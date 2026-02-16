@@ -7,7 +7,7 @@ Web Project for Block 3 - Web App Development
 Make sure you have deno installed, Visit the [official site](https://deno.com) for instructions.
 
 ```sh
-git clone https://codeberg.org/panbread/webproject.git
+git clone https://github.com/pnbread/webproject
 cd webproject
 deno install # install dependancies (jsr)
 deno task start
