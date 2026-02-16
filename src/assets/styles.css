@@ -2,6 +2,16 @@ html {
     height: 100%;
 }
 
+/* Color Palette */
+:root {
+    --color-normal: black;
+    --color-bg: white;
+    --color-header: lightgreen;
+    --color-header-fg: seagreen;
+    --color-footer: black;
+    --color-footer-fg: whitesmoke;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -14,19 +24,60 @@ body {
         align-items: center;
         justify-content: space-between;
         padding: 0 2em;
-        background-color: lawngreen;
+        background-color: var(--color-header);
+        color: var(--color-header-fg);
+
+        a {
+            padding: 0 0.25em;
+            text-decoration: none;
+            color: inherit;
+        }
     }
 
     main {
-        margin: auto;
+        height: 100%;
     }
 
     footer {
+        margin-top: auto;
         display: flex;
+        align-items: center;
+        height: 3em;
         gap: 1em;
         padding: 0 1em;
-        background-color: green;
-        color: white;
+        background-color: var(--color-footer);
+        color: var(--color-footer-fg);
     }
 }
 
+/* Products View */
+
+#productsRoot {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    
+    #productsSidepanel {
+        width: 30%;
+        background-color: whitesmoke;
+    }
+    
+    #productsItemsView {
+        width: 100%;
+        background-color: beige;
+    }
+}
+
+
+/*  */
+
+/* Login View */
+
+#loginForm {
+    display: block;
+    flex-direction: column;
+    padding: 2em;
+    gap: 2em;
+}
+
+/*  */

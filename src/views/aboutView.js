@@ -1,6 +1,6 @@
 const aboutView = () => {
     return `
-        <p>starting point of a group project...</p>
+        <p>make two seperate pages for yourself and the teammate</p>
     `;
 }
 
