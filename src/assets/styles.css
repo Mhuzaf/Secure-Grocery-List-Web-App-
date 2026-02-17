@@ -18,7 +18,8 @@ body {
     height: 100%;
     margin: 0;
     font-family: system-ui;
-    
+    background-color: var(--color-bg);
+
     header {
         display: flex;
         align-items: center;
@@ -31,6 +32,34 @@ body {
             padding: 0 0.25em;
             text-decoration: none;
             color: inherit;
+        }
+
+        #headerNavButton {
+            /* border: 0;
+            background: none; */
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 300px) {
+        header {
+            padding: 0 1em;
+
+            h2 {
+                font-size: medium;
+            }
+        }
+    }
+
+    @media screen and (max-width: 420px) {
+        header {
+            nav {
+                display: none;
+            }
+
+            #headerNavButton {
+                display: inline;
+            }
         }
     }
 
@@ -48,36 +77,50 @@ body {
         background-color: var(--color-footer);
         color: var(--color-footer-fg);
     }
-}
 
-/* Products View */
+    /* Products View */
 
-#productsRoot {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    
-    #productsSidepanel {
-        width: 30%;
-        background-color: whitesmoke;
+    #productsRoot {
+        display: flex;
+        flex-direction: row;
+
+        #productsSidepanel {
+            width: 30%;
+            background-color: whitesmoke;
+        }
+        
+        #productsItemsView {
+            width: 100%;
+            max-height: 10%;
+            background-color: beige;
+            padding: 1em;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            .productCard {
+                background-color: aquamarine;
+                width: 12em;
+                height: 16em;
+            }
+        }
     }
-    
-    #productsItemsView {
-        width: 100%;
-        background-color: beige;
+
+    @media screen and (max-width: 300px) {
+        #productsRoot {
+            flex-direction: column;
+        }
     }
+
+    /*  */
+
+    /* Login View */
+
+    #loginForm {
+        display: block;
+        flex-direction: column;
+        padding: 2em;
+        gap: 2em;
+    }
+
+    /*  */
 }
-
-
-/*  */
-
-/* Login View */
-
-#loginForm {
-    display: block;
-    flex-direction: column;
-    padding: 2em;
-    gap: 2em;
-}
-
-/*  */

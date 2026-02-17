@@ -1,9 +1,9 @@
-import homeController from "../controller/homeController.js";
-import notFoundController from "../controller/notFoundController.js";
-import aboutController from "../controller/aboutController.js";
-import staticController from "../controller/staticController.js";
-import loginController from "../controller/loginController.js";
-import productsController from "../controller/productsController.js";
+import homeController from "../controllers/homeController.js";
+import notFoundController from "../controllers/notFoundController.js";
+import aboutController from "../controllers/aboutController.js";
+import staticController from "../controllers/staticController.js";
+import loginController from "../controllers/loginController.js";
+import productsController from "../controllers/productsController.js";
 
 // Enums for each route
 export const Routes = Object.freeze({

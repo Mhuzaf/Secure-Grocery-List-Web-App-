@@ -1,11 +1,29 @@
 const productsView = () => {
+    
+    const product = `<article class="productCard">
+                    <p>image</p>
+                    <p>item name</p>
+                    <p>price</p>
+                </article>`;
+
+    let products = "";
+    for (let i = 0; i < 50; i++) {
+        products += product;   
+    }
+
     return `
         <div id="productsRoot">
             <aside id="productsSidepanel">
-                <p>filter sort panel</p>
+                <ul>Category
+                    <li>Fruits</li>
+                    <li>Vegetables</li>
+                    <li>Rice</li>
+                    <li>Chocolate</li>
+                    <li>Sweets</li>
+                </ul>
             </aside>
             <section id="productsItemsView">
-                <p>carousel of items goes here</p>
+                ${products}
             </section>
         </div>
     `;

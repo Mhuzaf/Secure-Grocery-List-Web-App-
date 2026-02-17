@@ -4,13 +4,14 @@ const render = (content, status = 200) => {
     const headers = new Headers();
     headers.set("content-type", "text/html");
 
-    const title = "HuzafaHashim Products";
-    const groupName = "HuzafaHashim"; // temporary
+    const groupName = "Cartereuse"; // "Cart"ereuse?
+    const title =  groupName + " Groceries";
 
-    let routes = "";
-    Object.values(Routes).forEach(route => {
-        routes += `<a href="${route.route}">${route.name}</a>`
-    });
+    const routes = Object.values(Routes).map(route => {
+        return `<a href="${route.route}">${route.name}</a>`
+    }).join("");
+
+    console.log(routes);
 
     return new Response(`
         <!DOCTYPE html>
@@ -28,6 +29,9 @@ const render = (content, status = 200) => {
                     <nav>
                         ${routes}
                     </nav>
+                    <button id="headerNavButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z"/></svg>
+                    </button>
                 </header>
                 
                 <main>
