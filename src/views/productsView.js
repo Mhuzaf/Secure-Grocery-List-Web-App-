@@ -1,9 +1,9 @@
-import { getProducts } from "../models/productsModel.js";
+const productsView = ({ products }) => {
+    const items = products.map(p => {
+        return `<div>${p.name} - ${p.price}</div>`
+    }).join("");
 
-const productsView = () => {
-    
-    const products = getProducts();
-    console.log(products)
+    console.log(items, products)
 
     return `
         <div id="productsRoot">
@@ -17,7 +17,7 @@ const productsView = () => {
                 </ul>
             </aside>
             <section id="productsItemsView">
-                <p>impl later</p>
+                ${items}
             </section>
         </div>
     `;

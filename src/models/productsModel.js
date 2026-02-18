@@ -1,18 +1,7 @@
-const products = [
-    {
-        name: "Apple",
-        price: 0.35
-    },
-    {
-        name: "Banana",
-        price: 0.42
-    },
-    {
-        name: "Orange",
-        price: 0.72
-    }
-];
+import { db } from "../app/db.js";
 
-const getProducts = () => { return products; }
+const getProducts = () => { 
+    return db.prepare("SELECT * FROM products").all();
+}
 
 export { getProducts }

@@ -11,8 +11,6 @@ const render = (content, status = 200) => {
         return `<a href="${route.route}">${route.name}</a>`
     }).join("");
 
-    console.log(routes);
-
     return new Response(`
         <!DOCTYPE html>
         <html>

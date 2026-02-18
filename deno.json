@@ -1,8 +1,10 @@
 {
   "imports": {
+    "@db/sqlite": "jsr:@db/sqlite@^0.13.0",
     "@std/http": "jsr:@std/http@^1.0.24"
   },
   "tasks": {
-    "start": "deno --watch --allow-net --allow-read index.js"
+    "start": "deno --watch --allow-net --allow-ffi --allow-env --allow-read index.js",
+    "db:create": "deno --allow-env --allow-ffi --allow-read ./src/tasks/db-create.js"
   }
 }
