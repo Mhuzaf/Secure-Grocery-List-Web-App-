@@ -1,15 +1,9 @@
+import { getProducts } from "../models/productsModel.js";
+
 const productsView = () => {
     
-    const product = `<article class="productCard">
-                    <p>image</p>
-                    <p>item name</p>
-                    <p>price</p>
-                </article>`;
-
-    let products = "";
-    for (let i = 0; i < 50; i++) {
-        products += product;   
-    }
+    const products = getProducts();
+    console.log(products)
 
     return `
         <div id="productsRoot">
@@ -23,7 +17,7 @@ const productsView = () => {
                 </ul>
             </aside>
             <section id="productsItemsView">
-                ${products}
+                <p>impl later</p>
             </section>
         </div>
     `;
