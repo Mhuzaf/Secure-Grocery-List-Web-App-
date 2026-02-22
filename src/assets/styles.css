@@ -6,25 +6,32 @@ html {
 :root {
     --color-normal: black;
     --color-bg: white;
-    --color-header: lightgreen;
-    --color-header-fg: seagreen;
+    --color-header: darkgreen;
+    --color-header-fg: yellowgreen;
     --color-footer: black;
     --color-footer-fg: whitesmoke;
+    --color-footer-2: silver;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../assets/inter.ttf");
 }
 
 body {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    justify-content: space-between;
+    min-height: 100%;
     margin: 0;
-    font-family: system-ui;
+    font-family: "Inter";
     background-color: var(--color-bg);
 
     header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 2em;
+        padding: 0 1em;
         background-color: var(--color-header);
         color: var(--color-header-fg);
 
@@ -32,12 +39,6 @@ body {
             padding: 0 0.25em;
             text-decoration: none;
             color: inherit;
-        }
-
-        #headerNavButton {
-            /* border: 0;
-            background: none; */
-            display: none;
         }
     }
 
@@ -51,63 +52,94 @@ body {
         }
     }
 
-    @media screen and (max-width: 420px) {
+    @media screen and (max-width: 500px) {
         header {
-            nav {
-                display: none;
-            }
-
-            #headerNavButton {
-                display: inline;
+            h2 {
+                font-size: medium;
+                text-wrap: wrap;
             }
         }
     }
 
     main {
-        height: 100%;
+        display: inline;
     }
 
     footer {
-        margin-top: auto;
         display: flex;
         align-items: center;
-        height: 3em;
+        justify-content: space-between;
         gap: 1em;
-        padding: 0 1em;
+        padding: 1em;
         background-color: var(--color-footer);
         color: var(--color-footer-fg);
+
+        .toAboutUs {
+            color: var(--color-footer-2);
+            text-decoration: none;
+        }
+
+        #socials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-footer-fg);
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 2em;
+                height: 2em;
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+    }
+
+    /* Home View */
+
+    #homeRoot {
+
+        #homeContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     /* Products View */
 
     #productsRoot {
-        display: flex;
-        flex-direction: row;
+        height: 100%;
+        padding: 1em;
 
-        #productsSidepanel {
-            width: 30%;
-            background-color: whitesmoke;
+        #productsFilter {
+            padding: 1em;
+            background-color: aliceblue;
         }
         
         #productsItemsView {
-            width: 100%;
-            max-height: 10%;
-            background-color: beige;
-            padding: 1em;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: auto;
+            grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+            gap: 1em;
+            margin-top: 1em;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: azure;
 
             .productCard {
-                background-color: aquamarine;
-                width: 12em;
-                height: 16em;
-            }
-        }
-    }
+                background-color: lightgreen;
+                border-radius: 0.5em;
+                padding: 1em;
+                box-sizing: border-box;
 
-    @media screen and (max-width: 300px) {
-        #productsRoot {
-            flex-direction: column;
+                img {
+                    width: 100%;
+                    object-fit: cintain;
+                }
+            }
         }
     }
 
