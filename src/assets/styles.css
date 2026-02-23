@@ -6,8 +6,8 @@ html {
 :root {
     --color-normal: black;
     --color-bg: white;
-    --color-header: darkgreen;
-    --color-header-fg: yellowgreen;
+    --color-header: yellowgreen;
+    --color-header-fg: darkgreen;
     --color-footer: black;
     --color-footer-fg: whitesmoke;
     --color-footer-2: silver;

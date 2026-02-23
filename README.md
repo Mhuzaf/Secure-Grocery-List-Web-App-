@@ -12,3 +12,17 @@ cd webproject
 deno install # install dependancies (jsr)
 deno task start
 ```
+### Items
+
+- [ ] fruits
+- [ ] vegetables
+- [ ] drinks
+- [ ] snacks
+- [ ] dairy products
+- [ ] bakery products
+- [ ] facial products
+
+### Functionality 
+
+- [ ] Login
+- [ ] (almost) purchasing setup

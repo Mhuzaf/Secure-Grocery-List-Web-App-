@@ -13,13 +13,15 @@ const productsView = ({ products }) => {
     const categories = [
         "Fruits", 
         "Vegetables", 
-        "Rice",
-        "Chocolate",
-        "Sweets", 
+        "Drinks",
+        "Dry foods",
+        "Snacks",
+        "Dairy",
+        "Breads",
     ];
 
     const checkboxItems = categories.map(c => {
-        let it = c.toLowerCase();
+        const it = c.toLowerCase();
         return `
         <input type="checkbox" id="cb-${it}" name="filter-${it}">
         <label for="cb-${it}">${c}</label>
@@ -29,11 +31,11 @@ const productsView = ({ products }) => {
 
     return `
         <div id="productsRoot">
-            <aside id="productsFilter">
+            <section id="productsFilter">
                 <h3>Search</h3>
                 <form>
                     <input name="productSearch" type="text" placeholder="Search products..." />
-                    <input type="submit">
+                    <input type="submit" value="🔍">
                     <br><br>
                     <h3>Advanced Filter</h3>
                     ${checkboxItems}
@@ -43,7 +45,7 @@ const productsView = ({ products }) => {
                     <label for="priceRange">Price range</label>
                     <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">
                 </form>
-            </aside>
+            </section>
             <section id="productsItemsView">
                 <div class="productCard">
                     <img src="src/assets/img/apple.png">
