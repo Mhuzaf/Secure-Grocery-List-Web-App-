@@ -1,10 +1,11 @@
 import render from "../app/render.js";
-import { getProducts } from "../models/productsModel.js";
+import { getProducts, getCategories } from "../models/productsModel.js";
 import productsView from "../views/productsView.js";
 
-const productsController = () => {
+const productsController = ({ request }) => {
+    const categories = getCategories();
     const products = getProducts();
-    return render(productsView({ products }));
+    return render(productsView({ request, categories, products }));
 }
 
 export default productsController;

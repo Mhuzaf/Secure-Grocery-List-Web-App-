@@ -4,6 +4,7 @@ import aboutController from "../controllers/aboutController.js";
 import staticController from "../controllers/staticController.js";
 import loginController from "../controllers/loginController.js";
 import productsController from "../controllers/productsController.js";
+import cartController from "../controllers/cartController.js";
 
 // Enums for each route
 export const Routes = Object.freeze({
@@ -11,6 +12,7 @@ export const Routes = Object.freeze({
     ABOUT:      { name: "About Us", route: "/about" },
     PRODUCTS:   { name: "Products", route: "/products" },
     LOGIN:      { name: "Login",    route: "/login" },
+    CART:      { name: "Cart",    route: "/cart" },
 });
 
 export const server = (request) => {
@@ -31,6 +33,8 @@ export const server = (request) => {
             return productsController({ request });
         case Routes.LOGIN.route:
             return loginController({ request });
+        case Routes.CART.route:
+            return cartController({ request });
         default:
             return notFoundController({ request });
     }    

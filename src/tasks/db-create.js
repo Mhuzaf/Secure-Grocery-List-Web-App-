@@ -3,13 +3,20 @@ import { db } from "../app/db.js"
 // Create/Reset
 
 db.exec(`
+    DROP TABLE IF EXISTS category;
+
+    CREATE TABLE category (
+        name TEXT PRIMARY KEY
+    );
+
     DROP TABLE IF EXISTS products;
 
     CREATE TABLE products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         price INTEGER NOT NULL,
-        category TEXT
+        category TEXT,
+        FOREIGN KEY (category) REFERENCES category(name)
     );
  
     DROP TABLE IF EXISTS user;
@@ -21,12 +28,12 @@ db.exec(`
         FOREIGN KEY (cart_id) REFERENCES cart(cart_id)
     );
     
-    DROP TABLE if EXISTS cart;
+    DROP TABLE IF EXISTS cart;
 
     CREATE TABLE cart (
         uname TEXT,
-        FOREIGN KEY (uname) REFERENCES user(uname),
         product_id INTEGER,
+        FOREIGN KEY (uname) REFERENCES user(uname),
         FOREIGN KEY (product_id) REFERENCES products(id)
     );
 `);
@@ -35,8 +42,19 @@ db.exec(`
 
 db.exec(`
    
-    INSERT INTO products (name, price) VALUES
-        ('apple', 0.32),
-        ('banana', 0.42),
-        ('orange', 0.72); 
+    INSERT INTO category (name) VALUES
+        ('Fruits'),
+        ('Vegetables'),
+        ('Drinks'),
+        ('Snacks'),
+        ('Dairy Products'),
+        ('Bakery Products'),
+        ('Dry foods');
+
+    INSERT INTO products (category, name, price) VALUES
+        ('Fruits', 'Apple', 5),
+        ('Fruits', 'Banana', 10),
+        ('Fruits', 'Mandarin', 7),
+        ('Fruits', 'Grapes', 10),
+        ('Fruits', 'Watermelon', 6);
 `);
