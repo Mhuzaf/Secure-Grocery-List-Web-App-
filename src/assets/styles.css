@@ -119,7 +119,7 @@ body {
             }
 
             a {
-                padding: 15px;
+                padding-top: 60px;
             }
         }
 
@@ -193,10 +193,32 @@ body {
     /* Login View */
 
     #loginForm {
-        display: block;
+        display: flex;
         flex-direction: column;
         padding: 2em;
         gap: 2em;
+        align-items: left;
+
+        
+    }
+
+
+    .login-section h2  {
+        margin-left: 2em;
+    }
+
+    .login-section p {
+        margin-left: 3em;
+    }
+
+
+    .form-group {
+           margin-left: 1em;
+    }
+
+    #loginForm button {
+        width: 5em;
+        margin-left: 10em;
     }
 
     /*  */
