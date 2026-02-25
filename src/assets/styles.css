@@ -119,21 +119,32 @@ body {
             }
 
             a {
-                padding-top: 60px;
+                margin-top: 2em;
+                padding: 1em;
+                border-radius: 999px;
+                color: green;
+                background-color: greenyellow;
+                text-align: center;
+                text-decoration: none;
             }
         }
 
         #homeFeatures {
-            /* display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(max(200px, 100%), 1fr)); */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
+            display: grid;
+            width: 75%;
+            grid-template-columns: repeat(auto-fit, minmax(min(24em, 100%), 1fr));
             gap: 1em;
+            margin-top: 2em;
 
             .featureCard {
-                background-color: cadetblue;
+                padding: 1em;
+                border-radius: 0.5em;
+                box-sizing: border-box;
+                background-color: whitesmoke;
+
+                h3 {
+                    margin-top: 0;
+                }
             }
         }
     }
@@ -151,11 +162,13 @@ body {
             #productsFilter {
                 flex: 1;
                 padding: 1em;
+                box-sizing: border-box;
                 background-color: aliceblue;
             }
 
             #productsCartView {
                 flex: 1;
+                padding: 1em;
                 background-color: darkseagreen;
             }
         }

@@ -1,12 +1,12 @@
 const productsView = ({ request, categories, products }) => {
-    let items = products.map(p => {
-        return `<div class="productCard">
+    const items = products.map(p => {
+        return `<article class="productCard">
                     <img 
                         src="src/assets/${p.category.toLowerCase()}/${p.name.toLowerCase()}.png"
                         alt="An image of ${p.name}"
                     >
                     <p>${p.name} - ${p.price}</p>
-                </div>`
+                </article>`
     }).join("")
 
     console.log(categories, products)
@@ -24,7 +24,7 @@ const productsView = ({ request, categories, products }) => {
     }
 
     return `
-        <div id="productsRoot">
+        <section id="productsRoot">
             <section id="productsUpper">
                 <section id="productsFilter">
                     <form>
@@ -51,7 +51,7 @@ const productsView = ({ request, categories, products }) => {
             <section id="productsItemsView">
                 ${items}
             </section>
-        </div>
+        </section>
     `;
 }
 

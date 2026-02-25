@@ -3,13 +3,13 @@ import { db } from "../app/db.js"
 // Create/Reset
 
 db.exec(`
+    DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS category;
 
     CREATE TABLE category (
         name TEXT PRIMARY KEY
     );
-
-    DROP TABLE IF EXISTS products;
 
     CREATE TABLE products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,13 +27,11 @@ db.exec(`
         cart_id INTEGER,
         FOREIGN KEY (cart_id) REFERENCES cart(cart_id)
     );
-    
-    DROP TABLE IF EXISTS cart;
 
     CREATE TABLE cart (
+        cart_id INTEGER PRIMARY KEY,
         uname TEXT,
         product_id INTEGER,
-        FOREIGN KEY (uname) REFERENCES user(uname),
         FOREIGN KEY (product_id) REFERENCES products(id)
     );
 `);
