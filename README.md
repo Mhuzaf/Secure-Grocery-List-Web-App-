@@ -12,3 +12,42 @@ cd webproject
 deno install # install dependancies (jsr)
 deno task start
 ```
+### Items
+
+- fruits
+    - apple
+    - banana
+    - mandarin
+    - grapes
+    - watermelon
+- vegetables
+    - tomato
+    - potato
+    - carrot
+    - onion
+    - cabbage
+- drinks
+    - Coffee
+    - Tea
+    - Espresso
+    - Milkshake
+    - Lemonade
+- snacks
+    - Cookie
+    - Cracker
+    - Brownie
+- dairy products
+    - Milk
+    - Yogurt
+    - Mozzarella
+- bakery products
+    - Bread
+    - Croissant
+- dry foods
+    - Peanuts
+
+### Functionality 
+
+- Login
+- Cart
+- Checkout
