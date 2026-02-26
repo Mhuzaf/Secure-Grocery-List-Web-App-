@@ -58,3 +58,6 @@ deno task start
 - collect phone, email, address
 - restrict address to certain area (city?)
 - new table "orders" to take care of checkouts
+- require user page to change address
+- cleaner nav bar (move title to home)
+- 
