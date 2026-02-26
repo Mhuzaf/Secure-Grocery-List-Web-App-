@@ -51,3 +51,10 @@ deno task start
 - Login
 - Cart
 - Checkout
+
+### To Change
+
+- singularize about us
+- collect phone, email, address
+- restrict address to certain area (city?)
+- new table "orders" to take care of checkouts
