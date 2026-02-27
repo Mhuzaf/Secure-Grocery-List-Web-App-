@@ -1,4 +1,5 @@
-import { Routes } from "./server.js";
+import { Company, Title } from "./common.js";
+import Routes from "./routes.js";
 
 const socials = [
     {
@@ -30,18 +31,21 @@ const socialsMap = socials.map(s => {
     `;
 }).join("");
 
+const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.LOGIN].map(r => {
+    return `<a href="${r.route}" aria-label="${r.name}" title="${r.name}">
+                ${r.name}
+            </a>`
+}).join("");
+
 const render = (content, status = 200) => {
     const headers = new Headers();
     headers.set("content-type", "text/html");
-
-    const groupName = "GreensMart";
-    const title =  groupName + " Groceries";
 
     return new Response(`
         <!DOCTYPE html>
         <html>
             <head>
-                <title>${title}</title>
+                <title>${Title}</title>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
                 <link rel="icon" href="/src/assets/favicon.svg">
@@ -49,16 +53,11 @@ const render = (content, status = 200) => {
             </head>
             <body>
                 <header>
-                    <a href="/">
-                        <h2 class="title">${title}</h2>
+                    <a href="/" class="title">
+                        <h2>${Title}</h2>
                     </a>
                     <nav>
-                        <a href="/cart" aria-label="View Cart" title="View Cart">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2"/></svg>     
-                        </a>
-                        <a href="/login" aria-label="Login" title="Login">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
-                        </a>
+                        ${routesMap}
                     </nav>
                 </header>
                 
@@ -67,7 +66,7 @@ const render = (content, status = 200) => {
                 </main>
 
                 <footer>
-                    <span>&copy; ${groupName}, All Rights Reserved.</span>
+                    <span>&copy; ${Company}, All Rights Reserved.</span>
                     <section class="footerRight">
                         <a class="toAboutUs" href="/about">About Us</a>
                         <section id="socials">

@@ -1,3 +1,5 @@
+import { Title } from "../app/common.js";
+
 const features = [
     {
         title: "Manage Items",
@@ -25,9 +27,10 @@ const homeView = () => {
     return `
     <section id="homeRoot">
         <section id="homeContainer">
-            <h1>Your grocery shopping, organized.</h1>
-            <p> Keep track of everything you need to buy. Add items, set quantities, search by name, </p>
-            <p>and filter by category, all in one place </p>
+            <h1>${Title}</h1>
+            <h2>Your grocery shopping, organized.</h2>
+            <p class="desc">Keep track of everything you need to buy. Add items, set quantities, 
+            search by name, and filter by category, all in one place. </p>
             <a class="toProducts" href="/products">Start Shopping → </a> 
             <section id="homeFeatures">
                 ${featuresMap}

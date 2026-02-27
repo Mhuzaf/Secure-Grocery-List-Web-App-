@@ -7,6 +7,7 @@ const productsController = async ({ request }) => {
     console.log(request.method)
 
     if (request.method == "POST") {
+        console.log("WE GOT POST REQUEST!")
         const data = await request.formData("productSearch");
         console.log(data);
     }

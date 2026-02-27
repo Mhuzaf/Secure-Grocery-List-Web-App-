@@ -5,7 +5,14 @@ const productsView = ({ request, categories, products }) => {
                         src="src/assets/${p.category.toLowerCase()}/${p.name.toLowerCase()}.png"
                         alt="An image of ${p.name}"
                     >
-                    <p>${p.name} - ${p.price}</p>
+                    <form>
+                        <input type="hidden" name="productAdd" value="${p.name}">
+                        <section>
+                            <span>${p.name}</span>
+                            <span>AED ${p.price}</span>
+                        </section>
+                        <input type="submit" value="+">
+                    </form>
                 </article>`
     }).join("")
 
@@ -19,14 +26,10 @@ const productsView = ({ request, categories, products }) => {
                 `
     }).join("");
 
-    if (request.method == "GET") {
-        console.log("applying filter");
-    }
-
     return `
         <section id="productsRoot">
             <section id="productsUpper">
-                <section id="productsFilter">
+                <article id="productsFilter">
                     <form>
                         <input name="productSearch" type="text" placeholder="Search products..." />
                         <input type="submit" value="🔍">
@@ -43,10 +46,10 @@ const productsView = ({ request, categories, products }) => {
                         <br>
                         <input type="submit" value="Apply">
                     </form>
-                </section>
-                <section id="productsCartView">
+                </article>
+                <article id="productsCartView">
                     <p>Cart view</p>
-                </section>
+                </article>
             </section>
             <section id="productsItemsView">
                 ${items}

@@ -2,6 +2,11 @@ html {
     height: 100%;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 /* Color Palette */
 :root {
     --color-normal: black;
@@ -34,28 +39,32 @@ body {
         align-items: center;
         justify-content: space-between;
         padding: 0 1em;
+        height: 4em;
         background-color: var(--color-header);
         color: var(--color-header-fg);
 
-        a {
+        .title {
             padding: 0 0.25em;
-            text-decoration: none;
             color: inherit;
+        }
+
+        nav {
+            display: flex;
+            gap: 1em;
         }
     }
 
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 600px) {
         header {
             padding: 0 1em;
 
-            h2 {
-                font-size: medium;
-                text-wrap: wrap;
+            .title {
+                display: none;
             }
 
-            nav > a > svg {
-                width: 1.5em;
-                height: 1.5em;
+            nav {
+                width: 100%;
+                justify-content: space-between;
             }
         }
     }
@@ -88,6 +97,7 @@ body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                flex-wrap: wrap;
                 color: var(--color-footer-fg);
 
                 a {
@@ -115,16 +125,16 @@ body {
             flex-direction: column;
             align-items: center;
 
-            p {
-                margin: 0;
+            .desc {
+                margin: 0 25%;
             }
 
             a {
                 margin-top: 2em;
                 padding: 1em;
                 border-radius: 999px;
-                color: green;
-                background-color: greenyellow;
+                color: var(--color-header-fg);
+                background-color: var(--color-header);
                 text-align: center;
                 text-decoration: none;
             }
@@ -148,6 +158,18 @@ body {
                 }
             }
         }
+
+        @media screen and (max-width: 400px) {  
+            #homeContainer {
+                .desc {
+                    margin: 0;
+                }
+
+                #homeFeatures {
+                    width: unset;
+                }
+            }
+        }
     }
 
     /* Products View */
@@ -164,13 +186,15 @@ body {
                 flex: 1;
                 padding: 1em;
                 box-sizing: border-box;
-                background-color: aliceblue;
+                border-radius: 0.5em;
+                background-color: var(--color-card);
             }
 
             #productsCartView {
                 flex: 1;
                 padding: 1em;
-                background-color: darkseagreen;
+                border-radius: 0.5em;
+                background-color: var(--color-card);
             }
         }
         
@@ -182,14 +206,13 @@ body {
             margin-top: 1em;
             width: 100%;
             box-sizing: border-box;
-            background-color: azure;
 
             .productCard {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 box-sizing: border-box;
-                background-color: lightgreen;
+                background-color: var(--color-card);
                 border-radius: 0.5em;
                 padding: 1em;
 
@@ -197,6 +220,24 @@ body {
                     flex: 1;
                     width: 100%;
                     object-fit: contain;
+                }
+                
+                form {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 1em;
+
+                    section {
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    input[type="submit"] {
+                        width: 3em;
+                        height: 3em;
+                        /* border-radius: 100%; */
+                    }
                 }
             }
         }

@@ -1,5 +1,5 @@
 const cartView = () => {
-    return "<p>Cart View</p>";
+    return "<p>Admin View</p>";
 }
 
 export default cartView;
