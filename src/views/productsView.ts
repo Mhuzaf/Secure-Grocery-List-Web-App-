@@ -1,5 +1,9 @@
-const productsView = ({ request, categories, products }) => {
+import { CategoryProps, ProductsProps } from "../models/productsModel.ts";
+
+const productsView = ({ categories, products } : { categories: CategoryProps[], products: ProductsProps[] }) => {
     const items = products.map(p => {
+        console.log(p)
+
         return `<article class="productCard">
                     <img 
                         src="src/assets/${p.category.toLowerCase()}/${p.name.toLowerCase()}.png"

@@ -60,4 +60,4 @@ deno task start
 - new table "orders" to take care of checkouts
 - require user page to change address
 - cleaner nav bar (move title to home)
-- 
+- find a solution to the products page or make a seperate cart page (i think the latter is the best?)

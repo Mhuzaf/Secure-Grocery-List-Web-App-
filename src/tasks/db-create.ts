@@ -1,4 +1,4 @@
-import { db } from "../app/db.js"
+import { db } from "../app/db.ts"
 
 // Create/Reset
 
@@ -22,7 +22,7 @@ db.exec(`
     DROP TABLE IF EXISTS user;
 
     CREATE TABLE user (
-        uname TEXT PRIMARY KEY NOT NULL,
+        username TEXT PRIMARY KEY NOT NULL,
         password TEXT NOT NULL,
         cart_id INTEGER,
         FOREIGN KEY (cart_id) REFERENCES cart(cart_id)
@@ -30,7 +30,6 @@ db.exec(`
 
     CREATE TABLE cart (
         cart_id INTEGER PRIMARY KEY,
-        uname TEXT,
         product_id INTEGER,
         FOREIGN KEY (product_id) REFERENCES products(id)
     );

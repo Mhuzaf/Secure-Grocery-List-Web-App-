@@ -1,5 +1,5 @@
-import { Company, Title } from "./common.js";
-import Routes from "./routes.js";
+import { Company, Title } from "./common.ts";
+import Routes from "./routes.ts";
 
 const socials = [
     {

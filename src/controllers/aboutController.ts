@@ -1,5 +1,5 @@
-import render from "../app/render.js";
-import aboutView from "../views/aboutView.js";
+import render from "../app/render.ts";
+import aboutView from "../views/aboutView.ts";
 
 const aboutController = () => {
     return render(aboutView());

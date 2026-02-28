@@ -1,4 +1,4 @@
-import { Title } from "../app/common.js";
+import { Title } from "../app/common.ts";
 
 const features = [
     {

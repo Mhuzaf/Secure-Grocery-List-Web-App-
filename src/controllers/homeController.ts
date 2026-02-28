@@ -1,5 +1,5 @@
-import render from "../app/render.js";
-import homeView from "../views/homeView.js";
+import render from "../app/render.ts";
+import homeView from "../views/homeView.ts";
 
 const homeController = () => {
     return render(homeView());
