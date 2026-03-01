@@ -1,11 +1,11 @@
-import homeController from "../controllers/homeController.ts";
-import notFoundController from "../controllers/notFoundController.ts";
-import aboutController from "../controllers/aboutController.ts";
-import staticController from "../controllers/staticController.ts";
-import loginController from "../controllers/loginController.ts";
-import productsController from "../controllers/productsController.ts";
-import cartController from "../controllers/manageController.ts";
-import Routes from "./routes.ts";
+import { homeController } from "../controllers/homeController.ts";
+import { notFoundController } from "../controllers/notFoundController.ts";
+import { aboutController } from "../controllers/aboutController.ts";
+import { staticController } from "../controllers/staticController.ts";
+import { loginController }from "../controllers/loginController.ts";
+import { productsController } from "../controllers/productsController.ts";
+import { manageController } from "../controllers/manageController.ts";
+import { Routes }from "./routes.ts";
 
 export const server = (request: Request) => {
     const url = new URL(request.url);
@@ -26,7 +26,7 @@ export const server = (request: Request) => {
         case Routes.LOGIN.route:
             return loginController();
         case Routes.MANAGE.route:
-            return cartController();
+            return manageController();
         default:
             return notFoundController();
     }    

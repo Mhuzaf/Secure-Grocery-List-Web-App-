@@ -1,8 +1,6 @@
-import render from "../app/render.ts";
-import notFoundView from "../views/notFoundView.ts";
+import { render } from "../app/render.ts";
+import { notFoundView } from "../views/notFoundView.ts";
 
-const notFoundController = () => {
+export const notFoundController = () => {
     return render(notFoundView(), 404);
 }
-
-export default notFoundController;

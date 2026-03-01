@@ -1,8 +1,6 @@
-import render from "../app/render.ts";
-import aboutView from "../views/aboutView.ts";
+import { render } from "../app/render.ts";
+import { aboutView } from "../views/aboutView.ts";
 
-const aboutController = () => {
+export const aboutController = () => {
     return render(aboutView());
 }
-
-export default aboutController;

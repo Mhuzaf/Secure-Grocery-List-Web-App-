@@ -1,8 +1,6 @@
-import render from "../app/render.ts";
-import loginView from "../views/loginView.ts";
+import { render } from "../app/render.ts";
+import { loginView } from "../views/loginView.ts";
 
-const loginController = () => {
+export const loginController = () => {
     return render(loginView());
 }
-
-export default loginController;

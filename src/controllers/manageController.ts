@@ -1,8 +1,6 @@
-import render from "../app/render.ts";
-import cartView from "../views/manageView.ts";
+import { render } from "../app/render.ts";
+import { manageView } from "../views/manageView.ts";
 
-const manageController = () => {
-    return render(cartView());
+export const manageController = () => {
+    return render(manageView());
 }
-
-export default manageController;

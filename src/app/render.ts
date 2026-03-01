@@ -37,7 +37,7 @@ const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.LOGIN].map
             </a>`
 }).join("");
 
-const render = (content, status = 200) => {
+export const render = (content: string, status = 200) => {
     const headers = new Headers();
     headers.set("content-type", "text/html");
 
@@ -79,5 +79,3 @@ const render = (content, status = 200) => {
         </html>
     `, {headers, status});
 }
-
-export default render;

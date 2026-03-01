@@ -1,8 +1,6 @@
-import render from "../app/render.ts";
-import homeView from "../views/homeView.ts";
+import { render } from "../app/render.ts";
+import { homeView } from "../views/homeView.ts";
 
-const homeController = () => {
+export const homeController = () => {
     return render(homeView());
 }
-
-export default homeController;

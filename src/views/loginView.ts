@@ -1,4 +1,4 @@
-const loginView = () => {
+export const loginView = () => {
     return `
         <section class="login-section" aria-labelledby="login-heading">
             <h2 id="login-heading">Login</h2>
@@ -23,6 +23,3 @@ const loginView = () => {
         </section>    
     `;
 };
-
-export default loginView;
-

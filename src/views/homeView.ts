@@ -23,7 +23,7 @@ const featuresMap = features.map(f => {
     `
 }).join("");
 
-const homeView = () => {
+export const homeView = () => {
     return `
     <section id="homeRoot">
         <section id="homeContainer">
@@ -39,5 +39,3 @@ const homeView = () => {
     </section>
     `;
 }
-
-export default homeView;

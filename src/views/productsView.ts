@@ -1,6 +1,6 @@
 import { CategoryProps, ProductsProps } from "../models/productsModel.ts";
 
-const productsView = ({ categories, products } : { categories: CategoryProps[], products: ProductsProps[] }) => {
+export const productsView = ({ categories, products } : { categories: CategoryProps[], products: ProductsProps[] }) => {
     const items = products.map(p => {
         console.log(p)
 
@@ -61,5 +61,3 @@ const productsView = ({ categories, products } : { categories: CategoryProps[], 
         </section>
     `;
 }
-
-export default productsView;
