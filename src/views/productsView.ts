@@ -20,7 +20,7 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
                 </article>`
     }).join("")
 
-    console.log(categories, products)
+    console.log(categories, products);
 
     const checkboxItems = categories.map(c => {
         const it = c.name.toLowerCase();
@@ -36,14 +36,11 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
                 <article id="productsFilter">
                     <form>
                         <input name="productSearch" type="text" placeholder="Search products..." />
-                        <input type="submit" value="🔍">
                         <br><br>
                         <label>Advanced Filter</label>
                         <br>
                         ${checkboxItems}
                         <br>
-                        <br>
-
                         <label for="priceRange">Price range</label>
                         <br>
                         <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">
@@ -52,7 +49,7 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
                     </form>
                 </article>
                 <article id="productsCartView">
-                    <p>Cart view</p>
+                    <p>Your Cart</p>
                 </article>
             </section>
             <section id="productsItemsView">

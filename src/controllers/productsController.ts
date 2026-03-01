@@ -2,14 +2,9 @@ import { render } from "../app/render.ts";
 import { getProducts, getCategories } from "../models/productsModel.ts";
 import { productsView } from "../views/productsView.ts";
 
-export const productsController = async ({ request } : { request: Request }) => {
-    console.log(request.method)
-
-    if (request.method == "POST") {
-        console.log("got post request")
-        const data = await request.formData();
-        console.log(data);
-    }
+export const productsController = ({ request } : { request: Request }) => {
+    const url = new URL(request.url);
+    console.log(url.searchParams);
 
     const categories = getCategories();
     const products = getProducts();

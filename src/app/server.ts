@@ -26,7 +26,7 @@ export const server = (request: Request) => {
         case Routes.LOGIN.route:
             return loginController();
         case Routes.MANAGE.route:
-            return manageController();
+            return manageController({ request });
         default:
             return notFoundController();
     }    

@@ -27,9 +27,7 @@ a {
 body {
     display: flex;
     flex-direction: column;
-    align-items: normal;
-    justify-content: space-between;
-    min-height: 100vh;
+    min-height: 100%;
     margin: 0;
     font-family: "Inter";
     background-color: var(--color-bg);
@@ -38,19 +36,26 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 1em;
         height: 4em;
         background-color: var(--color-header);
         color: var(--color-header-fg);
 
         .title {
-            padding: 0 0.25em;
+            padding: 0 1em;
             color: inherit;
         }
 
         nav {
             display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 1em;
+            padding: 0 1em;
+            box-sizing: border-box;
+            height: 100%;
+            a {
+
+            }
         }
     }
 
@@ -183,11 +188,14 @@ body {
             gap: 1em;
 
             #productsFilter {
-                flex: 1;
                 padding: 1em;
                 box-sizing: border-box;
                 border-radius: 0.5em;
                 background-color: var(--color-card);
+            }
+
+            #productsCartView.closed {
+                display: none;
             }
 
             #productsCartView {
@@ -195,6 +203,10 @@ body {
                 padding: 1em;
                 border-radius: 0.5em;
                 background-color: var(--color-card);
+
+                p {
+                    margin-top: 0;
+                }
             }
         }
         
@@ -236,11 +248,36 @@ body {
                     input[type="submit"] {
                         width: 3em;
                         height: 3em;
-                        /* border-radius: 100%; */
                     }
                 }
             }
         }
+
+        @media screen and (max-width: 500px) {
+            #productsUpper {
+                flex-direction: column;
+            }
+        }
+
+        /* @media screen and (max-width: 500px) {
+            #productsUpper {
+                #productsCartView {
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    border-radius: 0;
+
+                    .upper {
+
+                        #showCartButton {
+                            display: inline;
+                        }
+                    }
+            }
+            }
+        } */
     }
 
     /*  */
@@ -253,10 +290,7 @@ body {
         padding: 2em;
         gap: 2em;
         align-items: left;
-
-        
     }
-
 
     .login-section h2  {
         margin-left: 2em;
@@ -266,9 +300,8 @@ body {
         margin-left: 3em;
     }
 
-
     .form-group {
-           margin-left: 1em;
+        margin-left: 1em;
     }
 
     #loginForm button {
@@ -277,4 +310,24 @@ body {
     }
 
     /*  */
+
+    /* Manage View */
+
+    #manageRoot {
+        padding: 1em;
+
+        section {
+            width: fit-content;
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+                border: 1px solid var(--color-footer);
+
+                li {
+                    padding: 0.25em;
+                }
+            }
+        }
+    }
 }
