@@ -53,9 +53,6 @@ body {
             padding: 0 1em;
             box-sizing: border-box;
             height: 100%;
-            a {
-
-            }
         }
     }
 
@@ -316,9 +313,12 @@ body {
     #manageRoot {
         padding: 1em;
 
-        section {
+        section#categories {
             width: fit-content;
+        }
 
+        section {
+            
             ul {
                 list-style-type: none;
                 padding: 0;

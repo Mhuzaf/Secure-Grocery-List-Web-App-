@@ -8,5 +8,5 @@ export const productsController = ({ request } : { request: Request }) => {
 
     const categories = getCategories();
     const products = getProducts();
-    return render(productsView({ categories, products }));
+    return render(productsView({ categories, products }), request);
 }

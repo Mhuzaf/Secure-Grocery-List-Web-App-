@@ -1,4 +1,4 @@
-import { CategoryProps, ProductsProps } from "../models/productsModel.ts";
+import { CategoryProps, ProductsProps } from "../app/db.ts";
 
 export const productsView = ({ categories, products } : { categories: CategoryProps[], products: ProductsProps[] }) => {
     const items = products.map(p => {

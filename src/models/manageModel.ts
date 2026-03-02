@@ -7,3 +7,7 @@ export const getCategories = () : CategoryProps[] => {
 export const getProducts = () : ProductsProps[] => { 
     return db.prepare("SELECT * FROM products").all();
 }
+
+export const addCategory = (name: string) => {
+    db.prepare("INSERT INTO category (name) VALUES (:name)").run({ name });
+}

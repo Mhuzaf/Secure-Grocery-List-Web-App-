@@ -2,9 +2,9 @@ import { homeController } from "../controllers/homeController.ts";
 import { notFoundController } from "../controllers/notFoundController.ts";
 import { aboutController } from "../controllers/aboutController.ts";
 import { staticController } from "../controllers/staticController.ts";
-import { loginController }from "../controllers/loginController.ts";
+import { loginController }from "../controllers/login/loginController.ts";
 import { productsController } from "../controllers/productsController.ts";
-import { manageController } from "../controllers/manageController.ts";
+import { managePostController, manageController } from "../controllers/manageController.ts";
 import { Routes }from "./routes.ts";
 
 export const server = (request: Request) => {
@@ -18,18 +18,18 @@ export const server = (request: Request) => {
     // Routing
     switch (url.pathname){
         case Routes.HOME.route:
-            return homeController();
+            return homeController({ request });
         case Routes.ABOUT.route:
-            return aboutController();
+            return aboutController({ request });
         case Routes.PRODUCTS.route:
             return productsController({ request });
         case Routes.LOGIN.route:
-            return loginController();
+            return loginController({ request });
         case Routes.MANAGE.route:
+            if (request.method == "POST") 
+                return managePostController({ request });
             return manageController({ request });
         default:
-            return notFoundController();
+            return notFoundController({ request });
     }    
 }
-
-export default server;

@@ -1,5 +1,6 @@
 import { Company, Title } from "./common.ts";
 import Routes from "./routes.ts";
+import { getFlash } from "./flash.ts";
 
 const socials = [
     {
@@ -37,9 +38,16 @@ const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.LOGIN].map
             </a>`
 }).join("");
 
-export const render = (content: string, status = 200) => {
+export const render = (content: string, request: Request, status = 200) => {
     const headers = new Headers();
     headers.set("content-type", "text/html");
+
+    const flash = getFlash(request.headers, headers);
+    const flashMsg = flash ? `
+        <aside id="flashMsg">
+            ${flash}
+        </aside>
+    ` : "";
 
     return new Response(`
         <!DOCTYPE html>
@@ -60,6 +68,8 @@ export const render = (content: string, status = 200) => {
                         ${routesMap}
                     </nav>
                 </header>
+                
+                ${flashMsg}
                 
                 <main>
                     ${content}

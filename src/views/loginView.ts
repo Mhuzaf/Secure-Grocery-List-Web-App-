@@ -23,3 +23,7 @@ export const loginView = () => {
         </section>    
     `;
 };
+
+export const registerView = () => {
+    
+}
