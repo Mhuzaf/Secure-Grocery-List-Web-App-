@@ -2,10 +2,11 @@ import { homeController } from "../controllers/homeController.ts";
 import { notFoundController } from "../controllers/notFoundController.ts";
 import { aboutController } from "../controllers/aboutController.ts";
 import { staticController } from "../controllers/staticController.ts";
-import { loginController }from "../controllers/login/loginController.ts";
+import { loginController, loginPostController }from "../controllers/login/loginController.ts";
 import { productsController } from "../controllers/productsController.ts";
 import { managePostController, manageController } from "../controllers/manageController.ts";
 import { Routes }from "./routes.ts";
+import { registerPostController, registerController } from "../controllers/login/registerController.ts";
 
 export const server = (request: Request) => {
     const url = new URL(request.url);
@@ -23,8 +24,16 @@ export const server = (request: Request) => {
             return aboutController({ request });
         case Routes.PRODUCTS.route:
             return productsController({ request });
+        case Routes.PROFILE.route:
+            return;
         case Routes.LOGIN.route:
+            if (request.method == "POST")
+                return loginPostController({ request });
             return loginController({ request });
+        case Routes.REGISTER.route:
+            if (request.method == "POST") 
+                return registerPostController({ request });
+            return registerController({ request });
         case Routes.MANAGE.route:
             if (request.method == "POST") 
                 return managePostController({ request });

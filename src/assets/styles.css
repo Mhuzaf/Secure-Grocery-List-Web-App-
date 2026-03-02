@@ -279,31 +279,46 @@ body {
 
     /*  */
 
-    /* Login View */
+    /* Login/Register View */
 
-    #loginForm {
-        display: flex;
-        flex-direction: column;
-        padding: 2em;
-        gap: 2em;
-        align-items: left;
+    #loginRoot {
+        margin: 1em;
+
+        a {
+            color: var(--color-header-fg)
+        }
+
+        #loginForm {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1em;
+
+            section {
+                display: flex;
+                flex-direction: column;
+
+                label {
+                    margin-bottom: 4px;
+                }
+            }
+        }
     }
 
-    .login-section h2  {
-        margin-left: 2em;
-    }
+    #registerRoot {
+        margin: 1em;
 
-    .login-section p {
-        margin-left: 3em;
-    }
+        a {
+            color: var(--color-header-fg)
+        }
 
-    .form-group {
-        margin-left: 1em;
-    }
-
-    #loginForm button {
-        width: 5em;
-        margin-left: 10em;
+        #registerForm {
+            width: fit-content;
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 1em;
+        }
     }
 
     /*  */

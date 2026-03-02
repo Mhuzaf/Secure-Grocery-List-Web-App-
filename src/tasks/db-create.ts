@@ -6,6 +6,7 @@ db.exec(`
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS category;
+    DROP TABLE IF EXISTS user;
 
     CREATE TABLE category (
         name TEXT PRIMARY KEY
@@ -19,11 +20,14 @@ db.exec(`
         FOREIGN KEY (category) REFERENCES category(name)
     );
  
-    DROP TABLE IF EXISTS user;
-
     CREATE TABLE user (
         username TEXT PRIMARY KEY NOT NULL,
         password TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone_no TEXT,
+        city TEXT,
+        street TEXT,
+        room_no TEXT,
         cart_id INTEGER,
         FOREIGN KEY (cart_id) REFERENCES cart(cart_id)
     );

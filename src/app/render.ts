@@ -32,7 +32,7 @@ const socialsMap = socials.map(s => {
     `;
 }).join("");
 
-const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.LOGIN].map(r => {
+const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.PROFILE].map(r => {
     return `<a href="${r.route}" aria-label="${r.name}" title="${r.name}">
                 ${r.name}
             </a>`
