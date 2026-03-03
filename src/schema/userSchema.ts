@@ -10,12 +10,18 @@ export const userRegisterSchema = {
     email: {
         validators: [requiredString]
     },
-    phone: {},
-    city: {},
+    phone: {
+        validators: []
+    },
+    city: {
+        validators: []
+    },
     street: {
         validators: [minLength(5)]
     },
-    room: {},
+    room: {
+        validators: []
+    },
 }
 
 export const userLoginSchema = {

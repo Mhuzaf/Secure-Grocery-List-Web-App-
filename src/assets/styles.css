@@ -340,21 +340,29 @@ body {
     #manageRoot {
         padding: 1em;
 
-        section#categories {
-            width: fit-content;
-        }
-
         section {
             
             ul {
                 list-style-type: none;
+                width: fit-content;
                 padding: 0;
-                border: 1px solid var(--color-footer);
+                border: 1px solid slategray;
 
                 li {
+                    display: flex;
+                    justify-content: space-between;
                     padding: 0.25em;
                 }
+
+                li:nth-child(2n) {
+                    background-color: whitesmoke;
+                }
             }
+        }
+
+        .seperator {
+            border-top: 1px solid slategray;
+
         }
     }
 

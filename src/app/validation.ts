@@ -10,6 +10,7 @@ export const minLength = (min: number) => {
 
 // deno-lint-ignore no-explicit-any
 export const validateField = (name: string, value: any, validators: any) : string => {
+    console.log(validators);
     for (const validator of validators) {
         const error = validator(name, value);
         if (error) return error;
