@@ -4,7 +4,13 @@ import { CategoryProps, ProductsProps } from "../app/db.ts";
 export const manageView = ({ categories, products, error = { message: "" } } : { categories: CategoryProps[], products: ProductsProps[], error?: { message: string } }) => {
     
     const categoryMap = categories.map(c => {
-        return `<li>${escape(c.name)}</li>`
+        return `<li>
+        <span>${escape(c.name)}</span>
+        <section>
+            <button command="show-modal" commandfor="editCategoryDialog">Edit</button>
+            <button command="show-modal" commandfor="deleteCategoryDialog">Delete</button>
+        <section>
+        </li>`
     }).join("");
     
     const productsMap = products.map(p => {
@@ -17,19 +23,29 @@ export const manageView = ({ categories, products, error = { message: "" } } : {
                 <section id="categories"> 
                     <p>Manage Categories</p>
                     <form method="POST">
-                    <input name="addCategory" type="text" placeholder="New Category" required>
-                    <input type="submit">
-                        ${errorMsg}
-                        <ul>
-                            ${categoryMap}
-                        </ul>
+                        <input name="addCategory" type="text" placeholder="New Category" required>
+                        <input type="submit">
                     </form>
+                    ${errorMsg}
+                    <ul>
+                        ${categoryMap}
+                    </ul>
                 </section>
+                <div class="seperator"></div>
                 <section id="products">
                     <p>Manage Products</p>
                     <ul>
                         ${productsMap}
                     </ul>
                 </section>
+        
+                <dialog id="editCategoryDialog" closedby="any">
+                   <p>edit category</p>
+                    <button commandfor="editCategoryDialog" command="close">Close</button>
+                </dialog>
+                <dialog id="deleteCategoryDialog" closedby="any">
+                   <p>delete category</p>
+                    <button commandfor="deleteCategoryDialog" command="close">Close</button>
+                </dialog>
             </section>`;
 }
