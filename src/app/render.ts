@@ -78,7 +78,6 @@ export const render = (content: string, request: Request, status = 200) => {
                 <footer>
                     <span>&copy; ${Company}, All Rights Reserved.</span>
                     <section class="footerRight">
-                        <a class="toAboutUs" href="/about">About Us</a>
                         <section id="socials">
                             ${socialsMap}
                         </section>

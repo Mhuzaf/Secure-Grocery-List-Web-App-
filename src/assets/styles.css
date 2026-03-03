@@ -323,6 +323,18 @@ body {
 
     /*  */
 
+    /* Profile View */
+
+    #profileLoginMsg {
+        margin: 1em;
+
+        a {
+            color: var(--color-header-fg)
+        }
+    }
+
+    /*  */
+
     /* Manage View */
 
     #manageRoot {
@@ -345,4 +357,6 @@ body {
             }
         }
     }
+
+    /*  */
 }

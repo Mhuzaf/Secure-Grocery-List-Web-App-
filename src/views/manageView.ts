@@ -1,7 +1,7 @@
 import { escape } from "@std/html/entities";
 import { CategoryProps, ProductsProps } from "../app/db.ts";
 
-export const manageView = ({ categories, products, error = "" } : { categories: CategoryProps[], products: ProductsProps[], error?: string }) => {
+export const manageView = ({ categories, products, error = { message: "" } } : { categories: CategoryProps[], products: ProductsProps[], error?: { message: string } }) => {
     
     const categoryMap = categories.map(c => {
         return `<li>${escape(c.name)}</li>`
@@ -11,10 +11,10 @@ export const manageView = ({ categories, products, error = "" } : { categories: 
         return `<li>${escape(p.name)}</li>`
     }).join("");
 
-    const errorMsg = error ? `<p class="error">${escape(error)}</p>`: "";
+    const errorMsg = error ? `<p class="error">${escape(error.message)}</p>`: "";
 
     return `<section id="manageRoot">
-                <section id="categories">
+                <section id="categories"> 
                     <p>Manage Categories</p>
                     <form method="POST">
                     <input name="addCategory" type="text" placeholder="New Category" required>

@@ -1,4 +1,6 @@
-export const loginView = () => {
+export const loginView = (errors = {}) => {
+    console.log(errors);    
+
     return `
         <section id="loginRoot" aria-labelledby="loginRoot">
             <h2>Login</h2>
@@ -23,7 +25,9 @@ export const loginView = () => {
     `;
 };
 
-export const registerView = () => {
+export const registerView = (errors = {}) => {
+    console.log(errors);    
+
     return `
         <section id="registerRoot">
             <h2>Register</h2>
