@@ -30,6 +30,13 @@ export const manageView = ({ categories, products, error = { message: "" } } : {
                     <ul>
                         ${categoryMap}
                     </ul>
+                        <input name="addCategory" type="text" placeholder="New Category" required>
+                        <input type="submit">
+                    </form>
+                    ${errorMsg}
+                    <ul>
+                        ${categoryMap}
+                    </ul>
                 </section>
                 <div class="seperator"></div>
                 <section id="products">
@@ -38,14 +45,5 @@ export const manageView = ({ categories, products, error = { message: "" } } : {
                         ${productsMap}
                     </ul>
                 </section>
-        
-                <dialog id="editCategoryDialog" closedby="any">
-                   <p>edit category</p>
-                    <button commandfor="editCategoryDialog" command="close">Close</button>
-                </dialog>
-                <dialog id="deleteCategoryDialog" closedby="any">
-                   <p>delete category</p>
-                    <button commandfor="deleteCategoryDialog" command="close">Close</button>
-                </dialog>
             </section>`;
 }
