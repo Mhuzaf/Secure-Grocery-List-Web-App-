@@ -61,3 +61,7 @@ deno task start
 - require user page to change address
 - cleaner nav bar (move title to home)
 - find a solution to the products page or make a seperate cart page (i think the latter is the best?)
+
+### Uploads
+
+- create a new table to handle images??

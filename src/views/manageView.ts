@@ -45,5 +45,13 @@ export const manageView = ({ categories, products, error = { message: "" } } : {
                         ${productsMap}
                     </ul>
                 </section>
+                
+                <dialog id="editCategoryDialog" closedby="any">
+                
+                </dialog>
+
+                <dialog id="deleteCategoryDialog" closedby="any">
+
+                </dialog>
             </section>`;
 }

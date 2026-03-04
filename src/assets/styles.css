@@ -2,18 +2,13 @@ html {
     height: 100%;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
 /* Color Palette */
 :root {
-    --color-normal: black;
+    --color-base: #9acd32;
+    --color-fg: #1f290a;
     --color-bg: white;
-    --color-header: yellowgreen;
-    --color-header-fg: darkgreen;
-    --color-card: whitesmoke;
+    --color-header-fg:  #3d5214;
+    --color-card: #f5faea;
     --color-footer: black;
     --color-footer-fg: whitesmoke;
     --color-footer-2: silver;
@@ -24,6 +19,18 @@ a {
     src: url("../assets/inter.ttf");
 }
 
+/* Defaults */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input {
+    font-family: "Inter";
+}
+
+/*  */
+
 body {
     display: flex;
     flex-direction: column;
@@ -31,13 +38,14 @@ body {
     margin: 0;
     font-family: "Inter";
     background-color: var(--color-bg);
+    color: var(--color-fg);
 
     header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         height: 4em;
-        background-color: var(--color-header);
+        background-color: var(--color-base);
         color: var(--color-header-fg);
 
         .title {
@@ -136,7 +144,7 @@ body {
                 padding: 1em;
                 border-radius: 999px;
                 color: var(--color-header-fg);
-                background-color: var(--color-header);
+                background-color: var(--color-base);
                 text-align: center;
                 text-decoration: none;
             }
@@ -153,7 +161,7 @@ body {
                 padding: 1em;
                 border-radius: 0.5em;
                 box-sizing: border-box;
-                background-color: whitesmoke;
+                background-color: var(--color-card);
 
                 h3 {
                     margin-top: 0;
@@ -191,10 +199,6 @@ body {
                 background-color: var(--color-card);
             }
 
-            #productsCartView.closed {
-                display: none;
-            }
-
             #productsCartView {
                 flex: 1;
                 padding: 1em;
@@ -206,7 +210,42 @@ body {
                 }
             }
         }
+
+        @media screen and (max-width: 500px) {
+            #productsUpper {
+                display: none;
+                flex-direction: column;
+            }
+        }
         
+        #productsMobileView {
+            display: flex;
+            gap: 0.5em;
+
+            button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5em;
+                padding: 0.5em;
+                border-radius: 0.5em;
+                border: none;
+                background-color: #c2e184;
+                color: var(--color-header-fg);
+
+                &:hover {
+                    background-color: olivedrab !important;
+                    color: white !important;
+                }
+            }
+        }
+
+        @media screen and (min-width: 500px) {
+            #productsMobileView {
+                display: none;
+            }
+        }
+
         #productsItemsView {
             display: grid;
             grid-auto-rows: auto;
@@ -240,19 +279,22 @@ body {
                     section {
                         display: flex;
                         flex-direction: column;
+
+                        .productName {
+                            font-weight: bold;
+                        }
+
                     }
 
                     input[type="submit"] {
-                        width: 3em;
-                        height: 3em;
+                        border-radius: 0.5em;
+                        padding: 0.5em 1em;
+                        margin-left: 1em;
+                        border: none;
+                        background-color: var(--color-base);
+                        color: var(--color-header-fg);
                     }
                 }
-            }
-        }
-
-        @media screen and (max-width: 500px) {
-            #productsUpper {
-                flex-direction: column;
             }
         }
 
