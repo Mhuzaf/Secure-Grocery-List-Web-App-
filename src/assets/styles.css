@@ -188,7 +188,7 @@ body {
         height: 100%;
         padding: 1em;
 
-        #productsUpper {
+        #productsMiddle {
             display: flex;
             gap: 1em;
 
@@ -212,7 +212,7 @@ body {
         }
 
         @media screen and (max-width: 500px) {
-            #productsUpper {
+            #productsMiddle {
                 display: none;
                 flex-direction: column;
             }
@@ -299,7 +299,7 @@ body {
         }
 
         /* @media screen and (max-width: 500px) {
-            #productsUpper {
+            #productsMiddle {
                 #productsCartView {
                     position: fixed;
                     top: 0;

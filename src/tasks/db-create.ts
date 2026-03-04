@@ -9,15 +9,16 @@ db.exec(`
     DROP TABLE IF EXISTS user;
 
     CREATE TABLE category (
-        name TEXT PRIMARY KEY
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL
     );
 
     CREATE TABLE products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         price INTEGER NOT NULL,
-        category TEXT,
-        FOREIGN KEY (category) REFERENCES category(name)
+        category_id TEXT,
+        FOREIGN KEY (category_id) REFERENCES category(id)
     );
  
     CREATE TABLE user (
@@ -43,19 +44,19 @@ db.exec(`
 
 db.exec(`
    
-    INSERT INTO category (name) VALUES
-        ('Fruits'),
-        ('Vegetables'),
-        ('Drinks'),
-        ('Snacks'),
-        ('Dairy Products'),
-        ('Bakery Products'),
-        ('Dry foods');
+    INSERT INTO category (id, name) VALUES
+        ('fruits',          'Fruits'),
+        ('vegetables',      'Vegetables'),
+        ('drinks',          'Drinks'),
+        ('snacks',          'Snacks'),
+        ('dairy_products',   'Dairy Products'),
+        ('bakery_products',  'Bakery Products'),
+        ('dry_foods',        'Dry foods');
 
-    INSERT INTO products (category, name, price) VALUES
-        ('Fruits', 'Apple', 5),
-        ('Fruits', 'Banana', 10),
-        ('Fruits', 'Mandarin', 7),
-        ('Fruits', 'Grapes', 10),
-        ('Fruits', 'Watermelon', 6);
+    INSERT INTO products (category_id, name, price) VALUES
+        ('fruits', 'Apple', 5),
+        ('fruits', 'Banana', 10),
+        ('fruits', 'Mandarin', 7),
+        ('fruits', 'Grapes', 10),
+        ('fruits', 'Watermelon', 6);
 `);

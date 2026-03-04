@@ -80,7 +80,7 @@ export const registerView = (errors = {}) => {
                     ${locations.map(loc => {
                         return `<optgroup label="${loc.city}">
                                     ${loc.districts.map(dist => {
-                                        return `<option value="${dist.toLowerCase().replace(/\s+/g, "")}">${dist}</option>`
+                                        return `<option value="${dist.toLowerCase().replace(RegExp("\\s+"), "_")}">${dist}</option>`
                                     }).join("")}
                                 </optgroup>`
                     }).join("")}

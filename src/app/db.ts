@@ -8,7 +8,7 @@ export interface ProductsProps {
     id: number,
     name: string,
     price: number,
-    category: string,
+    category_id: string,
 }
 
 export const db = new Database("app.db");
