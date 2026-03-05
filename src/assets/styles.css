@@ -340,6 +340,82 @@ body {
 
     /*  */
 
+    /* About Page */
+
+    #aboutRoot {
+        margin: 2em auto;
+        width: 75%;
+        text-align: center;
+    }
+
+    #aboutHeader h1 {
+        margin-bottom: 0.5em;
+    }
+
+    .aboutDesc {
+        margin: 0 auto;
+        max-width: 700px;
+        color: #555;
+    }
+
+    /* Feature cards */
+
+    #aboutFeatures {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+        gap: 1.5em;
+        margin-top: 2em;
+    }
+
+    .aboutCard {
+        background-color: var(--color-card);
+        padding: 1.5em;
+        border-radius: 0.5em;
+        text-align: left;
+    }
+
+    .aboutCard h3 {
+        margin-top: 0;
+    }
+
+    /* How it works */
+
+    #aboutHow {
+        margin-top: 3em;
+        padding: 2em;
+        border-radius: 0.5em;
+        background-color: #eef3e7;
+    }
+
+    #aboutHow h2 {
+        margin-bottom: 1em;
+    }
+
+    .steps {
+        display: flex;
+        justify-content: space-around;
+        gap: 2em;
+        flex-wrap: wrap;
+    }
+
+    .step {
+        max-width: 200px;
+    }
+
+    .stepNumber {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: var(--color-header);
+        color: white;
+        font-weight: bold;
+        margin-bottom: 0.5em;
+    }
+
+
     /* Login/Register View */
 
     #loginRoot {
