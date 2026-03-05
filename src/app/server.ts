@@ -7,6 +7,7 @@ import { productsController } from "../controllers/productsController.ts";
 import { managePostController, manageController } from "../controllers/manageController.ts";
 import { Routes }from "./routes.ts";
 import { registerPostController, registerController } from "../controllers/login/registerController.ts";
+import { profileController } from "../controllers/profileController.ts";
 
 export const server = (request: Request) => {
     const url = new URL(request.url);
@@ -25,7 +26,7 @@ export const server = (request: Request) => {
         case Routes.PRODUCTS.route:
             return productsController({ request });
         case Routes.PROFILE.route:
-            return;
+            return profileController({ request });
         case Routes.LOGIN.route:
             if (request.method == "POST")
                 return loginPostController({ request });

@@ -1,4 +1,6 @@
-export const loginView = () => {
+export const loginView = (errors = {}) => {
+    console.log(errors);    
+
     return `
         <section id="loginRoot" aria-labelledby="loginRoot">
             <h2>Login</h2>
@@ -23,7 +25,25 @@ export const loginView = () => {
     `;
 };
 
-export const registerView = () => {
+// TODO: move the city and district data to somewhere else.
+const locations = [
+    {
+        city: "Dubai",
+        districts: ["Jumeirah", "Deira", "Al Karama", "Bur Dubai", "Business Bay"]
+    },
+    {
+        city: "Sharjah",
+        districts: ["Al Ruqa Al Hamra", "Rahmaniya Suburb", "Al Sajaah"]
+    },
+    {
+        city: "Ajman",
+        districts: ["Al Muwaihat 3", "Al Talia 1", "Al Talia 2"]
+    }
+]
+
+export const registerView = (errors = {}) => {
+    console.log(errors);    
+
     return `
         <section id="registerRoot">
             <h2>Register</h2>
@@ -31,8 +51,10 @@ export const registerView = () => {
             
             <ul>
                 <li>Fields marked with an asterisk (*) are required.</li>
-                <li>Do not register if you do not live in Dubai, United Arab Emirates.</li>
+                <li>Do not register if you do not live in the United Arab Emirates.</li>
+                <li>We do not provide shipping outside of the UAE, and to certain cities within the country.</li>
             </ul>
+
             <form method="POST" id="registerForm">
                 <label for="username">Username*</label>
                 <input type="text" name="username" id="username" required>
@@ -48,10 +70,20 @@ export const registerView = () => {
 
                 <label for="city">City</label>
                 <select name="city" id="city">
-                    <option value="deira">Deira</option>
-                    <option value="burdubai">Bur Dubai</option>
-                    <option value="zaabeel">Zaa'beel</option>
-                    <option value="rasalkhor">Ras Al Khor</option>
+                    ${locations.map(loc => {
+                        return `<option value="${loc.city.toLowerCase()}">${loc.city}</option>`
+                    }).join("")}
+                </select>
+
+                <label for="district">District</label>
+                <select name="district" id="district">
+                    ${locations.map(loc => {
+                        return `<optgroup label="${loc.city}">
+                                    ${loc.districts.map(dist => {
+                                        return `<option value="${dist.toLowerCase().replace(RegExp("\\s+"), "_")}">${dist}</option>`
+                                    }).join("")}
+                                </optgroup>`
+                    }).join("")}
                 </select>
 
                 <label for="street">Street</label>

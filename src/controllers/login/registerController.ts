@@ -1,6 +1,8 @@
 import { redirect } from "../../app/redirect.ts";
 import { render } from "../../app/render.ts";
 import Routes from "../../app/routes.ts";
+import { validateSchema } from "../../app/validation.ts";
+import { userRegisterSchema } from "../../schema/userSchema.ts";
 import { registerView } from "../../views/loginView.ts";
 
 export const registerController = ({ request } : { request: Request }) => {
@@ -10,6 +12,12 @@ export const registerController = ({ request } : { request: Request }) => {
 export const registerPostController = async ({ request } : { request: Request }) => {
     const formData = await request.formData();
     
+    const { isValid, errors } = validateSchema(formData, userRegisterSchema);
+
+    if (!isValid) {
+        return render(registerView({ errors }), request, 400);
+    }
+
     const username = formData.get("username");
     const password = formData.get("password");
     const email = formData.get("email");

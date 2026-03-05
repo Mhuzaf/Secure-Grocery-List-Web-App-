@@ -1,10 +1,10 @@
 import { deleteCookie, getCookies, setCookie } from "@std/http/cookie";
-import { decodeBase64, encodeBase64 } from "@std/encoding/base64";
+import { decodeBase64Url, encodeBase64Url } from "@std/encoding/base64url";
 
 export const setFlash = (headers: Headers, msg: string) => {
     setCookie(headers, {
         name: "flash",
-        value: encodeBase64(msg),
+        value: encodeBase64Url(msg),
         path: "/"
     });
 }
@@ -13,7 +13,7 @@ export const getFlash = (requestHeaders: Headers, responseHeaders: Headers) => {
     const { flash } = getCookies(requestHeaders);
     if (flash) {
         deleteCookie(responseHeaders, "flash", { path: "/" });
-        return new TextDecoder().decode(decodeBase64(flash));
+        return new TextDecoder().decode(decodeBase64Url(flash));
     }
-    return null;
+    return "";
 }

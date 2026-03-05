@@ -1,4 +1,4 @@
-import { Title } from "../app/common.ts";
+import { title } from "../app/common.ts";
 
 const features = [
     {
@@ -27,7 +27,7 @@ export const homeView = () => {
     return `
     <section id="homeRoot">
         <section id="homeContainer">
-            <h1>${Title}</h1>
+            <h1>${title}</h1>
             <h2>Your grocery shopping, organized.</h2>
             <p class="desc">Keep track of everything you need to buy. Add items, set quantities, 
             search by name, and filter by category, all in one place. </p>

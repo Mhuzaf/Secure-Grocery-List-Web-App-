@@ -1,3 +1,3 @@
-export const Company = "GreensMart"
+export const company = "GreensMart"
 
-export const Title = `${Company} Groceries`;
+export const title = `${company} Groceries`;
