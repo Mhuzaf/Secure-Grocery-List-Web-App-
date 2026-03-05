@@ -1,4 +1,4 @@
-import { Company, Title } from "./common.ts";
+import { company, title } from "./common.ts";
 import Routes from "./routes.ts";
 import { getFlash } from "./flash.ts";
 
@@ -53,7 +53,7 @@ export const render = (content: string, request: Request, status = 200) => {
         <!DOCTYPE html>
         <html>
             <head>
-                <title>${Title}</title>
+                <title>${title}</title>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
                 <link rel="icon" href="/src/assets/favicon.svg">
@@ -62,7 +62,7 @@ export const render = (content: string, request: Request, status = 200) => {
             <body>
                 <header>
                     <a href="/" class="title">
-                        <h2>${Title}</h2>
+                        <h2>${title}</h2>
                     </a>
                     <nav>
                         ${routesMap}
@@ -76,7 +76,7 @@ export const render = (content: string, request: Request, status = 200) => {
                 </main>
 
                 <footer>
-                    <span>&copy; ${Company}, All Rights Reserved.</span>
+                    <span>&copy; ${company}, All Rights Reserved.</span>
                     <section class="footerRight">
                         <section id="socials">
                             ${socialsMap}

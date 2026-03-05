@@ -1,11 +1,13 @@
+import { company } from "../app/common.ts";
+
 export const aboutView = () => {
     return `
     <section id="aboutRoot">
 
         <section id="aboutHeader">
-            <h1>About GroceryList</h1>
+            <h1>About ${company}</h1>
             <p class="aboutDesc">
-                GroceryList is a simple web application that helps users organize their grocery shopping.
+                ${company} is a simple web application that helps users organize their grocery shopping.
                 Instead of using paper lists that are easy to lose, this system keeps everything in one
                 digital place where items, quantities, and categories can be easily managed.
             </p>
