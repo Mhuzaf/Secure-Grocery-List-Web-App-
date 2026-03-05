@@ -25,7 +25,7 @@ a {
     color: inherit;
 }
 
-button, input {
+button, input, select {
     font-family: "Inter";
 }
 
@@ -192,13 +192,6 @@ body {
             display: flex;
             gap: 1em;
 
-            #productsFilter {
-                padding: 1em;
-                box-sizing: border-box;
-                border-radius: 0.5em;
-                background-color: var(--color-card);
-            }
-
             #productsCartView {
                 flex: 1;
                 padding: 1em;
@@ -215,6 +208,13 @@ body {
             #productsMiddle {
                 display: none;
                 flex-direction: column;
+            }
+
+            #productsFilter {
+                padding: 1em;
+                box-sizing: border-box;
+                border-radius: 0.5em;
+                background-color: var(--color-card);
             }
         }
         
@@ -319,6 +319,25 @@ body {
         } */
     }
 
+    .filterForm {
+
+        section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            font-weight: bold;
+        }
+
+        #filterList {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+            margin-bottom: 1em;
+        }
+    }
+
     /*  */
 
     /* Login/Register View */
@@ -384,6 +403,13 @@ body {
 
         section {
             
+            .productForm {
+                display: grid;
+                grid-template-columns: auto auto;
+                width: fit-content;
+                gap: 1em;
+            }
+
             ul {
                 list-style-type: none;
                 width: fit-content;
@@ -394,6 +420,10 @@ body {
                     display: flex;
                     justify-content: space-between;
                     padding: 0.25em;
+
+                    section {
+                        margin-left: 1em;
+                    }
                 }
 
                 li:nth-child(2n) {
@@ -404,7 +434,6 @@ body {
 
         .seperator {
             border-top: 1px solid slategray;
-
         }
     }
 

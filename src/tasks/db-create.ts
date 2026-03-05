@@ -17,7 +17,9 @@ db.exec(`
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         price INTEGER NOT NULL,
-        category_id TEXT,
+        category_id TEXT NOT NULL,
+        mime_type TEXT,
+        image_data BLOB,
         FOREIGN KEY (category_id) REFERENCES category(id)
     );
  
@@ -45,13 +47,13 @@ db.exec(`
 db.exec(`
    
     INSERT INTO category (id, name) VALUES
-        ('fruits',          'Fruits'),
-        ('vegetables',      'Vegetables'),
-        ('drinks',          'Drinks'),
-        ('snacks',          'Snacks'),
-        ('dairy_products',   'Dairy Products'),
-        ('bakery_products',  'Bakery Products'),
-        ('dry_foods',        'Dry foods');
+        ('fruits',              'Fruits'),
+        ('vegetables',          'Vegetables'),
+        ('drinks',              'Drinks'),
+        ('snacks',              'Snacks'),
+        ('dairy_products',      'Dairy Products'),
+        ('bakery_products',     'Bakery Products'),
+        ('dry_foods',           'Dry foods');
 
     INSERT INTO products (category_id, name, price) VALUES
         ('fruits', 'Apple', 5),

@@ -49,9 +49,24 @@ export const manageView = ({ categories, products, error = { message: "" } } : {
                 <div class="seperator"></div>
                 <section id="products">
                     <p>Manage Products</p>
-                    <form method="POST">
-                        <label for="productName">New Item</label>
-                        <input type="text" name="productName", id="productName" placeholder="New item">
+                    <form method="POST" class="productForm">
+                        <label for="addProductName">Product Name</label>
+                        <input type="text" name="addProductName", id="addProductName" placeholder="New item">
+
+                        <label for="productPrice">Price</label>
+                        <input type="number" name="productPrice" id="productPrice" placeholder="1">
+
+                        <label for="productCategory">Category</label>
+                        <select name="productCategory" id="productCategory">
+                            ${categories.map(c => {
+                                return `<option value="${c.id}">${c.name}</option>`
+                            }).join("")}
+                        </select>
+
+                        <label for="productImage">Image</label>
+                        <input type="file" name="productImage" id="productImage">
+
+                        <input type="submit">
                     </form>
                     <ul>
                         ${productsMap}

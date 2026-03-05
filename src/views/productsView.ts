@@ -3,27 +3,29 @@ import { CategoryProps, ProductsProps } from "../app/db.ts";
 export const productsView = ({ categories, products } : { categories: CategoryProps[], products: ProductsProps[] }) => {
     
     const filterFormView = () => {
-        return `<form>
-                    <br><br>
-                    <label>Advanced Filter</label>
-                    <br>
-                    ${categories.map(c => {
-                        console.log(c);
-                        const it = c.name.toLowerCase();
-                        return `<input type="checkbox" id="cb-${it}" name="filter-${it}">
-                                <label for="cb-${it}">${c.name}</label>
-                                <br>
-                                `
-                    }).join("")}
-                    <br>
-                    <label for="priceRange">Price range</label>
-                    <br>
-                    <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">
-                    <br>
+        return `<form class="filterForm">
+                    <section>
+                        <span class="title">Advanced Filter</span>
+                        <ul id="filterList">
+                            ${categories.map(c => {
+                                console.log(c);
+                                const it = c.name.toLowerCase();
+                                return `<li>
+                                            <input type="checkbox" id="cb-${it}" name="filter-${it}">
+                                            <label for="cb-${it}">${c.name}</label>
+                                        </li>`
+                            }).join("")}
+                        <ul>
+                    </section>
+                    <section>
+                        <label for="priceRange">Price range</label>
+                        <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">    
+                    </section>
                     <input type="submit" value="Apply">
                 </form>`
     }
 
+    // TODO: add "per kg"
     const items = products.map(p => {
         console.log(p);
         return `<article class="productCard">
@@ -74,8 +76,8 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
                 ${items}
             </section>
 
-            <dialog id="filterDialog">
-                <p>test</p>
+            <dialog id="filterDialog" closedby="any">
+                ${filterFormView()}
             </dialog>
             
             <dialog id="cartDialog">

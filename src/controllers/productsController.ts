@@ -10,3 +10,7 @@ export const productsController = ({ request } : { request: Request }) => {
     const products = getProducts();
     return render(productsView({ categories, products }), request);
 }
+
+export const productsPostController = async ({ request } : { request: Request }) => {
+    const formData = await request.formData();
+}

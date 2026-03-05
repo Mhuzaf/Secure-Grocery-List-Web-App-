@@ -4,7 +4,7 @@ import { manageView } from "../views/manageView.ts";
 import { redirect } from "../app/redirect.ts";
 import Routes from "../app/routes.ts";
 import { validateSchema } from "../app/validation.ts";
-import { addCategorySchema, deleteCategorySchema } from "../schema/manageSchema.ts";
+import { addCategorySchema, deleteCategorySchema } from "../schema/categorySchema.ts";
 
 
 export const manageController = ({ request } : { request: Request }) => {
@@ -55,7 +55,7 @@ export const managePostController = async ({ request } : { request: Request }) =
         return redirect(headers, Routes.MANAGE.route, `Deleted ${item} from Category.`);
     }
 
-    else if (formData.has("addProduct")) {
+    if (formData.has("addProductName")) {
         // Later
     }
 }
