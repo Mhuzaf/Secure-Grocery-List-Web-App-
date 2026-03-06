@@ -1,4 +1,6 @@
-import { CategoryProps, ProductsProps } from "../app/db.ts";
+import { stripSpaces } from "../app/utils.ts";
+import { CategoryProps } from "../interfaces/categoryInterface.ts";
+import { ProductsProps } from "../interfaces/productsInterface.ts";
 
 export const productsView = ({ categories, products } : { categories: CategoryProps[], products: ProductsProps[] }) => {
     
@@ -21,6 +23,12 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
                         <label for="priceRange">Price range</label>
                         <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">    
                     </section>
+                    <section>
+                        <span>Sort</span>
+                        
+                        <input type="radio" id="productCheap" name="productCheap">
+                        <label for="productCheap">Cheapest</label>
+                    </section>
                     <input type="submit" value="Apply">
                 </form>`
     }
@@ -36,11 +44,13 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
                     <form>
                         <input type="hidden" name="productAdd" value="${p.name}">
                         <section>
-                            <span class="productName">${p.name}</span>
-                            <span class="productPrice">AED ${p.price}</span>
+                            <p class="productName">${p.name}</p>
+                            <p class="productPrice">AED ${p.price} ${p.category_id.toLowerCase() == "fruits" || p.category_id.toLowerCase() == "vegetables" ? "per kg" : ""}</p>
                         </section>
                         <input type="submit" value="Add to Cart">
                     </form>
+                    <dialog id="productOptionsDialog${stripSpaces(p.name)}">
+                    </dialog>
                 </article>`
     }).join("")
 

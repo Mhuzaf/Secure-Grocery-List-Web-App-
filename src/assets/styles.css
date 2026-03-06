@@ -8,7 +8,9 @@ html {
     --color-fg: #1f290a;
     --color-bg: white;
     --color-header-fg:  #3d5214;
-    --color-card: #f5faea;
+    --color-button-fg: #5c7b1e;
+    --color-card: whitesmoke;
+    --color-card2: #f5faea;
     --color-footer: black;
     --color-footer-fg: whitesmoke;
     --color-footer-2: silver;
@@ -185,6 +187,9 @@ body {
     /* Products View */
 
     #productsRoot {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
         height: 100%;
         padding: 1em;
 
@@ -196,7 +201,7 @@ body {
                 flex: 1;
                 padding: 1em;
                 border-radius: 0.5em;
-                background-color: var(--color-card);
+                background-color: var(--color-card2);
 
                 p {
                     margin-top: 0;
@@ -214,7 +219,7 @@ body {
                 padding: 1em;
                 box-sizing: border-box;
                 border-radius: 0.5em;
-                background-color: var(--color-card);
+                background-color: var(--color-card2);
             }
         }
         
@@ -231,11 +236,11 @@ body {
                 border-radius: 0.5em;
                 border: none;
                 background-color: #c2e184;
-                color: var(--color-header-fg);
+                color: var(--color-button-fg);
 
                 &:hover {
-                    background-color: olivedrab !important;
-                    color: white !important;
+                    background-color: var(--color-base) !important;
+                    /* color: white !important; */
                 }
             }
         }
@@ -251,7 +256,6 @@ body {
             grid-auto-rows: auto;
             grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
             gap: 1em;
-            margin-top: 1em;
             width: 100%;
             box-sizing: border-box;
 
@@ -263,6 +267,7 @@ body {
                 background-color: var(--color-card);
                 border-radius: 0.5em;
                 padding: 1em;
+                gap: 1em;
 
                 img {
                     flex: 1;
@@ -272,16 +277,21 @@ body {
                 
                 form {
                     display: flex;
+                    flex-direction: column;
                     justify-content: space-between;
-                    align-items: center;
-                    margin-top: 1em;
+                    gap: 1em;
 
                     section {
                         display: flex;
                         flex-direction: column;
 
+                        p {
+                            margin: 0;
+                        }
+
                         .productName {
                             font-weight: bold;
+                            word-wrap: break-word;
                         }
 
                     }
@@ -289,7 +299,6 @@ body {
                     input[type="submit"] {
                         border-radius: 0.5em;
                         padding: 0.5em 1em;
-                        margin-left: 1em;
                         border: none;
                         background-color: var(--color-base);
                         color: var(--color-header-fg);
@@ -385,7 +394,7 @@ body {
             margin-top: 3em;
             padding: 2em;
             border-radius: 0.5em;
-            background-color: #eef3e7;
+            background-color: var(--color-card2);
             
             h2 {
                 margin-bottom: 1em;
@@ -426,7 +435,7 @@ body {
         margin: 1em;
 
         a {
-            color: var(--color-header-fg)
+            color: var(--color-button-fg);
         }
 
         #loginForm {
@@ -443,6 +452,11 @@ body {
                 label {
                     margin-bottom: 4px;
                 }
+
+                .error {
+                    margin: 0;
+                    color: red;
+                }
             }
         }
     }
@@ -451,7 +465,7 @@ body {
         margin: 1em;
 
         a {
-            color: var(--color-header-fg)
+            color: var(--color-button-fg);
         }
 
         #registerForm {
@@ -459,6 +473,15 @@ body {
             display: grid;
             grid-template-columns: auto auto;
             gap: 1em;
+
+            input, select {
+                width: fit-content;
+            }
+
+            .error {
+                margin: 0;
+                color: red;
+            }
         }
     }
 

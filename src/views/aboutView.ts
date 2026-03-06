@@ -1,4 +1,4 @@
-import { company } from "../app/common.ts";
+import { company } from "../app/defaults.ts";
 
 export const aboutView = () => {
     return `

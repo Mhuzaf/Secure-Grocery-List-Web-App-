@@ -1,4 +1,5 @@
 import { db } from "../app/db.ts"
+import { defaultProducts } from "../app/defaults.ts";
 
 // Create/Reset
 
@@ -44,21 +45,22 @@ db.exec(`
 
 // Populate
 
+const categoryMap = defaultProducts.map(d => {
+    return `('${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}', '${d.category}')`
+}).join(", ").concat(";");
+
+const productsMap = Object.values(defaultProducts).map((d: { category: string, items: { name: string, price: number }[] }) => { 
+    return d.items.map(i => {
+        return`('${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}', '${i.name}', ${i.price})`;
+    }).join(", ");
+}).join("").concat(";");
+
+console.log(categoryMap, productsMap)
+
 db.exec(`
-   
     INSERT INTO category (id, name) VALUES
-        ('fruits',              'Fruits'),
-        ('vegetables',          'Vegetables'),
-        ('drinks',              'Drinks'),
-        ('snacks',              'Snacks'),
-        ('dairy_products',      'Dairy Products'),
-        ('bakery_products',     'Bakery Products'),
-        ('dry_foods',           'Dry foods');
+        ${categoryMap}
 
     INSERT INTO products (category_id, name, price) VALUES
-        ('fruits', 'Apple', 5),
-        ('fruits', 'Banana', 10),
-        ('fruits', 'Mandarin', 7),
-        ('fruits', 'Grapes', 10),
-        ('fruits', 'Watermelon', 6);
+        ${productsMap}
 `);

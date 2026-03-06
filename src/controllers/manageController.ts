@@ -7,14 +7,14 @@ import { validateSchema } from "../app/validation.ts";
 import { addCategorySchema, deleteCategorySchema } from "../schema/categorySchema.ts";
 
 
-export const manageController = ({ request } : { request: Request }) => {
+export const manageController = (request: Request ) => {
     const categories = getCategories();
     const products = getProducts();
 
-    return render(manageView({ categories, products }), request);
+    return render(manageView(categories, products), request);
 }
 
-export const managePostController = async ({ request } : { request: Request }) => {
+export const managePostController = async (request: Request ) => {
     const formData = await request.formData();
 
     if (formData.has("addCategory")) {
@@ -27,7 +27,7 @@ export const managePostController = async ({ request } : { request: Request }) =
             const categories = getCategories();
             const products = getProducts();
 
-            return render(manageView({ categories, products, error }), request, 400);
+            return render(manageView(categories, products, error), request, 400);
         }
 
         addCategory(newItem.toString().toLowerCase().replace(RegExp("\\s+"), "_"), newItem.toString());
@@ -46,7 +46,7 @@ export const managePostController = async ({ request } : { request: Request }) =
             const categories = getCategories();
             const products = getProducts();
 
-            return render(manageView({ categories, products, error }), request, 400);
+            return render(manageView(categories, products, error), request, 400);
         }
 
         deleteCategory(item.toString().toLowerCase().replace(RegExp("\\s+"), "_"));
@@ -56,6 +56,7 @@ export const managePostController = async ({ request } : { request: Request }) =
     }
 
     if (formData.has("addProductName")) {
-        // Later
+        const headers = new Headers();
+        return redirect(headers, Routes.MANAGE.route, `Dummy.`);
     }
 }

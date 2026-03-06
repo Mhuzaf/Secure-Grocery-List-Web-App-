@@ -1,4 +1,6 @@
-import { CategoryProps, ProductsProps, db } from "../app/db.ts";
+import { db } from "../app/db.ts";
+import { CategoryProps } from "../interfaces/categoryInterface.ts";
+import { ProductsProps } from "../interfaces/productsInterface.ts";
 
 export const getCategories = () : CategoryProps[] => {
     return db.prepare("SELECT * FROM category").all();

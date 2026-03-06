@@ -5,11 +5,11 @@ import { validateSchema } from "../../app/validation.ts";
 import { userLoginSchema } from "../../schema/userSchema.ts";
 import { loginView } from "../../views/loginView.ts";
 
-export const loginController = ({ request } : { request: Request }) => {
+export const loginController = (request: Request ) => {
     return render(loginView(), request);
 }
 
-export const loginPostController = async ({ request } : { request: Request }) => {
+export const loginPostController = async (request: Request ) => {
     const formData = await request.formData();
     
     const { isValid, errors } = validateSchema(formData, userLoginSchema);

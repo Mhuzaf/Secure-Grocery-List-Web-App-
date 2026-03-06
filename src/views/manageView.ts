@@ -1,7 +1,8 @@
 import { escape } from "@std/html/entities";
-import { CategoryProps, ProductsProps } from "../app/db.ts";
+import { CategoryProps } from "../interfaces/categoryInterface.ts";
+import { ProductsProps } from "../interfaces/productsInterface.ts";
 
-export const manageView = ({ categories, products, error = { message: "" } } : { categories: CategoryProps[], products: ProductsProps[], error?: { message: string } }) => {
+export const manageView = (categories: CategoryProps[], products: ProductsProps[], error?: { message: string }) => {
     
     const categoryMap = categories.map(c => {
         const name = escape(c.name);
@@ -32,6 +33,8 @@ export const manageView = ({ categories, products, error = { message: "" } } : {
         return `<li>${escape(p.name)}</li>`
     }).join("");
 
+    console.log(error);
+
     const errorMsg = error ? `<p class="error">${escape(error.message)}</p>`: "";
 
     return `<section id="manageRoot">
@@ -49,7 +52,7 @@ export const manageView = ({ categories, products, error = { message: "" } } : {
                 <div class="seperator"></div>
                 <section id="products">
                     <p>Manage Products</p>
-                    <form method="POST" class="productForm">
+                    <form method="POST" enctype="multipart/form-data" class="productForm">
                         <label for="addProductName">Product Name</label>
                         <input type="text" name="addProductName", id="addProductName" placeholder="New item">
 
