@@ -5,15 +5,15 @@ export const title = `${company} Groceries`;
 export const defaultLocations = [
     {
         city: "Dubai",
-        districts: ["Jumeirah", "Deira", "Al Karama", "Bur Dubai", "Business Bay"]
+        districts: ["Jumeirah", "Deira", "Al Karama", "Bur Dubai", "Business Bay"].sort()
     },
     {
         city: "Sharjah",
-        districts: ["Al Ruqa Al Hamra", "Rahmaniya Suburb", "Al Sajaah"]
+        districts: ["Al Ruqa Al Hamra", "Rahmaniya Suburb", "Al Sajaah"].sort()
     },
     {
         city: "Ajman",
-        districts: ["Al Muwaihat 3", "Al Talia 1", "Al Talia 2"]
+        districts: ["Al Muwaihat 3", "Al Talia 1", "Al Talia 2"].sort()
     }
 ]
 
@@ -23,48 +23,48 @@ export const defaultProducts = [
         items: [
             {
                 name: "Apple",
-                price: 5
+                price: 5,
             },
             {
                 name: "Banana",
-                price: 0
+                price: 0,
             },
             {
                 name: "Mandarin",
-                price: 7
+                price: 7,
             },
             {
                 name: "Grapes",
-                price: 10
+                price: 10,
             },
             {
                 name: "Watermelon",
-                price: 6
+                price: 6,
             },
-        ]
+        ].sort()
     },
     {
         category: "Vegetables",
-        items: []
+        items: [].sort()
     },
     {
         category: "Drinks",
-        items: []
+        items: [].sort()
     },
     {
         category: "Snacks",
-        items: []
+        items: [].sort()
     },
     {
         category: "Dairy Products",
-        items: []
+        items: [].sort()
     },
     {
         category: "Bakery Products",
-        items: []
+        items: [].sort()
     },
     {
         category: "Dry Foods",
-        items: []
+        items: [].sort()
     }
 ]

@@ -10,7 +10,6 @@ export const setFlash = (headers: Headers, msg: string) => {
 }
 
 export const getFlash = (requestHeaders: Headers, responseHeaders: Headers) => {
-    console.log("is this fr" + requestHeaders);
     const { flash } = getCookies(requestHeaders);
     if (flash) {
         deleteCookie(responseHeaders, "flash", { path: "/" });

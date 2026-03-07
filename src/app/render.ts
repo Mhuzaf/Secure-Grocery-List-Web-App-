@@ -41,9 +41,7 @@ const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.PROFILE].m
 export const render = (content: string, request: Request, status = 200) => {
     const headers = new Headers();
     headers.set("content-type", "text/html");
-
-    console.log(request);
-
+    
     const flash = getFlash(request.headers, headers);
     const flashMsg = flash ? `
         <aside id="flashMsg">

@@ -54,14 +54,14 @@ deno task start
 
 ### To Change
 
-- singularize about us
-- collect phone, email, address
-- restrict address to certain area (city?)
+- ~~singularize about us~~
+- ~~collect phone, email, address~~
+- ~~restrict address to certain area (city?)~~
 - new table "orders" to take care of checkouts
 - require user page to change address
-- cleaner nav bar (move title to home)
-- find a solution to the products page or make a seperate cart page (i think the latter is the best?)
+- ~~cleaner nav bar (move title to home)~~
+- ~~find a solution to the products page or make a seperate cart page (i think the latter is the best?)~~
 
 ### Uploads
 
-- create a new table to handle images??
+- ~~create a new table to handle images??~~

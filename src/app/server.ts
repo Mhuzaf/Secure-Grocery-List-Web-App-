@@ -8,6 +8,9 @@ import { managePostController, manageController } from "../controllers/manageCon
 import { Routes }from "./routes.ts";
 import { registerPostController, registerController } from "../controllers/login/registerController.ts";
 import { profileController } from "../controllers/profileController.ts";
+import { imageController } from "../controllers/imageController.ts";
+
+const imagePattern = new URLPattern({ pathname: "/images/:imageId" });
 
 export const server = (request: Request) => {
     const url = new URL(request.url);
@@ -16,6 +19,11 @@ export const server = (request: Request) => {
     // Serve static assets like stylesheet and favicon
     if (url.pathname.startsWith("/src/assets")) 
         return staticController(request);
+
+    if (imagePattern.test(url) && request.method == "GET") {
+        const { imageId } = imagePattern.exec(url).pathname.groups;
+        return imageController(imageId);
+    }
 
     // Routing
     switch (url.pathname){

@@ -197,6 +197,13 @@ body {
             display: flex;
             gap: 1em;
 
+            #productsFilter {
+                padding: 1em;
+                box-sizing: border-box;
+                border-radius: 0.5em;
+                background-color: var(--color-card2);
+            }
+
             #productsCartView {
                 flex: 1;
                 padding: 1em;
@@ -213,13 +220,6 @@ body {
             #productsMiddle {
                 display: none;
                 flex-direction: column;
-            }
-
-            #productsFilter {
-                padding: 1em;
-                box-sizing: border-box;
-                border-radius: 0.5em;
-                background-color: var(--color-card2);
             }
         }
         
@@ -293,7 +293,6 @@ body {
                             font-weight: bold;
                             word-wrap: break-word;
                         }
-
                     }
 
                     input[type="submit"] {
@@ -329,8 +328,11 @@ body {
     }
 
     .filterForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
 
-        section {
+        > section {
             display: flex;
             flex-direction: column;
         }
@@ -339,11 +341,10 @@ body {
             font-weight: bold;
         }
 
-        #filterList {
+        #filterList, #radioContainer {
             list-style-type: none;
             padding-left: 0;
             margin: 0;
-            margin-bottom: 1em;
         }
     }
 
@@ -372,7 +373,8 @@ body {
 
         #aboutFeatures {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(20em, 100%), 1fr));
+            grid-auto-rows: 1fr;
             gap: 1.5em;
             margin-top: 2em;
         

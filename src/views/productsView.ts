@@ -1,6 +1,7 @@
-import { stripSpaces } from "../app/utils.ts";
 import { CategoryProps } from "../interfaces/categoryInterface.ts";
 import { ProductsProps } from "../interfaces/productsInterface.ts";
+
+const sortOptions = ["Default", "Price: Ascending", "Price: Descending", "Alphabetical"];
 
 export const productsView = ({ categories, products } : { categories: CategoryProps[], products: ProductsProps[] }) => {
     
@@ -20,25 +21,30 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
                         <ul>
                     </section>
                     <section>
-                        <label for="priceRange">Price range</label>
+                        <label for="priceRange" class="title">Price range</label>
                         <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">    
                     </section>
                     <section>
-                        <span>Sort</span>
-                        
-                        <input type="radio" id="productCheap" name="productCheap">
-                        <label for="productCheap">Cheapest</label>
+                        <span class="title">Sort</span>
+                        <ul id="radioContainer">
+                            ${sortOptions.map(s => {
+                                const stripped = s.replace(": ", ""); // maybe regex?
+                                return `<li>
+                                            <input type="radio" id="sort${stripped}" name="sortProducts" value="${stripped}">
+                                            <label for="sort${stripped}">${s}</label>
+                                        </li>`
+                            }).join("")}
+                        </ul>
                     </section>
                     <input type="submit" value="Apply">
                 </form>`
     }
 
-    // TODO: add "per kg"
     const items = products.map(p => {
-        console.log(p);
+        // console.log(p.image_data);
         return `<article class="productCard">
                     <img 
-                        src="src/assets/${p.category_id.toLowerCase()}/${p.name.toLowerCase()}.png"
+                        src="images/${p.id}"
                         alt="An image of ${p.name}"
                     >
                     <form>
@@ -49,8 +55,6 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
                         </section>
                         <input type="submit" value="Add to Cart">
                     </form>
-                    <dialog id="productOptionsDialog${stripSpaces(p.name)}">
-                    </dialog>
                 </article>`
     }).join("")
 
@@ -92,6 +96,10 @@ export const productsView = ({ categories, products } : { categories: CategoryPr
             
             <dialog id="cartDialog">
             </dialog>
+
+            <dialog id="productOptionsDialog" closedby="any">
+            </dialog>
         </section>
+        <script type="module" src="/src/assets/js/productsSelector.js"></script>
     `;
 }

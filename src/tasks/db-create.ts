@@ -49,18 +49,23 @@ const categoryMap = defaultProducts.map(d => {
     return `('${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}', '${d.category}')`
 }).join(", ").concat(";");
 
-const productsMap = Object.values(defaultProducts).map((d: { category: string, items: { name: string, price: number }[] }) => { 
-    return d.items.map(i => {
-        return`('${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}', '${i.name}', ${i.price})`;
-    }).join(", ");
-}).join("").concat(";");
-
-console.log(categoryMap, productsMap)
-
 db.exec(`
     INSERT INTO category (id, name) VALUES
-        ${categoryMap}
-
-    INSERT INTO products (category_id, name, price) VALUES
-        ${productsMap}
+    ${categoryMap}
 `);
+
+Object.values(defaultProducts).map((d: { category: string, items: { name: string, price: number }[] }) => { 
+    return d.items.map(i => {
+        const imageFile = Deno.readFileSync(`src/defaultAssets/${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}/${i.name.toLowerCase()}.png`);
+        if (imageFile) {
+            console.log(`Populating ${i.name}`);
+            db.prepare(`INSERT INTO products (category_id, name, price, mime_type, image_data) VALUES
+                (?, ?, ?, ?, ?)`
+            ).run(d.category.toLowerCase().replace(RegExp("\\s+"), "_"), i.name, i.price, "png", imageFile);
+        } else {
+            db.prepare(`INSERT INTO products (category_id, name, price, mime_type, image_data) VALUES
+                (?, ?, ?, ?, ?)`
+            ).run(d.category.toLowerCase().replace(RegExp("\\s+"), "_"), i.name, i.price, null, null);
+        }
+    }).join(", ");
+}).join("").concat(";");
