@@ -5,6 +5,7 @@ import { redirect } from "../app/redirect.ts";
 import Routes from "../app/routes.ts";
 import { validateSchema } from "../app/validation.ts";
 import { addCategorySchema, deleteCategorySchema } from "../schema/categorySchema.ts";
+import { addProductSchema } from "../schema/productSchema.ts";
 
 
 export const manageController = (request: Request ) => {
@@ -21,13 +22,12 @@ export const managePostController = async (request: Request ) => {
         const { isValid, errors } = validateSchema(formData, addCategorySchema); 
 
         const newItem = formData.get("addCategory");
-        const error = errors["addCategory"];
         
         if (!isValid) {
             const categories = getCategories();
             const products = getProducts();
 
-            return render(manageView(categories, products, error), request, 400);
+            return render(manageView(categories, products, errors), request, 400);
         }
 
         addCategory(newItem.toString().toLowerCase().replace(RegExp("\\s+"), "_"), newItem.toString());
@@ -39,16 +39,14 @@ export const managePostController = async (request: Request ) => {
     if (formData.has("deleteCategory")) {
         const { isValid, errors } = validateSchema(formData, deleteCategorySchema); 
 
-        const item = formData.get("deleteCategory");
-        const error = errors["deleteCategory"];
-
         if (!isValid) {
             const categories = getCategories();
             const products = getProducts();
 
-            return render(manageView(categories, products, error), request, 400);
+            return render(manageView(categories, products, errors), request, 400);
         }
 
+        const item = formData.get("deleteCategory");
         deleteCategory(item.toString().toLowerCase().replace(RegExp("\\s+"), "_"));
 
         const headers = new Headers();
@@ -56,6 +54,22 @@ export const managePostController = async (request: Request ) => {
     }
 
     if (formData.has("addProductName")) {
+        const { isValid, errors } = validateSchema(formData, addProductSchema); 
+
+        if (!isValid) {
+            const categories = getCategories();
+            const products = getProducts();
+
+            return render(manageView(categories, products, errors), request, 400);
+        }
+
+        const productName = formData.get("addProductName");
+        const productPrice = formData.get("productPrice");
+        const productCategory = formData.get("productCategory");
+        const productImage = formData.get("productImage") as File;
+
+        console.log(productName, productPrice, productCategory, productImage);
+
         const headers = new Headers();
         return redirect(headers, Routes.MANAGE.route, `Dummy.`);
     }

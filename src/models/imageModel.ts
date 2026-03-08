@@ -5,6 +5,5 @@ export const getProductImage = (id: string) => {
         `SELECT name, image_data, mime_type FROM products WHERE id=:id`
     ).get(id);
 
-    console.log(image_data);
     return new File([image_data], name, { type: mime_type });
 }

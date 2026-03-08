@@ -22,7 +22,7 @@ export const registerPostController = async (request: Request) => {
     const password = formData.get("password");
     const email = formData.get("email");
     
-    // TODO: replace with validation.js
+    // TODO: replace with ...?
     const validUser = true;
     const headers = new Headers();
     

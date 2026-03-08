@@ -27,7 +27,7 @@ export const defaultProducts = [
             },
             {
                 name: "Banana",
-                price: 0,
+                price: 7,
             },
             {
                 name: "Mandarin",
@@ -41,30 +41,51 @@ export const defaultProducts = [
                 name: "Watermelon",
                 price: 6,
             },
-        ].sort()
+        ]
     },
     {
         category: "Vegetables",
-        items: [].sort()
+        items: [
+            {
+                name: "Tomato",
+                price: 5,
+            },
+            {
+                name: "Potato",
+                price: 8,
+            },
+            {
+                name: "Carrot",
+                price: 4,
+            },
+            {
+                name: "Onion",
+                price: 4,
+            },
+            {
+                name: "Cabbage",
+                price: 2,
+            },
+        ]
     },
     {
         category: "Drinks",
-        items: [].sort()
+        items: []
     },
     {
         category: "Snacks",
-        items: [].sort()
+        items: []
     },
     {
         category: "Dairy Products",
-        items: [].sort()
+        items: []
     },
     {
         category: "Bakery Products",
-        items: [].sort()
+        items: []
     },
     {
         category: "Dry Foods",
-        items: [].sort()
+        items: []
     }
-]
+].sort();

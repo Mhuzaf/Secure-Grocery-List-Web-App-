@@ -54,8 +54,8 @@ db.exec(`
     ${categoryMap}
 `);
 
-Object.values(defaultProducts).map((d: { category: string, items: { name: string, price: number }[] }) => { 
-    return d.items.map(i => {
+Object.values(defaultProducts).forEach((d: { category: string, items: { name: string, price: number }[] }) => { 
+    d.items.forEach(i => {
         const imageFile = Deno.readFileSync(`src/defaultAssets/${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}/${i.name.toLowerCase()}.png`);
         if (imageFile) {
             console.log(`Populating ${i.name}`);
@@ -67,5 +67,5 @@ Object.values(defaultProducts).map((d: { category: string, items: { name: string
                 (?, ?, ?, ?, ?)`
             ).run(d.category.toLowerCase().replace(RegExp("\\s+"), "_"), i.name, i.price, null, null);
         }
-    }).join(", ");
-}).join("").concat(";");
+    });
+});

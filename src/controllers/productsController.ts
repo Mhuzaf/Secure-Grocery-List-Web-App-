@@ -8,9 +8,9 @@ export const productsController = (request: Request) => {
 
     const categories = getCategories();
     const products = getProducts();
-    return render(productsView({ categories, products }), request);
+    return render(productsView(categories, products), request);
 }
 
-export const productsPostController = async ({ request } : { request: Request }) => {
+export const productsPostController = async (request: Request) => {
     const formData = await request.formData();
 }

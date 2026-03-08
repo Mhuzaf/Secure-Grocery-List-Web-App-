@@ -20,6 +20,7 @@ export const server = (request: Request) => {
     if (url.pathname.startsWith("/src/assets")) 
         return staticController(request);
 
+    // Serve images
     if (imagePattern.test(url) && request.method == "GET") {
         const { imageId } = imagePattern.exec(url).pathname.groups;
         return imageController(imageId);
