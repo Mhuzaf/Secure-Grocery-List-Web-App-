@@ -9,10 +9,9 @@ export const manageView = (categories: CategoryProps[], products: ProductsProps[
     if (errors) fragments = getErrFragments(errors);
 
     const categoryMap = categories.map(c => {
-        const id = escape(c.id);
         const name = escape(c.name);
         return `<li class="categoryItem"
-                    data-id="${id}"
+                    data-id="${c.id}"
                     data-name="${name}"
                 >
                     <span>${name}</span>
@@ -45,10 +44,11 @@ export const manageView = (categories: CategoryProps[], products: ProductsProps[
                 <section id="products">
                     <p>Manage Products</p>
                     <form method="POST" enctype="multipart/form-data" class="productForm">
-                        <label for="addProductName">Product Name</label>
+                        <input type="hidden" name="manageMethod" value="addProduct">
+                        <label for="productName">Product Name</label>
                         <section>
-                            <input type="text" name="addProductName", id="addProductName" placeholder="New item" ${errors ? (fragments.addProductName ? fragments.addProductName.value : "" ) : ""}>
-                            ${errors ? (fragments.addProductName ? fragments.addProductName.message : "" ) : ""}
+                            <input type="text" name="productName", id="productName" placeholder="New item" ${errors ? (fragments.productName ? fragments.productName.value : "" ) : ""}>
+                            ${errors ? (fragments.productName ? fragments.productName.message : "" ) : ""}
                         </section>
 
                         <label for="productPrice">Price</label>
@@ -80,8 +80,9 @@ export const manageView = (categories: CategoryProps[], products: ProductsProps[
             <dialog id="editCategoryDialog" closedby="any">
                 <p id="editCategoryTitle">...</p>
                 <form method="POST">
-                    <input name="editCategoryNew" id="editCategoryNew" type="text" placeholder="New Category" ${errors ? (fragments.addCategory ? fragments.addCategory.value : "" ) : ""} required>
-                    <input type="hidden" name="editCategoryOld" id="editCategoryOld">
+                    <input type="hidden" name="manageMethod" value="editCategory">
+                    <input type="hidden" name="editCategoryId" id="editCategoryId">
+                    <input name="editCategoryNewName" id="editCategoryNewName" type="text" placeholder="New Category" ${errors ? (fragments.addCategory ? fragments.addCategory.value : "" ) : ""} required>
                     <input type="submit" value="Confirm">
                 </form>
                 ${errors ? (fragments.addCategory ? fragments.addCategory.message : "" ) : ""}
@@ -90,6 +91,7 @@ export const manageView = (categories: CategoryProps[], products: ProductsProps[
                 <p id="deleteDialogTitle">...</p>
                 <button command="close" commandfor="deleteCategoryDialog">Cancel</button>
                 <form method="POST" id="deleteCategoryForm">
+                    <input type="hidden" name="manageMethod" value="deleteCategory">
                     <input type="hidden" name="deleteCategory" id="deleteCategory">
                     <input type="submit" value="Confirm">
                 </form>

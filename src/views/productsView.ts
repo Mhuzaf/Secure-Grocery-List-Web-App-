@@ -80,7 +80,7 @@ export const productsView = (categories: CategoryProps[], products: ProductsProp
                 </section>
             </section>
             
-            <dialog id="cartDialog">
+            <dialog id="cartDialog" closedby="any">
             </dialog>
 
             <dialog id="productOptionsDialog" closedby="any">

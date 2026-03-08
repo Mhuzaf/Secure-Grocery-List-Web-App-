@@ -1,76 +1,99 @@
 import { render } from "../app/render.ts";
-import { getCategories, getProducts, addCategory, deleteCategory } from "../models/manageModel.ts";
+import { getCategories, getProducts, addCategory, deleteCategory, updateCategory } from "../models/manageModel.ts";
 import { manageView } from "../views/manageView.ts";
 import { redirect } from "../app/redirect.ts";
 import Routes from "../app/routes.ts";
 import { validateSchema } from "../app/validation.ts";
-import { addCategorySchema, deleteCategorySchema } from "../schema/categorySchema.ts";
+import { addCategorySchema, deleteCategorySchema, editCategorySchema } from "../schema/categorySchema.ts";
 import { addProductSchema } from "../schema/productSchema.ts";
 
 
-export const manageController = (request: Request ) => {
+export const manageController = (request: Request) => {
     const categories = getCategories();
     const products = getProducts();
 
     return render(manageView(categories, products), request);
 }
 
-export const managePostController = async (request: Request ) => {
+export const managePostController = async (request: Request) => {
     const formData = await request.formData();
 
-    if (formData.has("addCategory")) {
-        const { isValid, errors } = validateSchema(formData, addCategorySchema); 
+    console.log(formData.get("manageMethod"))
 
-        const newItem = formData.get("addCategory");
-        
-        if (!isValid) {
+    switch (formData.get("manageMethod")) {
+        case "addCategory": {
+            const { isValid, errors } = validateSchema(formData, addCategorySchema); 
+
+            const newItem = formData.get("addCategory");
+            
             const categories = getCategories();
-            const products = getProducts();
+            if (!isValid) {
+                const products = getProducts();
 
-            return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), request, 400);
+            }
+
+            addCategory(categories.length + 1, newItem.toString());
+
+            const headers = new Headers();
+            return redirect(headers, Routes.MANAGE.route, `Added ${newItem} to category.`);
         }
 
-        addCategory(newItem.toString().toLowerCase().replace(RegExp("\\s+"), "_"), newItem.toString());
+        case "editCategory": {
+            const { isValid, errors } = validateSchema(formData, editCategorySchema); 
 
-        const headers = new Headers();
-        return redirect(headers, Routes.MANAGE.route, `Added ${newItem} to Category.`);
-    } 
-    
-    if (formData.has("deleteCategory")) {
-        const { isValid, errors } = validateSchema(formData, deleteCategorySchema); 
+            const id = formData.get("editCategoryId");
+            const newItem = formData.get("editCategoryNewName");
+            
+            if (!isValid) {
+                const categories = getCategories();
+                const products = getProducts();
 
-        if (!isValid) {
-            const categories = getCategories();
-            const products = getProducts();
+                return render(manageView(categories, products, errors), request, 400);
+            }
 
-            return render(manageView(categories, products, errors), request, 400);
+            updateCategory(id.toString(), newItem.toString());
+
+            const headers = new Headers();
+            return redirect(headers, Routes.MANAGE.route, `Updated a category to \"${newItem}\".`);
         }
 
-        const item = formData.get("deleteCategory");
-        deleteCategory(item.toString().toLowerCase().replace(RegExp("\\s+"), "_"));
+        case "deleteCategory": {
+            const { isValid, errors } = validateSchema(formData, deleteCategorySchema); 
 
-        const headers = new Headers();
-        return redirect(headers, Routes.MANAGE.route, `Deleted ${item} from Category.`);
-    }
+            if (!isValid) {
+                const categories = getCategories();
+                const products = getProducts();
 
-    if (formData.has("addProductName")) {
-        const { isValid, errors } = validateSchema(formData, addProductSchema); 
+                return render(manageView(categories, products, errors), request, 400);
+            }
 
-        if (!isValid) {
-            const categories = getCategories();
-            const products = getProducts();
+            const item = formData.get("deleteCategory");
+            deleteCategory(item.toString().toLowerCase().replace(RegExp("\\s+"), "_"));
 
-            return render(manageView(categories, products, errors), request, 400);
+            const headers = new Headers();
+            return redirect(headers, Routes.MANAGE.route, `Deleted ${item} from category.`);
         }
 
-        const productName = formData.get("addProductName");
-        const productPrice = formData.get("productPrice");
-        const productCategory = formData.get("productCategory");
-        const productImage = formData.get("productImage") as File;
+        case "addProduct": {
+            const { isValid, errors } = validateSchema(formData, addProductSchema); 
 
-        console.log(productName, productPrice, productCategory, productImage);
+            if (!isValid) {
+                const categories = getCategories();
+                const products = getProducts();
 
-        const headers = new Headers();
-        return redirect(headers, Routes.MANAGE.route, `Dummy.`);
+                return render(manageView(categories, products, errors), request, 400);
+            }
+
+            const productName = formData.get("productName");
+            const productPrice = formData.get("productPrice");
+            const productCategory = formData.get("productCategory");
+            const productImage = formData.get("productImage") as File;
+
+            console.log(productName, productPrice, productCategory, productImage);
+
+            const headers = new Headers();
+            return redirect(headers, Routes.MANAGE.route, `stub!`);
+        }
     }
 }

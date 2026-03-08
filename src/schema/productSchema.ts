@@ -1,7 +1,7 @@
 import { isImageFile, minLength, requiredString } from "../app/validation.ts";
 
 export const addProductSchema = {
-    "addProductName": {
+    "productName": {
         displayName: "Product Name",
         validators: [requiredString, minLength(3)]
     },

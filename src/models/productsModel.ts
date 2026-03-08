@@ -7,5 +7,5 @@ export const getCategories = () : CategoryProps[] => {
 }
 
 export const getProducts = () : ProductsProps[] => { 
-    return db.prepare("SELECT * FROM products").all();
+    return db.prepare("SELECT * FROM products ORDER BY name").all();
 }
