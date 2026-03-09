@@ -15,7 +15,7 @@ export const editCategorySchema = {
 }
 
 export const deleteCategorySchema = {
-    "deleteCategory": {
+    "deleteCategoryName": {
         displayName: "Category",
         validators: [requiredString, minLength(3)],
     }

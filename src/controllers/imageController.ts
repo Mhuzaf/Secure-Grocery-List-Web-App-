@@ -1,4 +1,4 @@
-import { getProductImage } from "../models/imageModel.ts";
+import { getProductImage } from "../models/productsModel.ts";
 
 export const imageController = (id: string) => {
     const image = getProductImage(id);

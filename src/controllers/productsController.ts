@@ -1,5 +1,6 @@
 import { render } from "../app/render.ts";
-import { getProducts, getCategories } from "../models/productsModel.ts";
+import { getCategories } from "../models/categoryModel.ts";
+import { getProducts } from "../models/productsModel.ts";
 import { productsView } from "../views/productsView.ts";
 
 export const productsController = (request: Request) => {

@@ -9,6 +9,7 @@ import { Routes }from "./routes.ts";
 import { registerPostController, registerController } from "../controllers/login/registerController.ts";
 import { profileController } from "../controllers/profileController.ts";
 import { imageController } from "../controllers/imageController.ts";
+import { logoutController } from "../controllers/login/logoutController.ts";
 
 const imagePattern = new URLPattern({ pathname: "/images/:imageId" });
 
@@ -40,6 +41,9 @@ export const server = (request: Request) => {
             if (request.method == "POST")
                 return loginPostController(request);
             return loginController(request);
+        case Routes.LOGOUT.route:
+            if (request.method == "POST") return logoutController(request);
+            break;
         case Routes.REGISTER.route:
             if (request.method == "POST") 
                 return registerPostController(request);

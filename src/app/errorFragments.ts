@@ -4,7 +4,7 @@ export const getErrFragments = (errors: { value: string, message: string, error:
     return Object.fromEntries(Object.keys(errors).map((key) => {
         const { error, value, message, isRequired } = errors[key]
         return [key, {
-            value: value ? `value=${escape(value)}` : "",
+            value: value ? `value=${typeof value === 'string' ? escape(value) : escape(value.name)}` : "",
             message: error ? `<p class="error">${escape(message)}</p>` : "",
             isRequired: isRequired
         }]

@@ -23,17 +23,19 @@ export const validateField = (name: string, value: any, validators: any) : strin
 }
 
 // deno-lint-ignore no-explicit-any
-export const validateSchema = (formData: FormData, schema: any): { isValid: boolean, errors: any } => {
+export const validateSchema = (formData: FormData, schema: any): { isValid: boolean, errors: any, validated: any } => {
     const entries: [string, { displayName?: string, validators?: string }][] = Object.entries(schema);
+    const validated = {};
     let isValid = true;
     
     const errorEntries = entries.map(([key, { displayName, validators }]) => {
         const value = formData.get(key);
         const message = validateField(displayName || key, value, validators) || "";
         if (message) isValid = false;
+        else validated[key] = value;
         return [key, { value, message, error: !!message }];
     })
     
     const errors = Object.fromEntries(errorEntries);
-    return { isValid, errors };
+    return { isValid, errors, validated };
 }

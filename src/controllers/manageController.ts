@@ -1,14 +1,22 @@
 import { render } from "../app/render.ts";
-import { getCategories, getProducts, addCategory, deleteCategory, updateCategory } from "../models/manageModel.ts";
 import { manageView } from "../views/manageView.ts";
 import { redirect } from "../app/redirect.ts";
 import Routes from "../app/routes.ts";
 import { validateSchema } from "../app/validation.ts";
 import { addCategorySchema, deleteCategorySchema, editCategorySchema } from "../schema/categorySchema.ts";
 import { addProductSchema } from "../schema/productSchema.ts";
+import { currentSession } from "../app/auth.ts";
+import { addCategory, deleteCategory, getCategories, updateCategory } from "../models/categoryModel.ts";
+import { getProducts } from "../models/productsModel.ts";
 
 
 export const manageController = (request: Request) => {
+    const session = currentSession(request.headers);
+    if (!session || session.role != "admin") {
+        const headers = new Headers();
+        return redirect(headers, Routes.HOME.route, `Page access is not authorized.`);
+    }
+    
     const categories = getCategories();
     const products = getProducts();
 
@@ -24,16 +32,15 @@ export const managePostController = async (request: Request) => {
         case "addCategory": {
             const { isValid, errors } = validateSchema(formData, addCategorySchema); 
 
-            const newItem = formData.get("addCategory");
-            
-            const categories = getCategories();
             if (!isValid) {
+                const categories = getCategories();
                 const products = getProducts();
-
+                
                 return render(manageView(categories, products, errors), request, 400);
             }
-
-            addCategory(categories.length + 1, newItem.toString());
+            
+            const newItem = formData.get("addCategory");
+            addCategory(newItem.toString());
 
             const headers = new Headers();
             return redirect(headers, Routes.MANAGE.route, `Added ${newItem} to category.`);
@@ -41,9 +48,6 @@ export const managePostController = async (request: Request) => {
 
         case "editCategory": {
             const { isValid, errors } = validateSchema(formData, editCategorySchema); 
-
-            const id = formData.get("editCategoryId");
-            const newItem = formData.get("editCategoryNewName");
             
             if (!isValid) {
                 const categories = getCategories();
@@ -52,6 +56,8 @@ export const managePostController = async (request: Request) => {
                 return render(manageView(categories, products, errors), request, 400);
             }
 
+            const id = formData.get("editCategoryId");
+            const newItem = formData.get("editCategoryNewName");
             updateCategory(id.toString(), newItem.toString());
 
             const headers = new Headers();
@@ -69,10 +75,11 @@ export const managePostController = async (request: Request) => {
             }
 
             const item = formData.get("deleteCategory");
+            const itemName = formData.get("deleteCategoryName");
             deleteCategory(item.toString().toLowerCase().replace(RegExp("\\s+"), "_"));
 
             const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `Deleted ${item} from category.`);
+            return redirect(headers, Routes.MANAGE.route, `Deleted ${itemName} from category.`);
         }
 
         case "addProduct": {

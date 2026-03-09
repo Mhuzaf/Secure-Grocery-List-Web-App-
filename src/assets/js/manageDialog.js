@@ -7,6 +7,7 @@ const editCategoryInputNewName = document.getElementById("editCategoryNewName");
 
 const deleteCategoryDialog = document.getElementById("deleteCategoryDialog");
 const deleteDialogTitle = document.getElementById("deleteDialogTitle");
+const deleteDialogItemName = document.getElementById("deleteCategoryName");
 const deleteDialogInput = document.getElementById("deleteCategory");
 
 categoryItems.forEach(category => {
@@ -21,6 +22,7 @@ categoryItems.forEach(category => {
     // Delete dialog
     category.children[1].children[1].addEventListener("click", () => {
         deleteDialogTitle.textContent = `Are you sure you want to delete \"${category.dataset.name}\"?`
+        deleteDialogItemName.value = category.dataset.name; 
         deleteDialogInput.value = category.dataset.id;
         deleteCategoryDialog.showModal();
     });

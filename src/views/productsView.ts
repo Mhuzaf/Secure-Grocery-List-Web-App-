@@ -1,5 +1,5 @@
-import { CategoryProps } from "../interfaces/categoryInterface.ts";
-import { ProductsProps } from "../interfaces/productsInterface.ts";
+import { CategoryProps } from "../models/categoryModel.ts";
+import { ProductsProps } from "../models/productsModel.ts";
 
 const sortOptions = ["Alphabetical", "Price: Ascending", "Price: Descending"];
 
@@ -10,7 +10,7 @@ export const productsView = (categories: CategoryProps[], products: ProductsProp
                     class="productCard"
                     data-name="${p.name}"
                     data-price="${p.price}"
-                    data-category=${p.category_id}
+                    data-category=${p.category}
                 >
                     <img 
                         src="images/${p.id}"
@@ -61,7 +61,7 @@ export const productsView = (categories: CategoryProps[], products: ProductsProp
             <section id="productsMain">
                 <section id="productsUpper">
                     <form>
-                        <input name="productSearch" type="text" placeholder="Search products..." />
+                        <input type="search" name="productSearch" placeholder="Search products..." />
                         <input type="submit" value="Search">
                     </form>
                     <section id="productsOptions">

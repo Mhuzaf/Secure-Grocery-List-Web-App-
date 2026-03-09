@@ -18,7 +18,7 @@ html {
 
 @font-face {
     font-family: "Inter";
-    src: url("../assets/inter.ttf");
+    src: url("inter.ttf");
 }
 
 /* Defaults */
@@ -94,7 +94,15 @@ body {
         background-color: var(--color-footer);
         color: var(--color-footer-fg);
 
-        .footerRight {
+        #footerLeft {
+            display: flex;
+            flex-direction: column;
+            #loggedIn {
+                color: var(--color-footer-2);
+            }
+        }
+
+        #footerRight {
             display: flex;
             justify-content: center;
             align-items: center;

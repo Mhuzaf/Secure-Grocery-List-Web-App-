@@ -1,5 +1,8 @@
 import { db } from "../app/db.ts"
 import { defaultProducts } from "../app/defaults.ts";
+import { addCategory } from "../models/categoryModel.ts";
+import { addProduct } from "../models/productsModel.ts";
+import { addUser } from "../models/userModel.ts";
 
 // Create/Reset
 
@@ -7,7 +10,8 @@ db.exec(`
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS category;
-    DROP TABLE IF EXISTS user;
+    DROP TABLE IF EXISTS sessions;
+    DROP TABLE IF EXISTS users;
 
     CREATE TABLE category (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,43 +28,58 @@ db.exec(`
     );
  
     CREATE TABLE cart (
-        cart_id INTEGER PRIMARY KEY,
+        user_id INTEGER,
         product_id INTEGER,
+        FOREIGN KEY (user_id) REFERENCES user(user_id),
         FOREIGN KEY (product_id) REFERENCES products(id)
     );
 
-    CREATE TABLE user (
-        username TEXT PRIMARY KEY NOT NULL,
+    CREATE TABLE users (
+        user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
+        access TEXT DEFAULT 'normal',
         email TEXT NOT NULL,
         phone_no TEXT,
         city TEXT,
         street TEXT,
-        room_no TEXT,
-        cart_id INTEGER,
-        FOREIGN KEY (cart_id) REFERENCES cart(cart_id)
+        room_no TEXT
+    );
+
+    CREATE TABLE sessions (
+        session_id TEXT PRIMARY KEY,
+        username TEXT NOT NULL,
+        role TEXT NOT NULL,
+        FOREIGN KEY (username) REFERENCES users(username)
     );
 `);
 
 // Populate
 
+await addUser({
+    username: "admin",
+    password: "12345",
+    access: "admin",
+    email: "support@greensmart.com",
+    phoneNo: null,
+    city: null,
+    street: null,
+    roomNo: null
+});
+
 defaultProducts.forEach((d: { category: string }) => {
-    db.prepare(`INSERT INTO category (name) VALUES
-        (?)`).run(d.category);
+    addCategory(d.category);
 });
 
 defaultProducts.forEach((d: { category: string, items: { name: string, price: number }[] }) => {
     d.items.forEach(i => {
         const imageFile = Deno.readFileSync(`src/defaultAssets/${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}/${i.name.toLowerCase()}.png`);
-        if (imageFile) {
-            console.log(`Populating ${i.name}`);
-            db.prepare(`INSERT INTO products (category, name, price, mime_type, image_data) VALUES
-                (?, ?, ?, ?, ?)`
-            ).run(d.category, i.name, i.price, "png", imageFile);
-        } else {
-            db.prepare(`INSERT INTO products (category, name, price, mime_type, image_data) VALUES
-                (?, ?, ?, ?, ?)`
-            ).run(d.category, i.name, i.price, null, null);
-        }
+        addProduct({ 
+            category: d.category,
+            name: i.name,
+            price: i.price,
+            mime_type: "png",
+            image_data: imageFile
+        });
     });
 });

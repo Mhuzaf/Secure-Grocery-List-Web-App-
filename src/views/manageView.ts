@@ -1,7 +1,7 @@
 import { escape } from "@std/html/entities";
-import { CategoryProps } from "../interfaces/categoryInterface.ts";
-import { ProductsProps } from "../interfaces/productsInterface.ts";
 import { getErrFragments } from "../app/errorFragments.ts";
+import { CategoryProps } from "../models/categoryModel.ts";
+import { ProductsProps } from "../models/productsModel.ts";
 
 // deno-lint-ignore no-explicit-any
 export const manageView = (categories: CategoryProps[], products: ProductsProps[], errors?: any) => {
@@ -32,7 +32,8 @@ export const manageView = (categories: CategoryProps[], products: ProductsProps[
                 <section id="categories"> 
                     <p>Manage Categories</p>
                     <form method="POST">
-                        <input name="addCategory" id="editCategory" type="text" placeholder="New Category" ${errors ? (fragments.addCategory ? fragments.addCategory.value : "" ) : ""} required>
+                        <input type="hidden" name="manageMethod" value="addCategory">
+                        <input name="addCategory" id="addCategory" type="text" placeholder="New Category" ${errors ? (fragments.addCategory ? fragments.addCategory.value : "" ) : ""} required>
                         <input type="submit">
                     </form>
                     ${errors ? (fragments.addCategory ? fragments.addCategory.message : "" ) : ""}
@@ -66,7 +67,7 @@ export const manageView = (categories: CategoryProps[], products: ProductsProps[
 
                         <label for="productImage">Image</label>
                         <section>
-                            <input type="file" name="productImage" id="productImage" ${errors ? (fragments.productImage ? fragments.productImage.value : "") : ""}>
+                            <input type="file" accept="image/*" name="productImage" id="productImage" ${errors ? (fragments.productImage ? fragments.productImage.value : "") : ""}>
                             ${errors ? (fragments.productImage ? fragments.productImage.message : "") : ""}
                         </section>
 
@@ -82,16 +83,17 @@ export const manageView = (categories: CategoryProps[], products: ProductsProps[
                 <form method="POST">
                     <input type="hidden" name="manageMethod" value="editCategory">
                     <input type="hidden" name="editCategoryId" id="editCategoryId">
-                    <input name="editCategoryNewName" id="editCategoryNewName" type="text" placeholder="New Category" ${errors ? (fragments.addCategory ? fragments.addCategory.value : "" ) : ""} required>
+                    <input name="editCategoryNewName" id="editCategoryNewName" type="text" placeholder="New Category" ${errors ? (fragments.editCategoryNewName ? fragments.editCategoryNewName.value : "" ) : ""} required>
                     <input type="submit" value="Confirm">
                 </form>
-                ${errors ? (fragments.addCategory ? fragments.addCategory.message : "" ) : ""}
+                ${errors ? (fragments.editCategoryNewName ? fragments.editCategoryNewName.message : "" ) : ""}
             </dialog>
             <dialog id="deleteCategoryDialog" closedby="any">
                 <p id="deleteDialogTitle">...</p>
                 <button command="close" commandfor="deleteCategoryDialog">Cancel</button>
                 <form method="POST" id="deleteCategoryForm">
                     <input type="hidden" name="manageMethod" value="deleteCategory">
+                    <input type="hidden" name="deleteCategoryName" id="deleteCategoryName">
                     <input type="hidden" name="deleteCategory" id="deleteCategory">
                     <input type="submit" value="Confirm">
                 </form>
