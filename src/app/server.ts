@@ -8,6 +8,10 @@ import { managePostController, manageController } from "../controllers/manageCon
 import { Routes }from "./routes.ts";
 import { registerPostController, registerController } from "../controllers/login/registerController.ts";
 import { profileController } from "../controllers/profileController.ts";
+import { imageController } from "../controllers/imageController.ts";
+import { logoutController } from "../controllers/login/logoutController.ts";
+
+const imagePattern = new URLPattern({ pathname: "/images/:imageId" });
 
 export const server = (request: Request) => {
     const url = new URL(request.url);
@@ -15,31 +19,40 @@ export const server = (request: Request) => {
     
     // Serve static assets like stylesheet and favicon
     if (url.pathname.startsWith("/src/assets")) 
-        return staticController({ request });
+        return staticController(request);
+
+    // Serve images
+    if (imagePattern.test(url) && request.method == "GET") {
+        const { imageId } = imagePattern.exec(url).pathname.groups;
+        return imageController(imageId);
+    }
 
     // Routing
     switch (url.pathname){
         case Routes.HOME.route:
-            return homeController({ request });
+            return homeController(request);
         case Routes.ABOUT.route:
-            return aboutController({ request });
+            return aboutController(request);
         case Routes.PRODUCTS.route:
-            return productsController({ request });
+            return productsController(request);
         case Routes.PROFILE.route:
-            return profileController({ request });
+            return profileController(request);
         case Routes.LOGIN.route:
             if (request.method == "POST")
-                return loginPostController({ request });
-            return loginController({ request });
+                return loginPostController(request);
+            return loginController(request);
+        case Routes.LOGOUT.route:
+            if (request.method == "POST") return logoutController(request);
+            break;
         case Routes.REGISTER.route:
             if (request.method == "POST") 
-                return registerPostController({ request });
-            return registerController({ request });
+                return registerPostController(request);
+            return registerController(request);
         case Routes.MANAGE.route:
             if (request.method == "POST") 
-                return managePostController({ request });
-            return manageController({ request });
+                return managePostController(request);
+            return manageController(request);
         default:
-            return notFoundController({ request });
+            return notFoundController(request);
     }    
 }

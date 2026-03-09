@@ -1,6 +1,7 @@
-import { company, title } from "./common.ts";
+import { company, title } from "./defaults.ts";
 import Routes from "./routes.ts";
 import { getFlash } from "./flash.ts";
+import { currentSession } from "./auth.ts";
 
 const socials = [
     {
@@ -41,6 +42,8 @@ const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.PROFILE].m
 export const render = (content: string, request: Request, status = 200) => {
     const headers = new Headers();
     headers.set("content-type", "text/html");
+    
+    const session = currentSession(request.headers);
 
     const flash = getFlash(request.headers, headers);
     const flashMsg = flash ? `
@@ -76,8 +79,17 @@ export const render = (content: string, request: Request, status = 200) => {
                 </main>
 
                 <footer>
-                    <span>&copy; ${company}, All Rights Reserved.</span>
-                    <section class="footerRight">
+                    <section id="footerLeft">
+                        ${session ? `
+                            ${session.role == "admin" ? `
+                                <span id="loggedIn">You have administrator access.</span>
+                            ` : `
+                                <span id="loggedIn">Logged in as ${session.username}</span>
+                            `}
+                        ` : ""}
+                        <span>&copy; ${company}, All Rights Reserved.</span>
+                    </section>
+                    <section id="footerRight">
                         <section id="socials">
                             ${socialsMap}
                         </section>

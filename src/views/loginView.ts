@@ -1,5 +1,11 @@
-export const loginView = (errors = {}) => {
-    console.log(errors);    
+import { defaultLocations } from "../app/defaults.ts"
+import { getErrFragments } from "../app/errorFragments.ts";
+
+export const loginView = (errors?) => {
+    let fragments;
+    if (errors) fragments = getErrFragments(errors);
+    
+    console.log(errors) 
 
     return `
         <section id="loginRoot" aria-labelledby="loginRoot">
@@ -10,12 +16,14 @@ export const loginView = (errors = {}) => {
 
                 <section>
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" required>
+                    <input type="text" name="username" id="username" ${errors ? fragments.username.value : ""} required>
+                    ${errors ? fragments.username.message : ""}
                 </section>
 
                 <section>
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" required>
+                    <input type="password" name="password" id="password" ${errors ? fragments.password.value : ""} required>
+                    ${errors ? fragments.password.message : ""}
                 </section>
 
                 <input type="submit" value="Login">
@@ -25,24 +33,11 @@ export const loginView = (errors = {}) => {
     `;
 };
 
-// TODO: move the city and district data to somewhere else.
-const locations = [
-    {
-        city: "Dubai",
-        districts: ["Jumeirah", "Deira", "Al Karama", "Bur Dubai", "Business Bay"]
-    },
-    {
-        city: "Sharjah",
-        districts: ["Al Ruqa Al Hamra", "Rahmaniya Suburb", "Al Sajaah"]
-    },
-    {
-        city: "Ajman",
-        districts: ["Al Muwaihat 3", "Al Talia 1", "Al Talia 2"]
-    }
-]
-
-export const registerView = (errors = {}) => {
-    console.log(errors);    
+export const registerView = (errors?) => {
+    let fragments;
+    if (errors) fragments = getErrFragments(errors);
+    
+    console.log(errors)
 
     return `
         <section id="registerRoot">
@@ -50,34 +45,44 @@ export const registerView = (errors = {}) => {
             <p>Have an account? <a href="/login">Login here.</a></p>
             
             <ul>
-                <li>Fields marked with an asterisk (*) are required.</li>
                 <li>Do not register if you do not live in the United Arab Emirates.</li>
                 <li>We do not provide shipping outside of the UAE, and to certain cities within the country.</li>
             </ul>
 
             <form method="POST" id="registerForm">
-                <label for="username">Username*</label>
-                <input type="text" name="username" id="username" required>
+                <label for="username">Username</label>
+                <section>
+                    <input type="text" name="username" id="username" ${errors ? fragments.username.value : ""} required>
+                    ${errors ? fragments.username.message : ""}
+                </section>
                 
-                <label for="password">Password*</label>
-                <input type="password" name="password" id="password" required>
+                <label for="password">Password</label>
+                <section>
+                    <input type="password" name="password" id="password" ${errors ? fragments.password.value : ""} required>
+                    ${errors ? fragments.password.message : ""}
+                </section>
 
-                <label for="email">Email*</label>
-                <input type="email" name="email" id="email" placeholder="example@domain.com" required>
+                <label for="confirm_password">Confirm Password</label>
+                <section>
+                    <input type="password" name="confirm_password" id="confirm_password" ${errors ? fragments.confirm_password.value : ""} required>
+                    ${errors ? fragments.confirm_password.message : ""}
+                </section>
+
+                <label for="email">Email</label>
+                <section>
+                    <input type="email" name="email" id="email" placeholder="example@domain.com" ${errors ? fragments.email.value : ""} required>
+                    ${errors ? fragments.email.message : ""}
+                </section>
 
                 <label for="phone">Phone No.</label>
-                <input type="tel" name="tel" id="tel" placeholder="+971" pattern="[0-9]">
+                <section>
+                    <input type="tel" name="phone" id="phone" ${errors ? fragments.phone.value : ""} required>
+                    ${errors ? fragments.phone.message : ""}
+                </section>
 
-                <label for="city">City</label>
-                <select name="city" id="city">
-                    ${locations.map(loc => {
-                        return `<option value="${loc.city.toLowerCase()}">${loc.city}</option>`
-                    }).join("")}
-                </select>
-
-                <label for="district">District</label>
-                <select name="district" id="district">
-                    ${locations.map(loc => {
+                <label for="citydistrict">City/District</label>
+                <select name="citydistrict" id="citydistrict">
+                    ${defaultLocations.map(loc => {
                         return `<optgroup label="${loc.city}">
                                     ${loc.districts.map(dist => {
                                         return `<option value="${dist.toLowerCase().replace(RegExp("\\s+"), "_")}">${dist}</option>`
@@ -87,13 +92,20 @@ export const registerView = (errors = {}) => {
                 </select>
 
                 <label for="street">Street</label>
-                <input type="text" name="street" id="street">
+                <section>
+                    <input type="text" name="street" id="street" ${errors ? fragments.street.value : ""} required>
+                    ${errors ? fragments.street.message : ""}
+                </section>
 
                 <label for="room">Room No.</label>
-                <input type="text" name="room" id="room">
+                <section>
+                    <input type="text" name="room" id="room" ${errors ? fragments.room.value : ""} required>
+                    ${errors ? fragments.room.message : ""}
+                </section>
 
                 <input type="submit" value="Register">
             </form>
+            <script type="module" src="/src/assets/js/confirmPassword.js"></script>
 
         </section>
     

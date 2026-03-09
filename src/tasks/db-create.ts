@@ -1,4 +1,8 @@
 import { db } from "../app/db.ts"
+import { defaultProducts } from "../app/defaults.ts";
+import { addCategory } from "../models/categoryModel.ts";
+import { addProduct } from "../models/productsModel.ts";
+import { addUser } from "../models/userModel.ts";
 
 // Create/Reset
 
@@ -6,10 +10,11 @@ db.exec(`
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS category;
-    DROP TABLE IF EXISTS user;
+    DROP TABLE IF EXISTS sessions;
+    DROP TABLE IF EXISTS users;
 
     CREATE TABLE category (
-        id TEXT PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL
     );
 
@@ -17,48 +22,64 @@ db.exec(`
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         price INTEGER NOT NULL,
-        category_id TEXT NOT NULL,
+        category TEXT NOT NULL,
         mime_type TEXT,
-        image_data BLOB,
-        FOREIGN KEY (category_id) REFERENCES category(id)
+        image_data BLOB
     );
  
-    CREATE TABLE user (
-        username TEXT PRIMARY KEY NOT NULL,
+    CREATE TABLE cart (
+        user_id INTEGER,
+        product_id INTEGER,
+        FOREIGN KEY (user_id) REFERENCES user(user_id),
+        FOREIGN KEY (product_id) REFERENCES products(id)
+    );
+
+    CREATE TABLE users (
+        user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
+        access TEXT DEFAULT 'normal',
         email TEXT NOT NULL,
         phone_no TEXT,
         city TEXT,
         street TEXT,
-        room_no TEXT,
-        cart_id INTEGER,
-        FOREIGN KEY (cart_id) REFERENCES cart(cart_id)
+        room_no TEXT
     );
 
-    CREATE TABLE cart (
-        cart_id INTEGER PRIMARY KEY,
-        product_id INTEGER,
-        FOREIGN KEY (product_id) REFERENCES products(id)
+    CREATE TABLE sessions (
+        session_id TEXT PRIMARY KEY,
+        username TEXT NOT NULL,
+        role TEXT NOT NULL,
+        FOREIGN KEY (username) REFERENCES users(username)
     );
 `);
 
 // Populate
 
-db.exec(`
-   
-    INSERT INTO category (id, name) VALUES
-        ('fruits',              'Fruits'),
-        ('vegetables',          'Vegetables'),
-        ('drinks',              'Drinks'),
-        ('snacks',              'Snacks'),
-        ('dairy_products',      'Dairy Products'),
-        ('bakery_products',     'Bakery Products'),
-        ('dry_foods',           'Dry foods');
+await addUser({
+    username: "admin",
+    password: "12345",
+    access: "admin",
+    email: "support@greensmart.com",
+    phoneNo: null,
+    city: null,
+    street: null,
+    roomNo: null
+});
 
-    INSERT INTO products (category_id, name, price) VALUES
-        ('fruits', 'Apple', 5),
-        ('fruits', 'Banana', 10),
-        ('fruits', 'Mandarin', 7),
-        ('fruits', 'Grapes', 10),
-        ('fruits', 'Watermelon', 6);
-`);
+defaultProducts.forEach((d: { category: string }) => {
+    addCategory(d.category);
+});
+
+defaultProducts.forEach((d: { category: string, items: { name: string, price: number }[] }) => {
+    d.items.forEach(i => {
+        const imageFile = Deno.readFileSync(`src/defaultAssets/${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}/${i.name.toLowerCase()}.png`);
+        addProduct({ 
+            category: d.category,
+            name: i.name,
+            price: i.price,
+            mime_type: "png",
+            image_data: imageFile
+        });
+    });
+});

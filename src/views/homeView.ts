@@ -1,4 +1,4 @@
-import { title } from "../app/common.ts";
+import { title } from "../app/defaults.ts";
 
 const features = [
     {
