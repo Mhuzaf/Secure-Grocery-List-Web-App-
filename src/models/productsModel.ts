@@ -9,6 +9,12 @@ export interface ProductsProps {
     image_data: Uint8Array<ArrayBuffer>
 }
 
+export const getProduct = (id: number) => {
+    return db.prepare(`
+        SELECT * FROM products WHERE id = ?
+    `).get(id);
+}
+
 export const getProducts = () : ProductsProps[] => { 
     return db.prepare("SELECT * FROM products ORDER BY name").all();
 }

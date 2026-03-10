@@ -1,15 +1,15 @@
 import { db } from "../app/db.ts"
 
-interface UserProps {
-    id?:  number,
+export interface UserProps {
+    user_id?:  number,
     username: string,
-    password: string,
-    access: string,
-    email: string,
-    phoneNo: string,
-    city: string,
-    street: string,
-    roomNo: string
+    password?: string,
+    access?: string,
+    email?: string,
+    phoneNo?: string,
+    city?: string,
+    street?: string,
+    roomNo?: string
 }
 
 const salt = "supersecretstring";
@@ -28,7 +28,7 @@ const hashedPassword = async (password: string) => {
     return Array.from(new Uint8Array(buffer)).map(byte => byte.toString(16).padStart(2, "0")).join("");
 }
 
-// TODO: replace with User interface
+
 export const addUser = async (data: UserProps) => {
     const pw = await hashedPassword(data.password);
     db.prepare(`
@@ -37,7 +37,7 @@ export const addUser = async (data: UserProps) => {
     `).run(data.username, pw, data.access, data.email, data.phoneNo, data.city, data.street, data.roomNo);
 }
 
-export const getUser = (username: string) => {
+export const getUser = (username: string): UserProps => {
     return db.prepare(`
         SELECT * FROM users WHERE username = ?    
     `).get(username);

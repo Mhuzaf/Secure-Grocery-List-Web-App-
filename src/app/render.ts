@@ -42,7 +42,7 @@ const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.PROFILE].m
 export const render = (content: string, request: Request, status = 200) => {
     const headers = new Headers();
     headers.set("content-type", "text/html");
-    
+
     const session = currentSession(request.headers);
 
     const flash = getFlash(request.headers, headers);
@@ -58,7 +58,7 @@ export const render = (content: string, request: Request, status = 200) => {
             <head>
                 <title>${title}</title>
                 <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <link rel="icon" href="/src/assets/favicon.svg">
                 <link rel="stylesheet" href="/src/assets/styles.css">
             </head>
@@ -69,11 +69,18 @@ export const render = (content: string, request: Request, status = 200) => {
                     </a>
                     <nav>
                         ${routesMap}
+                        ${session ? `
+                            ${session.role == "admin" ? `
+                                <a href="${Routes.MANAGE.route}" aria-label="${Routes.MANAGE.name}" title="${Routes.MANAGE.name}">
+                                    ${Routes.MANAGE.name}
+                                </a>
+                            ` : ""}
+                        `: ""}
                     </nav>
                 </header>
-                
+
                 ${flashMsg}
-                
+
                 <main>
                     ${content}
                 </main>

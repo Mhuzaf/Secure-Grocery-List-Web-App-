@@ -30,7 +30,7 @@ db.exec(`
     CREATE TABLE cart (
         user_id INTEGER,
         product_id INTEGER,
-        FOREIGN KEY (user_id) REFERENCES user(user_id),
+        FOREIGN KEY (user_id) REFERENCES users(user_id),
         FOREIGN KEY (product_id) REFERENCES products(id)
     );
 

@@ -3,9 +3,9 @@ import { notFoundController } from "../controllers/notFoundController.ts";
 import { aboutController } from "../controllers/aboutController.ts";
 import { staticController } from "../controllers/staticController.ts";
 import { loginController, loginPostController }from "../controllers/login/loginController.ts";
-import { productsController } from "../controllers/productsController.ts";
+import { productsController, productsPostController } from "../controllers/productsController.ts";
 import { managePostController, manageController } from "../controllers/manageController.ts";
-import { Routes }from "./routes.ts";
+import { Routes } from "./routes.ts";
 import { registerPostController, registerController } from "../controllers/login/registerController.ts";
 import { profileController } from "../controllers/profileController.ts";
 import { imageController } from "../controllers/imageController.ts";
@@ -34,6 +34,7 @@ export const server = (request: Request) => {
         case Routes.ABOUT.route:
             return aboutController(request);
         case Routes.PRODUCTS.route:
+            if (request.method == "POST") return productsPostController(request);
             return productsController(request);
         case Routes.PROFILE.route:
             return profileController(request);

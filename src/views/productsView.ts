@@ -3,11 +3,51 @@ import { ProductsProps } from "../models/productsModel.ts";
 
 const sortOptions = ["Alphabetical", "Price: Ascending", "Price: Descending"];
 
-export const productsView = (categories: CategoryProps[], products: ProductsProps[]) => {
-    
+export const productsView = (categories: CategoryProps[], products: ProductsProps[], errors?) => {
+    console.log(errors);
+
+    const filterView = (isSection: boolean) => {
+        return `
+        <form id="filterForm" class="${isSection ? "isSection" : ""}">
+            <section>
+                <span class="title">Advanced Filter</span>
+                <ul id="filterList">
+                    ${categories.map(c => {
+                        const it = c.name.toLowerCase();
+                        return `<li>
+                                    <input type="checkbox" id="cb-${it}" name="filter-${it}">
+                                    <label for="cb-${it}">${c.name}</label>
+                                </li>`
+                    }).join("")}
+                <ul>
+            </section>
+            <section>
+                <label for="priceRange" class="title">Price range</label>
+                <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">    
+            </section>
+            <section>
+                <span class="title">Sort</span>
+                <ul id="radioContainer">
+                    ${sortOptions.map(s => {
+                        const stripped = s.replace(": ", ""); // maybe regex?
+                        return `<li>
+                                    <input type="radio" id="sort${stripped}" name="sortProducts" value="${stripped}">
+                                    <label for="sort${stripped}">${s}</label>
+                                </li>`
+                    }).join("")}
+                </ul>
+            </section>
+            <section id="filterDialogOptions">
+                <button type="button" command="close" commandfor="filterDialog" id="filterClose">Close</button>
+                <input type="submit" value="Apply">
+            </section>
+        </form>`;
+    }
+
     const items = products.map(p => {
         return `<article 
                     class="productCard"
+                    data-id="${p.id}"
                     data-name="${p.name}"
                     data-price="${p.price}"
                     data-category=${p.category}
@@ -22,41 +62,11 @@ export const productsView = (categories: CategoryProps[], products: ProductsProp
 
     return `
         <section id="productsRoot">
-            <aside id="productsSidepanel" class="hidden">
-                <section id="filterSection">
-                    <button id="filterClose">Close</button>
-                    <form id="filterForm">
-                        <section>
-                            <span class="title">Advanced Filter</span>
-                            <ul id="filterList">
-                                ${categories.map(c => {
-                                    const it = c.name.toLowerCase();
-                                    return `<li>
-                                                <input type="checkbox" id="cb-${it}" name="filter-${it}">
-                                                <label for="cb-${it}">${c.name}</label>
-                                            </li>`
-                                }).join("")}
-                            <ul>
-                        </section>
-                        <section>
-                            <label for="priceRange" class="title">Price range</label>
-                            <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">    
-                        </section>
-                        <section>
-                            <span class="title">Sort</span>
-                            <ul id="radioContainer">
-                                ${sortOptions.map(s => {
-                                    const stripped = s.replace(": ", ""); // maybe regex?
-                                    return `<li>
-                                                <input type="radio" id="sort${stripped}" name="sortProducts" value="${stripped}">
-                                                <label for="sort${stripped}">${s}</label>
-                                            </li>`
-                                }).join("")}
-                            </ul>
-                        </section>
-                        <input type="submit" value="Apply">
-                    </form>
-                </section>
+            <aside id="productsFilter" class="hidden">
+                ${filterView(true)}
+                <dialog id="filterDialog" closedby="any">
+                    ${filterView(false)}
+                </dialog>
             </aside>
             <section id="productsMain">
                 <section id="productsUpper">
@@ -85,6 +95,10 @@ export const productsView = (categories: CategoryProps[], products: ProductsProp
 
             <dialog id="productOptionsDialog" closedby="any">
                 <p id="productTitle">...</p>
+                <form method="POST">
+                    <input type="hidden" name="addToCart" id="addToCart">
+                    <input type="submit" value="Add to Cart">
+                </form>
                 <button id="productClose" command="close" commandfor="productOptionsDialog">Close</button>
             </dialog>
         </section>

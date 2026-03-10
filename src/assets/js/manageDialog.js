@@ -20,7 +20,7 @@ categoryItems.forEach(category => {
     })
 
     // Delete dialog
-    category.children[1].children[1].addEventListener("click", () => {
+    category.children[2].children[0].addEventListener("click", () => {
         deleteDialogTitle.textContent = `Are you sure you want to delete \"${category.dataset.name}\"?`
         deleteDialogItemName.value = category.dataset.name; 
         deleteDialogInput.value = category.dataset.id;
@@ -36,4 +36,4 @@ deleteCategoryDialog.addEventListener("cancel", () => {
 deleteCategoryDialog.children[1].addEventListener("click", () => {
     console.log("closing");
     deleteCategoryDialog.close();
-})
+});
