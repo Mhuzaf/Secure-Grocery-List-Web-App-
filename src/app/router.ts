@@ -49,13 +49,7 @@ export class ApplicationRouter {
         const route = this.routes.find(({ method, pattern }) => {
             return request.method == method && pattern.test(request.url);
         });
-
-        // TODO: is there a better way?
-        const imagePath = route.pattern.exec(request.url).pathname.groups.imageId;
-        if (imagePath) {
-            return route.handler(imagePath);
-        }
-
+        
         return this.chain(ctx, this.middleware, route.handler);
     }
 }
