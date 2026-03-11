@@ -1,35 +1,39 @@
+import { login } from "../../app/auth.ts";
 import { redirect } from "../../app/redirect.ts";
 import { render } from "../../app/render.ts";
 import Routes from "../../app/routes.ts";
 import { validateSchema } from "../../app/validation.ts";
+import { addUser } from "../../models/userModel.ts";
 import { userRegisterSchema } from "../../schema/userSchema.ts";
 import { registerView } from "../../views/loginView.ts";
 
-export const registerController = ({ request } : { request: Request }) => {
+export const registerController = (request: Request) => {
     return render(registerView(), request);
 }
 
-export const registerPostController = async ({ request } : { request: Request }) => {
+export const registerPostController = async (request: Request) => {
     const formData = await request.formData();
     
-    const { isValid, errors } = validateSchema(formData, userRegisterSchema);
+    const { isValid, errors, validated } = validateSchema(formData, userRegisterSchema);
 
     if (!isValid) {
-        return render(registerView({ errors }), request, 400);
+        return render(registerView(errors), request, 400);
     }
 
-    const username = formData.get("username");
-    const password = formData.get("password");
-    const email = formData.get("email");
-    
-    // TODO: replace with validation.js
-    const validUser = true;
+    console.log(validated);
+    await addUser({
+        username: validated.username, 
+        password: validated.password, 
+        access: "normal",
+        email: validated.email,
+        phoneNo: validated.phone,
+        city: "test city",
+        street: "test street",
+        roomNo: "123"
+    });
+
     const headers = new Headers();
-    
-    if (validUser) {
-        console.log(username, password, email);
-
-        return redirect(headers, Routes.HOME.route, "User Created");
-    }
+    login(headers, validated.username);
+    return redirect(headers, Routes.HOME.route, `Created user \"${validated.username}\"`);
 
 }

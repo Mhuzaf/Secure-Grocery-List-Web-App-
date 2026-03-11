@@ -7,8 +7,15 @@ export const addCategorySchema =  {
     }
 }
 
+export const editCategorySchema = {
+    "editCategoryNewName": {
+        displayName: "Category",
+        validators: [requiredString, minLength(3)],
+    }
+}
+
 export const deleteCategorySchema = {
-    "deleteCategory": {
+    "deleteCategoryName": {
         displayName: "Category",
         validators: [requiredString, minLength(3)],
     }

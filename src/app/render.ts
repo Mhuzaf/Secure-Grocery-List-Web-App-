@@ -1,6 +1,7 @@
-import { company, title } from "./common.ts";
+import { company, title } from "./defaults.ts";
 import Routes from "./routes.ts";
 import { getFlash } from "./flash.ts";
+import { currentSession } from "./auth.ts";
 
 const socials = [
     {
@@ -42,6 +43,8 @@ export const render = (content: string, request: Request, status = 200) => {
     const headers = new Headers();
     headers.set("content-type", "text/html");
 
+    const session = currentSession(request.headers);
+
     const flash = getFlash(request.headers, headers);
     const flashMsg = flash ? `
         <aside id="flashMsg">
@@ -55,7 +58,7 @@ export const render = (content: string, request: Request, status = 200) => {
             <head>
                 <title>${title}</title>
                 <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <link rel="icon" href="/src/assets/favicon.svg">
                 <link rel="stylesheet" href="/src/assets/styles.css">
             </head>
@@ -66,18 +69,34 @@ export const render = (content: string, request: Request, status = 200) => {
                     </a>
                     <nav>
                         ${routesMap}
+                        ${session ? `
+                            ${session.role == "admin" ? `
+                                <a href="${Routes.MANAGE.route}" aria-label="${Routes.MANAGE.name}" title="${Routes.MANAGE.name}">
+                                    ${Routes.MANAGE.name}
+                                </a>
+                            ` : ""}
+                        `: ""}
                     </nav>
                 </header>
-                
+
                 ${flashMsg}
-                
+
                 <main>
                     ${content}
                 </main>
 
                 <footer>
-                    <span>&copy; ${company}, All Rights Reserved.</span>
-                    <section class="footerRight">
+                    <section id="footerLeft">
+                        ${session ? `
+                            ${session.role == "admin" ? `
+                                <span id="loggedIn">You have administrator access.</span>
+                            ` : `
+                                <span id="loggedIn">Logged in as ${session.username}</span>
+                            `}
+                        ` : ""}
+                        <span>&copy; ${company}, All Rights Reserved.</span>
+                    </section>
+                    <section id="footerRight">
                         <section id="socials">
                             ${socialsMap}
                         </section>
