@@ -1,9 +1,9 @@
-import { currentSession, logout } from "../../app/auth.ts";
+import { logout } from "../../app/auth.ts";
 import { redirect } from "../../app/redirect.ts";
+import { SessionProps } from "../../models/sessionsModel.ts";
 
-export const logoutController = (request: Request) => {
-    const session = currentSession(request.headers);
-    const headers = new Headers();
+export const logoutController = (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+    const { session, headers } = ctx;
     if (session) {
         logout(headers, session);
         return redirect(headers, "/", `Logged out!`);

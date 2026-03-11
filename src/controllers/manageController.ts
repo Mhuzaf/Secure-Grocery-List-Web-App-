@@ -4,25 +4,28 @@ import { redirect } from "../app/redirect.ts";
 import { validateSchema } from "../app/validation.ts";
 import { addCategorySchema, deleteCategorySchema, editCategorySchema } from "../schema/categorySchema.ts";
 import { addProductSchema } from "../schema/productSchema.ts";
-import { currentSession } from "../app/auth.ts";
 import { addCategory, deleteCategory, getCategories, updateCategory } from "../models/categoryModel.ts";
 import { getProducts } from "../models/productsModel.ts";
+import { SessionProps } from "../models/sessionsModel.ts";
 
 
-export const manageController = (request: Request) => {
-    const session = currentSession(request.headers);
-    if (!session || session.role != "admin") {
-        const headers = new Headers();
+export const manageController = (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+    const { session, headers } = ctx;
+    if (!session || session.access != "admin") {
         return redirect(headers, "/", `Page access is not authorized.`);
     }
     
     const categories = getCategories();
     const products = getProducts();
 
-    return render(manageView(categories, products), request);
+    return render(manageView(categories, products), ctx);
 }
 
-export const managePostController = async (request: Request) => {
+export const managePostController = async (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+    const { request, session, headers } = ctx;
+    if (!session || session.access != "admin") {
+        return redirect(headers, "/", `Page access is not authorized.`);
+    }
     const formData = await request.formData();
 
     console.log(formData.get("manageMethod"))
@@ -35,13 +38,12 @@ export const managePostController = async (request: Request) => {
                 const categories = getCategories();
                 const products = getProducts();
                 
-                return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), ctx, 400);
             }
             
             const newItem = formData.get("addCategory");
             addCategory(newItem.toString());
 
-            const headers = new Headers();
             return redirect(headers, "/manage", `Added ${newItem} to category.`);
         }
 
@@ -52,14 +54,13 @@ export const managePostController = async (request: Request) => {
                 const categories = getCategories();
                 const products = getProducts();
 
-                return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), ctx, 400);
             }
 
             const id = formData.get("editCategoryId");
             const newItem = formData.get("editCategoryNewName");
             updateCategory(id.toString(), newItem.toString());
 
-            const headers = new Headers();
             return redirect(headers, "/manage", `Updated a category to \"${newItem}\".`);
         }
 
@@ -70,14 +71,13 @@ export const managePostController = async (request: Request) => {
                 const categories = getCategories();
                 const products = getProducts();
 
-                return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), ctx, 400);
             }
 
             const item = formData.get("deleteCategory");
             const itemName = formData.get("deleteCategoryName");
             deleteCategory(item.toString().toLowerCase().replace(RegExp("\\s+"), "_"));
 
-            const headers = new Headers();
             return redirect(headers, "/manage", `Deleted ${itemName} from category.`);
         }
 
@@ -88,7 +88,7 @@ export const managePostController = async (request: Request) => {
                 const categories = getCategories();
                 const products = getProducts();
 
-                return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), ctx, 400);
             }
 
             const productName = formData.get("productName");
@@ -98,7 +98,6 @@ export const managePostController = async (request: Request) => {
 
             console.log(productName, productPrice, productCategory, productImage);
 
-            const headers = new Headers();
             return redirect(headers, "/manage", `stub!`);
         }
     }

@@ -1,14 +1,19 @@
-// Have to use "any" as the image controller needs an id...
 // deno-lint-ignore-file no-explicit-any
+// Have to use "any" as the image controller needs an id...
+
+import { SessionProps } from "../models/sessionsModel.ts";
+
 export class ApplicationRouter {
     routes: { 
         method: string,
         pattern: URLPattern,
         handler: any
     }[];
+    middleware: any[];
 
     constructor() {
         this.routes = [];
+        this.middleware = [];
     }
 
     private register(method: string, pattern, handler) {
@@ -26,7 +31,21 @@ export class ApplicationRouter {
         this.register("POST", path, handler);
     }
 
-    handle(request: Request) {
+    public use(middlewareFunc) {
+        this.middleware.push(middlewareFunc);
+    }
+
+    private chain(ctx: { request: Request, session?: SessionProps, headers?: Headers }, middleware: any[], handler) {
+        if (middleware.length == 0) return handler(ctx);
+        const [nextMWFunc, ...remainingMWFunc] = middleware;
+        const next = (ctx) => {
+            return this.chain(ctx, remainingMWFunc, handler);
+        };
+        return nextMWFunc({...ctx}, next);
+    }
+
+    public handle(ctx: { request: Request, session?: SessionProps, headers?: Headers }) {
+        const { request } = ctx; 
         const route = this.routes.find(({ method, pattern }) => {
             return request.method == method && pattern.test(request.url);
         });
@@ -37,6 +56,6 @@ export class ApplicationRouter {
             return route.handler(imagePath);
         }
 
-        return route.handler(request);
+        return this.chain(ctx, this.middleware, route.handler);
     }
 }

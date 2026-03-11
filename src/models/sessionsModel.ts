@@ -1,6 +1,6 @@
 import { db } from "../app/db.ts";
 
-interface SessionProps {
+export interface SessionProps {
     sessionId: string,
     username: string,
     access: string

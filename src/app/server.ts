@@ -10,8 +10,14 @@ import { profileController } from "../controllers/profileController.ts";
 import { imageController } from "../controllers/imageController.ts";
 import { logoutController } from "../controllers/login/logoutController.ts";
 import { ApplicationRouter } from "./router.ts";
+import { withLogs } from "../middleware/logging.ts";
+import { withSession } from "../middleware/auth.ts";
+import { withHeaders } from "../middleware/headers.ts";
 
 const app = new ApplicationRouter();
+app.use(withLogs);
+app.use(withSession);
+app.use(withHeaders);
 
 app.get("/src/assets/*", staticController);
 app.get("/", homeController);
@@ -32,8 +38,5 @@ app.get("*", notFoundController);
 app.post("*", notFoundController);
 
 export const server = (request: Request) => {
-    const url = new URL(request.url);
-    console.log(`${request.method} ${url.pathname}${url.search}`);
-
-    return app.handle(request);
+    return app.handle({ request });
 }

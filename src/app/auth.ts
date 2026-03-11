@@ -19,7 +19,7 @@ export const currentSession = (requestHeaders: Headers) => {
     if (session) return {
         sessionId: sessionId,
         username: session.username,
-        role: session.role
+        access: session.access
     }
     return null;
 }

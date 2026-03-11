@@ -1,6 +1,6 @@
 import { company, title } from "./defaults.ts";
 import { getFlash } from "./flash.ts";
-import { currentSession } from "./auth.ts";
+import { SessionProps } from "../models/sessionsModel.ts";
 
 const socials = [
     {
@@ -32,17 +32,16 @@ const socialsMap = socials.map(s => {
     `;
 }).join("");
 
-const routesMap = ["/home", "/about", "/products", "/profile"].map(r => {
+const routesMap = ["/", "/about", "/products", "/profile"].map(r => {
     return `<a href="${r}" aria-label="${r}" title="${r}">
                 ${r}
             </a>`
 }).join("");
 
-export const render = (content: string, request: Request, status = 200) => {
-    const headers = new Headers();
+export const render = (content: string, ctx: { request: Request, session: SessionProps, headers: Headers }, status = 200) => {
+    const { request, session, headers } = ctx;
+    
     headers.set("content-type", "text/html");
-
-    const session = currentSession(request.headers);
 
     const flash = getFlash(request.headers, headers);
     const flashMsg = flash ? `
@@ -69,7 +68,7 @@ export const render = (content: string, request: Request, status = 200) => {
                     <nav>
                         ${routesMap}
                         ${session ? `
-                            ${session.role == "admin" ? `
+                            ${session.access == "admin" ? `
                                 <a href="/manage" aria-label="Manage" title="Manage">
                                     Manage
                                 </a>
@@ -87,7 +86,7 @@ export const render = (content: string, request: Request, status = 200) => {
                 <footer>
                     <section id="footerLeft">
                         ${session ? `
-                            ${session.role == "admin" ? `
+                            ${session.access == "admin" ? `
                                 <span id="loggedIn">You have administrator access.</span>
                             ` : `
                                 <span id="loggedIn">Logged in as ${session.username}</span>
