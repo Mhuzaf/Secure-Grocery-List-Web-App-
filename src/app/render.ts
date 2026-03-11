@@ -1,5 +1,4 @@
 import { company, title } from "./defaults.ts";
-import Routes from "./routes.ts";
 import { getFlash } from "./flash.ts";
 import { currentSession } from "./auth.ts";
 
@@ -33,9 +32,9 @@ const socialsMap = socials.map(s => {
     `;
 }).join("");
 
-const routesMap = [Routes.HOME, Routes.PRODUCTS, Routes.ABOUT, Routes.PROFILE].map(r => {
-    return `<a href="${r.route}" aria-label="${r.name}" title="${r.name}">
-                ${r.name}
+const routesMap = ["/home", "/about", "/products", "/profile"].map(r => {
+    return `<a href="${r}" aria-label="${r}" title="${r}">
+                ${r}
             </a>`
 }).join("");
 
@@ -71,8 +70,8 @@ export const render = (content: string, request: Request, status = 200) => {
                         ${routesMap}
                         ${session ? `
                             ${session.role == "admin" ? `
-                                <a href="${Routes.MANAGE.route}" aria-label="${Routes.MANAGE.name}" title="${Routes.MANAGE.name}">
-                                    ${Routes.MANAGE.name}
+                                <a href="/manage" aria-label="Manage" title="Manage">
+                                    Manage
                                 </a>
                             ` : ""}
                         `: ""}

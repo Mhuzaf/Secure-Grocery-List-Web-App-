@@ -7,8 +7,8 @@ import { addUser } from "../models/userModel.ts";
 // Create/Reset
 
 db.exec(`
-    DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS cart;
+    DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS category;
     DROP TABLE IF EXISTS sessions;
     DROP TABLE IF EXISTS users;

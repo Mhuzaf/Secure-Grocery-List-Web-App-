@@ -1,5 +1,3 @@
-import Routes from "../app/routes.ts";
-
 export const profileView = (session?) => {
     return `
     <section id="profileLoginMsg">
@@ -10,7 +8,7 @@ export const profileView = (session?) => {
                 <button>Log out</button>
             </form>   
         ` : `
-            <a href="${Routes.LOGIN.route}">Login to order products.</a>
+            <a href="/login">Login to order products.</a>
         `}
     </section>
     `

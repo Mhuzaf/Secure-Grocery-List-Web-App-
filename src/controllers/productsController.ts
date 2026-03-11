@@ -1,7 +1,6 @@
 import { currentSession } from "../app/auth.ts";
 import { redirect } from "../app/redirect.ts";
 import { render } from "../app/render.ts";
-import Routes from "../app/routes.ts";
 import { validateSchema } from "../app/validation.ts";
 import { addToCart } from "../models/cartModel.ts";
 import { getCategories } from "../models/categoryModel.ts";
@@ -12,7 +11,7 @@ import { productsView } from "../views/productsView.ts";
 
 export const productsController = (request: Request) => {
     const url = new URL(request.url);
-    // console.log(url.searchParams);
+    console.log(url.searchParams);
 
     const categories = getCategories();
     const products = getProducts();
@@ -23,7 +22,7 @@ export const productsPostController = async (request: Request) => {
     const session = currentSession(request.headers);
     if (!session) {
         const headers = new Headers();
-        return redirect(headers, Routes.PRODUCTS.route, `Login to order products.`);
+        return redirect(headers, "/products", `Login to order products.`);
     }
 
     const formData = await request.formData();

@@ -1,7 +1,6 @@
 import { login } from "../../app/auth.ts";
 import { redirect } from "../../app/redirect.ts";
 import { render } from "../../app/render.ts";
-import Routes from "../../app/routes.ts";
 import { validateSchema } from "../../app/validation.ts";
 import { addUser } from "../../models/userModel.ts";
 import { userRegisterSchema } from "../../schema/userSchema.ts";
@@ -34,6 +33,6 @@ export const registerPostController = async (request: Request) => {
 
     const headers = new Headers();
     login(headers, validated.username);
-    return redirect(headers, Routes.HOME.route, `Created user \"${validated.username}\"`);
+    return redirect(headers, "/", `Created user \"${validated.username}\"`);
 
 }

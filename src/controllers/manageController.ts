@@ -1,7 +1,6 @@
 import { render } from "../app/render.ts";
 import { manageView } from "../views/manageView.ts";
 import { redirect } from "../app/redirect.ts";
-import Routes from "../app/routes.ts";
 import { validateSchema } from "../app/validation.ts";
 import { addCategorySchema, deleteCategorySchema, editCategorySchema } from "../schema/categorySchema.ts";
 import { addProductSchema } from "../schema/productSchema.ts";
@@ -14,7 +13,7 @@ export const manageController = (request: Request) => {
     const session = currentSession(request.headers);
     if (!session || session.role != "admin") {
         const headers = new Headers();
-        return redirect(headers, Routes.HOME.route, `Page access is not authorized.`);
+        return redirect(headers, "/", `Page access is not authorized.`);
     }
     
     const categories = getCategories();
@@ -43,7 +42,7 @@ export const managePostController = async (request: Request) => {
             addCategory(newItem.toString());
 
             const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `Added ${newItem} to category.`);
+            return redirect(headers, "/manage", `Added ${newItem} to category.`);
         }
 
         case "editCategory": {
@@ -61,7 +60,7 @@ export const managePostController = async (request: Request) => {
             updateCategory(id.toString(), newItem.toString());
 
             const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `Updated a category to \"${newItem}\".`);
+            return redirect(headers, "/manage", `Updated a category to \"${newItem}\".`);
         }
 
         case "deleteCategory": {
@@ -79,7 +78,7 @@ export const managePostController = async (request: Request) => {
             deleteCategory(item.toString().toLowerCase().replace(RegExp("\\s+"), "_"));
 
             const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `Deleted ${itemName} from category.`);
+            return redirect(headers, "/manage", `Deleted ${itemName} from category.`);
         }
 
         case "addProduct": {
@@ -100,7 +99,7 @@ export const managePostController = async (request: Request) => {
             console.log(productName, productPrice, productCategory, productImage);
 
             const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `stub!`);
+            return redirect(headers, "/manage", `stub!`);
         }
     }
 }
