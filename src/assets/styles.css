@@ -558,16 +558,66 @@ body {
         }
     }
 
-    /*  */
+    /* Login + Register card */
 
-    /* Profile View */
+    .authCard {
+        max-width: 420px;
+        margin: 3em auto;
+        padding: 2em;
+        background-color: var(--color-card);
+        border-radius: 0.5em;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
 
-    #profileLoginMsg {
-        margin: 1em;
+    .authCard h2 {
+        text-align: center;
+        margin-top: 0;
+    }
 
-        a {
-            color: var(--color-header-fg)
-        }
+    .authSwitch {
+        text-align: center;
+        margin-bottom: 1em;
+    }
+
+    .authBtn {
+        margin-top: 1em;
+        padding: 0.6em;
+        border-radius: 0.4em;
+        border: none;
+        background-color: var(--color-base);
+        color: var(--color-header-fg);
+        cursor: pointer;
+    }
+
+    .authBtn:hover {
+        background-color: #7fb028;
+    }
+
+    #loginForm,
+    #registerForm {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6em;
+    }
+
+    .registerRules {
+        font-size: 0.9em;
+    }
+
+        /*  */
+
+        /* Profile View */
+
+    .profileActions {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+    }
+
+    .secondaryBtn {
+        background-color: #ccc;
+        color: black;
     }
 
     /*  */

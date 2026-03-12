@@ -1,17 +1,30 @@
-import Routes from "../app/routes.ts";
+export const profileView = () => {
 
-export const profileView = (session?) => {
     return `
-    <section id="profileLoginMsg">
-        ${session ? `
-            <p>Welcome to your account page, ${session.username}!</p>
-            <br>
-            <form method="POST" action="/logout">
-                <button>Log out</button>
-            </form>   
-        ` : `
-            <a href="${Routes.LOGIN.route}">Login to order products.</a>
-        `}
+    <section id="profileRoot">
+
+        <div class="authCard">
+
+            <h2>Welcome</h2>
+
+            <p>
+                To order products and manage your cart, you need to be logged in.
+            </p>
+
+            <p>
+                If you already have an account, click the login button below.
+            </p>
+
+            <div class="profileActions">
+
+                <a href="/login" class="authBtn">Login</a>
+
+                <a href="/register" class="authBtn secondaryBtn">Register</a>
+
+            </div>
+
+        </div>
+
     </section>
-    `
-}
+    `;
+};

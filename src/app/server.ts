@@ -5,7 +5,7 @@ import { staticController } from "../controllers/staticController.ts";
 import { loginController, loginPostController }from "../controllers/login/loginController.ts";
 import { productsController } from "../controllers/productsController.ts";
 import { managePostController, manageController } from "../controllers/manageController.ts";
-import { Routes }from "./routes.ts";
+import { Routes } from "./routes.ts";
 import { registerPostController, registerController } from "../controllers/login/registerController.ts";
 import { profileController } from "../controllers/profileController.ts";
 import { imageController } from "../controllers/imageController.ts";
