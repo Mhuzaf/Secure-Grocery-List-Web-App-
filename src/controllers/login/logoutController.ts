@@ -1,8 +1,8 @@
 import { logout } from "../../app/auth.ts";
 import { redirect } from "../../app/redirect.ts";
-import { SessionProps } from "../../models/sessionsModel.ts";
+import { Context } from "../../app/router.ts";
 
-export const logoutController = (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+export const logoutController = (ctx: Context) => {
     const { session, headers } = ctx;
     if (session) {
         logout(headers, session);

@@ -15,25 +15,30 @@ import { withSession } from "../middleware/auth.ts";
 import { withHeaders } from "../middleware/headers.ts";
 
 const app = new ApplicationRouter();
+// Middleware
 app.use(withLogs);
 app.use(withSession);
 app.use(withHeaders);
 
+// GET
 app.get("/src/assets/*", staticController);
 app.get("/", homeController);
 app.get("/about", aboutController);
 app.get("/products", productsController);
-app.post("/products", productsPostController);
-app.get("/images/:imageId", imageController);
 app.get("/profile", profileController);
 app.get("/login", loginController);
-app.post("/login", loginPostController);
 app.get("/register", registerController);
+app.get("/manage", manageController);
+app.get("/images/:imageId", imageController);
+
+// POST
+app.post("/login", loginPostController);
+app.post("/products", productsPostController);
 app.post("/register", registerPostController);
 app.post("/logout", logoutController);
-app.get("/manage", manageController);
 app.post("/manage", managePostController);
 
+// 404
 app.get("*", notFoundController);
 app.post("*", notFoundController);
 

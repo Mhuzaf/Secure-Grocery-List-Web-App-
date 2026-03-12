@@ -1,6 +1,6 @@
 import { company, title } from "./defaults.ts";
 import { getFlash } from "./flash.ts";
-import { SessionProps } from "../models/sessionsModel.ts";
+import { Context } from "./router.ts";
 
 const socials = [
     {
@@ -38,7 +38,7 @@ const routesMap = ["/", "/about", "/products", "/profile"].map(r => {
             </a>`
 }).join("");
 
-export const render = (content: string, ctx: { request: Request, session: SessionProps, headers: Headers }, status = 200) => {
+export const render = (content: string, ctx: Context, status = 200) => {
     const { request, session, headers } = ctx;
     
     headers.set("content-type", "text/html");

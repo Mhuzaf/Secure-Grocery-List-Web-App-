@@ -1,7 +1,7 @@
 import { serveDir } from "@std/http/file-server";
-import { SessionProps } from "../models/sessionsModel.ts";
+import { Context } from "../app/router.ts";
 
-export const staticController = (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+export const staticController = (ctx: Context) => {
     const { request } = ctx;
     return serveDir(request);
 }

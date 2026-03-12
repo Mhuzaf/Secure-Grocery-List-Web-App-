@@ -1,7 +1,7 @@
 import { render } from "../app/render.ts";
-import { SessionProps } from "../models/sessionsModel.ts";
+import { Context } from "../app/router.ts";
 import { aboutView } from "../views/aboutView.ts";
 
-export const aboutController = (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+export const aboutController = (ctx: Context) => {
     return render(aboutView(), ctx);
 }

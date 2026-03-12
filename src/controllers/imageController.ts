@@ -1,7 +1,7 @@
+import { Context } from "../app/router.ts";
 import { getProductImage } from "../models/productsModel.ts";
-import { SessionProps } from "../models/sessionsModel.ts";
 
-export const imageController = (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+export const imageController = (ctx: Context) => {
     const { request } = ctx;
     const url = new URL(request.url); 
     return new Response(

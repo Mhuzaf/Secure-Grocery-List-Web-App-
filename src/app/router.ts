@@ -3,6 +3,12 @@
 
 import { SessionProps } from "../models/sessionsModel.ts";
 
+export interface Context {
+    request: Request, 
+    session?: SessionProps, 
+    headers?: Headers
+}
+
 export class ApplicationRouter {
     routes: { 
         method: string,
@@ -35,7 +41,7 @@ export class ApplicationRouter {
         this.middleware.push(middlewareFunc);
     }
 
-    private chain(ctx: { request: Request, session?: SessionProps, headers?: Headers }, middleware: any[], handler) {
+    private chain(ctx: Context, middleware: any[], handler) {
         if (middleware.length == 0) return handler(ctx);
         const [nextMWFunc, ...remainingMWFunc] = middleware;
         const next = (ctx) => {
@@ -44,7 +50,7 @@ export class ApplicationRouter {
         return nextMWFunc({...ctx}, next);
     }
 
-    public handle(ctx: { request: Request, session?: SessionProps, headers?: Headers }) {
+    public handle(ctx: Context) {
         const { request } = ctx; 
         const route = this.routes.find(({ method, pattern }) => {
             return request.method == method && pattern.test(request.url);

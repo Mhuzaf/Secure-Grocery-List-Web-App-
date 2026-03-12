@@ -6,10 +6,10 @@ import { addCategorySchema, deleteCategorySchema, editCategorySchema } from "../
 import { addProductSchema } from "../schema/productSchema.ts";
 import { addCategory, deleteCategory, getCategories, updateCategory } from "../models/categoryModel.ts";
 import { getProducts } from "../models/productsModel.ts";
-import { SessionProps } from "../models/sessionsModel.ts";
+import { Context } from "../app/router.ts";
 
 
-export const manageController = (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+export const manageController = (ctx: Context) => {
     const { session, headers } = ctx;
     if (!session || session.access != "admin") {
         return redirect(headers, "/", `Page access is not authorized.`);
@@ -21,7 +21,7 @@ export const manageController = (ctx: { request: Request, session: SessionProps,
     return render(manageView(categories, products), ctx);
 }
 
-export const managePostController = async (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+export const managePostController = async (ctx: Context) => {
     const { request, session, headers } = ctx;
     if (!session || session.access != "admin") {
         return redirect(headers, "/", `Page access is not authorized.`);

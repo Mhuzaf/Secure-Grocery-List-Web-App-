@@ -1,17 +1,17 @@
 import { login } from "../../app/auth.ts";
 import { redirect } from "../../app/redirect.ts";
 import { render } from "../../app/render.ts";
+import { Context } from "../../app/router.ts";
 import { validateSchema } from "../../app/validation.ts";
-import { SessionProps } from "../../models/sessionsModel.ts";
 import { addUser } from "../../models/userModel.ts";
 import { userRegisterSchema } from "../../schema/userSchema.ts";
 import { registerView } from "../../views/loginView.ts";
 
-export const registerController = (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+export const registerController = (ctx: Context) => {
     return render(registerView(), ctx);
 }
 
-export const registerPostController = async (ctx: { request: Request, session: SessionProps, headers: Headers }) => {
+export const registerPostController = async (ctx: Context) => {
     const { request, headers } = ctx;
     const formData = await request.formData();
     
