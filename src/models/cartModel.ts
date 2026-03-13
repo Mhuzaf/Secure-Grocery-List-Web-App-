@@ -1,5 +1,4 @@
 import { db } from "../app/db.ts";
-import { getUser } from "./userModel.ts";
 
 export interface CartProps {
     userId: number,
@@ -8,13 +7,13 @@ export interface CartProps {
 
 export const getCart = (userId: number) => {
     return db.prepare(`
-        SELECT * FROM cart WHERE user_id = ?    
+        SELECT * FROM cart WHERE userId = ?    
     `).get(userId);
 }
 
 export const addToCart = (productId: number, userId: number) => {
     db.prepare(`
-        INSERT INTO cart (user_id, product_id) VALUES
+        INSERT INTO cart (userId, productPd) VALUES
             (?, ?)
     `).run(userId, productId);
 }

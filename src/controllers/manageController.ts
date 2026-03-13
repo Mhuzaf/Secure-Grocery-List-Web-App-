@@ -5,7 +5,7 @@ import { validateSchema } from "../app/validation.ts";
 import { addCategorySchema, deleteCategorySchema, editCategorySchema } from "../schema/categorySchema.ts";
 import { addProductSchema } from "../schema/productSchema.ts";
 import { addCategory, deleteCategory, getCategories, updateCategory } from "../models/categoryModel.ts";
-import { getProducts } from "../models/productsModel.ts";
+import { addProduct, getProducts } from "../models/productsModel.ts";
 import { Context } from "../app/router.ts";
 
 
@@ -96,9 +96,16 @@ export const managePostController = async (ctx: Context) => {
             const productCategory = formData.get("productCategory");
             const productImage = formData.get("productImage") as File;
 
-            console.log(productName, productPrice, productCategory, productImage);
+            // console.log(productName, productPrice, productCategory, productImage);
+            const imageFile = await productImage.bytes();
+            addProduct({
+                name: productName.toString(), 
+                category: productCategory.toString(), 
+                price: Number.parseInt(productPrice.toString()),
+                imageData: imageFile
+            });
 
-            return redirect(headers, "/manage", `stub!`);
+            return redirect(headers, "/manage", `Added Product \"${productName.toString()}\"`);
         }
     }
 }

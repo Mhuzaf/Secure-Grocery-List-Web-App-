@@ -1,10 +1,10 @@
 import { escape } from "@std/html/entities";
 import { getErrFragments } from "../app/errorFragments.ts";
-import { CategoryProps } from "../models/categoryModel.ts";
-import { ProductsProps } from "../models/productsModel.ts";
+import { Category } from "../models/categoryModel.ts";
+import { Product } from "../models/productsModel.ts";
 
 // deno-lint-ignore no-explicit-any
-export const manageView = (categories: CategoryProps[], products: ProductsProps[], errors?: any) => {
+export const manageView = (categories: Category[], products: Product[], errors?: any) => {
     let fragments;
     if (errors) fragments = getErrFragments(errors);
 
@@ -89,7 +89,7 @@ export const manageView = (categories: CategoryProps[], products: ProductsProps[
                         <label for="productCategory">Category</label>
                         <select name="productCategory" id="productCategory">
                             ${categories.map(c => {
-                                return `<option value="${c.id}">${c.name}</option>`
+                                return `<option value="${c.name}">${c.name}</option>`
                             }).join("")}
                         </select>
 

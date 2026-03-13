@@ -49,15 +49,14 @@ deno task start
 ### Functionality 
 
 - ~~Login~~
-- Cart
+- ~~Cart~~
 - Checkout
 
 ### To Change
 
-- ~~singularize about us~~
-- ~~collect phone, email, address~~
-- ~~restrict address to certain area (city?)~~
 - new table "orders" to take care of checkouts
 - require user page to change address
-- ~~cleaner nav bar (move title to home)~~
-- ~~find a solution to the products page or make a seperate cart page (i think the latter is the best?)~~
+- add accessibility features (aria)
+- add escape() to anywhere involving ${} <---
+- bulletproof auth (only have one session per user)
+- fix some things in "about me"

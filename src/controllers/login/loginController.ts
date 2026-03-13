@@ -28,5 +28,5 @@ export const loginPostController = async (ctx: Context) => {
     }
 
     login(headers, validated.username);
-    return redirect(headers, "/login", `Logged in as ${validated.username}`);
+    return redirect(headers, "/", `Logged in as ${validated.username}`);
 }

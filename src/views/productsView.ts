@@ -1,21 +1,33 @@
-import { CategoryProps } from "../models/categoryModel.ts";
-import { ProductsProps } from "../models/productsModel.ts";
+import { Category } from "../models/categoryModel.ts";
+import { Product } from "../models/productsModel.ts";
 
-const sortOptions = ["Alphabetical", "Price: Ascending", "Price: Descending"];
+export const productsView = (
+    categories: Category[], 
+    products: Product[], 
+    errors,
+    filterData: {
+        search?: string,
+        categories?: string[],
+        priceRange?: string,
+        sort?: string
+    }
+) => {
+    console.log(errors, filterData);
+    // console.log(filterData.categories["Fruits"])
 
-export const productsView = (categories: CategoryProps[], products: ProductsProps[], errors?) => {
-    console.log(errors);
+    const sortOptions = ["Alphabetical", "Price: Ascending", "Price: Descending"];
 
     const filterView = (isSection: boolean) => {
         return `
         <form id="filterForm" class="${isSection ? "isSection" : ""}">
             <section>
-                <span class="title">Advanced Filter</span>
+                <span class="title">Categories</span>
                 <ul id="filterList">
                     ${categories.map(c => {
                         const it = c.name.toLowerCase();
+                        const isFilter = filterData ? (filterData.categories ? (filterData.categories.includes(c.name) ? "checked" : "") : "") : "";
                         return `<li>
-                                    <input type="checkbox" id="cb-${it}" name="filter-${it}">
+                                    <input type="checkbox" id="cb-${it}" name="filterCategory" value="${c.name}" ${isFilter}>
                                     <label for="cb-${it}">${c.name}</label>
                                 </li>`
                     }).join("")}
@@ -23,7 +35,7 @@ export const productsView = (categories: CategoryProps[], products: ProductsProp
             </section>
             <section>
                 <label for="priceRange" class="title">Price range</label>
-                <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10">    
+                <input type="range" id="priceRange" name="priceRange" min="0" max="400" step="10" value="0">    
             </section>
             <section>
                 <span class="title">Sort</span>
@@ -38,7 +50,9 @@ export const productsView = (categories: CategoryProps[], products: ProductsProp
                 </ul>
             </section>
             <section id="filterDialogOptions">
-                <button type="button" command="close" commandfor="filterDialog" id="filterClose">Close</button>
+                ${!isSection ? `
+                    <button type="button" command="close" commandfor="filterDialog" id="filterClose">Close</button>
+                ` : ""}
                 <input type="submit" value="Apply">
             </section>
         </form>`;
@@ -71,7 +85,7 @@ export const productsView = (categories: CategoryProps[], products: ProductsProp
             <section id="productsMain">
                 <section id="productsUpper">
                     <form>
-                        <input type="search" name="productSearch" placeholder="Search products..." />
+                        <input type="search" name="productSearch" placeholder="Search products..." ${filterData ? (filterData.search ? (`value=${filterData.search}`) : "") : ""}>
                         <input type="submit" value="Search">
                     </form>
                     <section id="productsOptions">

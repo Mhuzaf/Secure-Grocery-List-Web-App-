@@ -12,11 +12,38 @@ import { productsView } from "../views/productsView.ts";
 export const productsController = (ctx: Context) => {
     const { request } = ctx;
     const url = new URL(request.url);
-    console.log(url.searchParams);
 
     const categories = getCategories();
-    const products = getProducts();
-    return render(productsView(categories, products), ctx);
+    let products = getProducts();
+
+    const filterData: {
+        search?: string,
+        categories?: string[],
+        priceRange?: string,
+        sort?: string
+    } = {};
+
+    if (url.searchParams.has("productSearch") && url.searchParams.get("productSearch") != "") {
+        const search = url.searchParams.get("productSearch");
+        
+        products = products.filter((p) => {
+            return p.name.toLowerCase().includes(search);
+        });
+        filterData.search = search;
+    } 
+    
+    // TODO: checked by default?
+    if (url.searchParams.has("filterCategory") && url.searchParams.get("filterCategory") != "") {
+        const items = url.searchParams.getAll("filterCategory");
+        const filteredCategory = [];
+        items.forEach(i =>
+            filteredCategory.push(...products.filter(p => p.category.includes(i)))
+        );
+        products = filteredCategory;
+        filterData.categories = items.map(i => i);
+    }
+
+    return render(productsView(categories, products, null, filterData), ctx);
 }
 
 export const productsPostController = async (ctx: Context) => {
@@ -34,13 +61,13 @@ export const productsPostController = async (ctx: Context) => {
             const categories = getCategories();
             const products = getProducts();
             
-            return render(productsView(categories, products, errors), ctx);
+            return render(productsView(categories, products, errors, null), ctx);
         }
 
         const item = formData.get("addToCart");
 
         const user = getUser(session.username);
-        addToCart(Number.parseInt(item.toString()), user.user_id);
+        addToCart(Number.parseInt(item.toString()), user.userId);
 
         return redirect(headers, "/products", `Added ${item} to cart`);
     }
