@@ -5,6 +5,7 @@ export interface Product {
     name: string,
     price: number,
     category: string,
+    isWeighedPerKg: boolean,
     imageData: Uint8Array<ArrayBuffer>
 }
 

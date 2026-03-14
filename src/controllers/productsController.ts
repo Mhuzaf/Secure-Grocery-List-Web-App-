@@ -55,7 +55,7 @@ export const productsPostController = async (ctx: Context) => {
     const formData = await request.formData();
 
     if (formData.has("addToCart")) {
-        const { isValid, errors } = validateSchema(formData, addToCartSchema); 
+        const { isValid, errors } = validateSchema("addToCart", formData, addToCartSchema); 
         
         if (!isValid) {
             const categories = getCategories();

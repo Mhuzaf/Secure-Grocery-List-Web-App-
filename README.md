@@ -4,7 +4,8 @@ Web Project for Block 3 - Web App Development
 
 ## Running locally
 
-Make sure you have deno installed, Visit the [official site](https://deno.com) for instructions.
+Make sure you have deno installed, Visit the [official site](https://deno.com)
+for instructions.
 
 ```sh
 git clone https://github.com/pnbread/webproject
@@ -12,41 +13,41 @@ cd webproject
 deno install # install dependancies (jsr)
 deno task start
 ```
+
 ### Items
 
 - fruits
-    - apple
-    - banana
-    - mandarin
-    - grapes
-    - watermelon
+  - apple
+  - banana
+  - mandarin
+  - grapes
+  - watermelon
+  - tomato
+  - Dates
+  - Coconut
 - vegetables
-    - tomato
-    - potato
-    - carrot
-    - onion
-    - cabbage
-- drinks
-    - Coffee
-    - Tea
-    - Espresso
-    - Milkshake
-    - Lemonade
+  - potato
+  - carrot
+  - onion
+  - cabbage
 - snacks
-    - Cookie
-    - Cracker
-    - Brownie
+  - Chocolate chip cookie
+  - britannia whole wheat cracker
+  - ritz crackers
+  - parle nutricrunch
 - dairy products
-    - Milk
-    - Yogurt
-    - Mozzarella
+  - Milk
+  - Yogurt
+  - Mozzarella
 - bakery products
-    - Bread
-    - Croissant
-- dry foods
-    - Peanuts
+  - Bread
+  - Croissant
+- nuts
+  - Almond
+  - Peanuts
+  - Walnuts
 
-### Functionality 
+### Functionality
 
 - ~~Login~~
 - ~~Cart~~
@@ -55,8 +56,49 @@ deno task start
 ### To Change
 
 - new table "orders" to take care of checkouts
+- ^^^ make a new page. "/orders"
 - require user page to change address
 - add accessibility features (aria)
 - add escape() to anywhere involving ${} <---
 - bulletproof auth (only have one session per user)
 - fix some things in "about me"
+- modalify the "add products" and add sort buttons (manage)
+
+### locations
+
+```
+Dubai
+Jumeirah
+Deira
+Al Karama
+Bur Dubai
+Business Bay
+
+Sharjah
+Al Ruqa Al Hamra
+Rahmaniya Suburb
+Al Sajaah
+
+Ajman
+Al Muwaihat 3
+Al Talia 1
+Al Talia 2
+```
+
+### items
+
+```
+Fruits
+Apple 5
+Banana 7
+Mandarin 7
+Grapes 10
+Watermelon 6
+Tomato 5
+
+Vegetables
+Potato 8
+Carrot 4
+Onion 4
+Cabbage 2
+```

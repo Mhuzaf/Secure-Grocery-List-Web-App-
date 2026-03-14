@@ -1,12 +1,14 @@
 import { escape } from "@std/html/entities";
-import { getErrFragments } from "../app/errorFragments.ts";
+import { ErrorFragment, FormError, getErrFragments } from "../app/errorFragments.ts";
 import { Category } from "../models/categoryModel.ts";
 import { Product } from "../models/productsModel.ts";
 
-// deno-lint-ignore no-explicit-any
-export const manageView = (categories: Category[], products: Product[], errors?: any) => {
-    let fragments;
+export const manageView = (categories: Category[], products: Product[], errors?: FormError) => {
+    
+    let fragments: ErrorFragment;
     if (errors) fragments = getErrFragments(errors);
+
+    console.log(errors);
 
     const categoryMap = categories.map(c => {
         const name = escape(c.name);
@@ -46,17 +48,22 @@ export const manageView = (categories: Category[], products: Product[], errors?:
                 </tr>`
     }).join("");
 
-    console.log(errors);
-
     return `<section id="manageRoot">
                 <section id="categories">
-                    <p>Manage Categories</p>
-                    <form method="POST">
-                        <input type="hidden" name="manageMethod" value="addCategory">
-                        <input name="addCategory" id="addCategory" type="text" placeholder="New Category" ${errors ? (fragments.addCategory ? fragments.addCategory.value : "" ) : ""} required>
-                        <input type="submit">
-                    </form>
-                    ${errors ? (fragments.addCategory ? fragments.addCategory.message : "" ) : ""}
+                    <h2>Manage Categories</h2>
+                    <section class="options">
+                        <button id="addCategoryButton" command="show-modal" commandfor="addCategoryDialog">Add Category</button>
+                        <form>
+                            <label for="sortCategory">Sorting:</label>
+                            <select name="sortCategory" id="sortCategory">
+                                <option name="nameAsc">Name: Ascending</option>
+                                <option name="nameDsc">Name: Descending</option>
+                                <option name="prodAsc">Products: Ascending</option>
+                                <option name="prodDsc">Products: Descending</option>
+                            </select>
+                            <input type="submit" value="Apply">
+                        </form>
+                    </section>
                     <table id="categoryTable">
                         <thead>
                             <tr>
@@ -71,7 +78,62 @@ export const manageView = (categories: Category[], products: Product[], errors?:
                 </section>
                 <div class="seperator"></div>
                 <section id="products">
-                    <p>Manage Products</p>
+                    <h2>Manage Products</h2>
+                    <section class="options">
+                        <button id="addProductButton" command="show-modal" commandfor="addProductDialog">Add Product</button>
+                    </section>
+                    <table id="productsTable">
+                        <thead>
+                            <tr>
+                                <th class="imageCol">Image</th>
+                                <th>Name</th>
+                                <th class="priceCol">Price</th>
+                                <th class="categoryCol">Category</th>
+                                <th class="actionsCol" colspan=3>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${productsMap}
+                        </tbody>
+                    </table>
+                </section>
+                
+                <dialog id="addCategoryDialog" class="${errors ? (errors.formName == "addCategory" ? "hasError" : "") : ""}" closedby="any">
+                    <p>New Category</p>
+                    <form method="POST">
+                        <input type="hidden" name="manageMethod" value="addCategory">
+                        <input name="addCategory" id="addCategory" type="text" placeholder="New Category" ${errors ? (fragments.addCategory ? fragments.addCategory.value : "" ) : ""} required>
+                        ${errors ? (fragments.addCategory ? fragments.addCategory.message : "" ) : ""}
+                        <button type="button" command="close" commandfor="addCategoryDialog">Cancel</button>
+                        <input type="submit" value="OK">
+                    </form>
+                </dialog>
+
+                <dialog id="editCategoryDialog" closedby="any">
+                    <p id="editCategoryTitle">...</p>
+                    <form method="POST">
+                        <input type="hidden" name="manageMethod" value="editCategory">
+                        <input type="hidden" name="editCategoryId" id="editCategoryId">
+                        <input name="editCategoryNewName" id="editCategoryNewName" type="text" placeholder="New Category" ${errors ? (fragments.editCategoryNewName ? fragments.editCategoryNewName.value : "" ) : ""} required>
+                        <input type="submit" value="Confirm">
+                    </form>
+                    ${errors ? (fragments.editCategoryNewName ? fragments.editCategoryNewName.message : "" ) : ""}
+                </dialog>
+                
+                <dialog id="deleteCategoryDialog" closedby="any">
+                    <p id="deleteDialogTitle">...</p>
+                    <section>
+                        <button command="close" commandfor="deleteCategoryDialog">Cancel</button>
+                        <form method="POST" id="deleteCategoryForm">
+                            <input type="hidden" name="manageMethod" value="deleteCategory">
+                            <input type="hidden" name="deleteCategoryName" id="deleteCategoryName">
+                            <input type="hidden" name="deleteCategory" id="deleteCategory">
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </section>
+                </dialog>
+
+                <dialog id="addProductDialog" class="${errors ? (errors.formName == "addProduct" ? "hasError" : "") : ""}" closedby="any">
                     <form method="POST" enctype="multipart/form-data" class="productForm">
                         <input type="hidden" name="manageMethod" value="addProduct">
                         <label for="productName">Product Name</label>
@@ -99,46 +161,9 @@ export const manageView = (categories: Category[], products: Product[], errors?:
                             ${errors ? (fragments.productImage ? fragments.productImage.message : "") : ""}
                         </section>
 
+                        <button type="button" command="close" commandfor="addProductDialog">Cancel</button>
                         <input type="submit">
                     </form>
-                    <table id="productsTable">
-                        <thead>
-                            <tr>
-                                <th class="imageCol">Image</th>
-                                <th>Name</th>
-                                <th class="priceCol">Price</th>
-                                <th class="categoryCol">Category</th>
-                                <th class="actionsCol" colspan=3>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${productsMap}
-                        </tbody>
-                    </table>
-                </section>
-                
-                <dialog id="editCategoryDialog" closedby="any">
-                    <p id="editCategoryTitle">...</p>
-                    <form method="POST">
-                        <input type="hidden" name="manageMethod" value="editCategory">
-                        <input type="hidden" name="editCategoryId" id="editCategoryId">
-                        <input name="editCategoryNewName" id="editCategoryNewName" type="text" placeholder="New Category" ${errors ? (fragments.editCategoryNewName ? fragments.editCategoryNewName.value : "" ) : ""} required>
-                        <input type="submit" value="Confirm">
-                    </form>
-                    ${errors ? (fragments.editCategoryNewName ? fragments.editCategoryNewName.message : "" ) : ""}
-                </dialog>
-                
-                <dialog id="deleteCategoryDialog" closedby="any">
-                    <p id="deleteDialogTitle">...</p>
-                    <section>
-                        <button command="close" commandfor="deleteCategoryDialog">Cancel</button>
-                        <form method="POST" id="deleteCategoryForm">
-                            <input type="hidden" name="manageMethod" value="deleteCategory">
-                            <input type="hidden" name="deleteCategoryName" id="deleteCategoryName">
-                            <input type="hidden" name="deleteCategory" id="deleteCategory">
-                            <input type="submit" value="Confirm">
-                        </form>
-                    </section>
                 </dialog>
 
                 <dialog id="infoProductDialog" closedby="any">

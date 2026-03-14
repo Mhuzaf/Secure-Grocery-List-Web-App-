@@ -15,13 +15,12 @@ export const registerPostController = async (ctx: Context) => {
     const { request, headers } = ctx;
     const formData = await request.formData();
     
-    const { isValid, errors, validated } = validateSchema(formData, userRegisterSchema);
+    const { isValid, errors, validated } = validateSchema("register", formData, userRegisterSchema);
 
     if (!isValid) {
         return render(registerView(errors), ctx, 400);
     }
 
-    console.log(validated);
     await addUser({
         username: validated.username, 
         password: validated.password, 
@@ -34,6 +33,6 @@ export const registerPostController = async (ctx: Context) => {
     });
 
     login(headers, validated.username);
-    return redirect(headers, "/", `Created user \"${validated.username}\"`);
+    return redirect(headers, "/", `Created user \"${validated.username}\" and logged in.`);
 
 }

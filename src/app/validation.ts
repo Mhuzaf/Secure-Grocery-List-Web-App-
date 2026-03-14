@@ -1,3 +1,14 @@
+import { FormError } from "./errorFragments.ts";
+
+export interface Validation {
+    formName: string,
+    isValid: boolean,
+    errors: FormError,
+    validated: {
+        [key: string]: string
+    }
+}
+
 export const requiredString = (name: string, value: string) => {
     if (!value) return `${name} is required.`;
 }
@@ -8,22 +19,20 @@ export const minLength = (min: number) => {
     }
 }
 
-// deno-lint-ignore no-explicit-any
-export const isImageFile = (name: string, value: any) => {
+export const isImageFile = (name: string, value) => {
     if (!(value instanceof File)) return `${name} must be a file.`
     if (!value.type.startsWith("image/")) return `${name} must be an image file.`
 }
 
-// deno-lint-ignore no-explicit-any
-export const validateField = (name: string, value: any, validators: any) : string => {
+export const validateField = (name: string, value, validators) : string => {
     for (const validator of validators) {
         const error = validator(name, value);
         if (error) return error;
     }
 }
 
-// deno-lint-ignore no-explicit-any
-export const validateSchema = (formData: FormData, schema: any): { isValid: boolean, errors: any, validated: any } => {
+export const validateSchema = (formName: string, formData: FormData, schema): Validation => {
+    // Schema .js entries
     const entries: [string, { displayName?: string, validators?: string }][] = Object.entries(schema);
     const validated = {};
     let isValid = true;
@@ -37,5 +46,5 @@ export const validateSchema = (formData: FormData, schema: any): { isValid: bool
     })
     
     const errors = Object.fromEntries(errorEntries);
-    return { isValid, errors, validated };
+    return { formName, isValid, errors: { formName: formName, errors: errors }, validated };
 }

@@ -18,6 +18,5 @@ export const updateCategory = (id: string, name: string) => {
 }
 
 export const deleteCategory = (id: string) => {
-    console.log(id)
     db.prepare("DELETE FROM category WHERE id = ?").run(id);
 }

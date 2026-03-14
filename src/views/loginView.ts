@@ -1,8 +1,8 @@
 import { defaultLocations } from "../app/defaults.ts"
-import { getErrFragments } from "../app/errorFragments.ts";
+import { ErrorFragment, getErrFragments } from "../app/errorFragments.ts";
 
 export const loginView = (errors?) => {
-    let fragments;
+    let fragments: ErrorFragment;
     if (errors) fragments = getErrFragments(errors);
     
     console.log(errors) 
@@ -34,7 +34,7 @@ export const loginView = (errors?) => {
 };
 
 export const registerView = (errors?) => {
-    let fragments;
+    let fragments: ErrorFragment;
     if (errors) fragments = getErrFragments(errors);
     
     console.log(errors)

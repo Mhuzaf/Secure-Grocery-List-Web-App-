@@ -15,7 +15,7 @@ export const loginPostController = async (ctx: Context) => {
     const { request, headers } = ctx;
     const formData = await request.formData();
     
-    const { isValid, errors, validated } = validateSchema(formData, userLoginSchema);
+    const { isValid, errors, validated } = validateSchema("login", formData, userLoginSchema);
 
     if (!isValid) {
         return render(loginView(errors), ctx, 400);

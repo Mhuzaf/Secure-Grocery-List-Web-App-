@@ -32,7 +32,7 @@ export const managePostController = async (ctx: Context) => {
 
     switch (formData.get("manageMethod")) {
         case "addCategory": {
-            const { isValid, errors } = validateSchema(formData, addCategorySchema); 
+            const { isValid, errors } = validateSchema("addCategory", formData, addCategorySchema); 
 
             if (!isValid) {
                 const categories = getCategories();
@@ -48,7 +48,7 @@ export const managePostController = async (ctx: Context) => {
         }
 
         case "editCategory": {
-            const { isValid, errors } = validateSchema(formData, editCategorySchema); 
+            const { isValid, errors } = validateSchema("editCategory", formData, editCategorySchema); 
             
             if (!isValid) {
                 const categories = getCategories();
@@ -65,7 +65,7 @@ export const managePostController = async (ctx: Context) => {
         }
 
         case "deleteCategory": {
-            const { isValid, errors } = validateSchema(formData, deleteCategorySchema); 
+            const { isValid, errors } = validateSchema("deleteCategory", formData, deleteCategorySchema); 
 
             if (!isValid) {
                 const categories = getCategories();
@@ -82,7 +82,7 @@ export const managePostController = async (ctx: Context) => {
         }
 
         case "addProduct": {
-            const { isValid, errors } = validateSchema(formData, addProductSchema); 
+            const { isValid, errors } = validateSchema("addProduct", formData, addProductSchema); 
 
             if (!isValid) {
                 const categories = getCategories();
