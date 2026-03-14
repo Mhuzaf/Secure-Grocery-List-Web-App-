@@ -1,7 +1,7 @@
 import { db } from "../app/db.ts"
 
 export interface UserProps {
-    user_id?:  number,
+    userId?:  number,
     username: string,
     password?: string,
     access?: string,
@@ -32,7 +32,7 @@ const hashedPassword = async (password: string) => {
 export const addUser = async (data: UserProps) => {
     const pw = await hashedPassword(data.password);
     db.prepare(`
-        INSERT INTO users (username, password, access, email, phone_no, city, street, room_no) VALUES
+        INSERT INTO users (username, password, access, email, phoneNo, city, street, roomNo) VALUES
         (?, ?, ?, ?, ?, ?, ?, ?)  
     `).run(data.username, pw, data.access, data.email, data.phoneNo, data.city, data.street, data.roomNo);
 }

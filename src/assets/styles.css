@@ -8,7 +8,8 @@ html {
     --color-fg: #1f290a;
     --color-bg: white;
     --color-header-fg:  #3d5214;
-    --color-button-fg: #5c7b1e;
+    --color-button-bg: #c2e184;
+    --color-button-fg: #3d5214;
     --color-card: whitesmoke;
     --color-card2: #f5faea;
     --color-footer: black;
@@ -30,6 +31,22 @@ a {
 button, input, select {
     font-family: "Inter";
     width: fit-content;
+}
+
+input[type="submit"],
+button {
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    padding:  0.3em 0.5em;
+    border-radius: 0.5em;
+    border: none;
+    background-color: var(--color-button-bg);
+    color: var(--color-button-fg);
+
+    &:hover {
+        background-color: var(--color-base) !important;
+    }
 }
 
 /*  */
@@ -71,7 +88,25 @@ body {
             a {
                 margin: 1em 0;
             }
+        }
 
+        #pagesButton {
+            display: none;
+            background-color: unset;
+            padding: 0;
+            font-size: large;
+            margin: 0.5em;
+        }
+
+        #pagesDialog {
+            ul {
+                list-style-type: none;
+                padding: 0;
+
+                li > a {
+                    color: var(--color-button-fg);
+                }
+            }
         }
     }
 
@@ -94,16 +129,16 @@ body {
         header {
             padding: 0;
 
-            nav {
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: start;
-                margin: 0;
+            .title {
+                display: inline;
+            }
 
-                a {
-                    margin: 0;
-                    padding: 0.5em;
-                }
+            nav {
+                display: none;
+            }
+
+            #pagesButton {
+                display: inline;
             }
         }
     }
@@ -228,7 +263,7 @@ body {
         padding: 1em;
 
         #productsFilter {
-            flex-grow: 1;
+            flex-grow: 0;
             flex-shrink: 0;
             flex-basis: auto;
 
@@ -290,6 +325,7 @@ body {
         }
         
         #productsMain {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 1em;
@@ -298,7 +334,7 @@ body {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                gap: 1em;
+                gap: 0.5em;
 
                 #productsOptions {
                     display: flex;
@@ -306,19 +342,6 @@ body {
 
                     button {
                         display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        gap: 0.5em;
-                        padding: 0.5em;
-                        border-radius: 0.5em;
-                        border: none;
-                        background-color: #c2e184;
-                        color: var(--color-button-fg);
-
-                        &:hover {
-                            background-color: var(--color-base) !important;
-                            /* color: white !important; */
-                        }
                     }
                 }
 
@@ -338,8 +361,7 @@ body {
 
             #productsItemsView {
                 display: grid;
-                grid-auto-rows: auto;
-                grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(8em, 1fr));
                 grid-auto-rows: 1fr;
                 gap: 1em;
 
@@ -580,17 +602,13 @@ body {
             margin: 0;
         }
 
-        section {
+        > section {
             
-            .productForm {
-                display: grid;
-                grid-template-columns: auto auto;
-                width: fit-content;
-                gap: 1em;
-
-                section {
-                    width: fit-content;
-                }
+            /* TODO: rename to option bars */
+            .options {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5em;
             }
 
             table {
@@ -608,13 +626,14 @@ body {
                     th {
                         text-align: start;
                         background-color: var(--color-base);
+                        color: var(--color-button-fg);
                     }
 
                     .imageCol {
                         text-align: center;
 
                         img {
-                            width: 16px;
+                            height: 2em;
                         };
                     }     
 
@@ -628,6 +647,14 @@ body {
                 }
             }
 
+            @media screen and (min-width: 400px) {
+                #productsTable {
+                    .showCol {
+                        display: none;
+                    }
+                }
+            }
+
             @media screen and (max-width: 400px) {
                 #productsTable {
                     .imageCol, 
@@ -637,12 +664,27 @@ body {
                     .deleteCol {
                         display: none;
                     }
+                    
+                    .showCol {
+                        display: inline;
+                    }
                 }
             }
         }
 
         .seperator {
             border-top: 1px solid slategray;
+        }
+
+        #addProductDialog > form {
+            display: grid;
+            grid-template-columns: auto auto;
+            width: fit-content;
+            gap: 1em;
+
+            section {
+                width: fit-content;
+            }
         }
 
         #deleteCategoryDialog {

@@ -2,6 +2,9 @@ export const company = "GreensMart"
 
 export const title = `${company} Groceries`;
 
+// TODO: make this a table
+// and store it like a map...??
+// TODO: make this less miserable using proper OOP
 export const defaultLocations = [
     {
         city: "Dubai",
@@ -41,15 +44,15 @@ export const defaultProducts = [
                 name: "Watermelon",
                 price: 6,
             },
-        ]
-    },
-    {
-        category: "Vegetables",
-        items: [
             {
                 name: "Tomato",
                 price: 5,
             },
+        ].sort((a, b) => a.name.localeCompare(b.name))
+    },
+    {
+        category: "Vegetables",
+        items: [
             {
                 name: "Potato",
                 price: 8,
@@ -66,26 +69,23 @@ export const defaultProducts = [
                 name: "Cabbage",
                 price: 2,
             },
-        ]
+        ].sort((a, b) => a.name.localeCompare(b.name))
     },
     {
-        category: "Drinks",
-        items: []
-    },
-    {
-        category: "Snacks",
-        items: []
+        category: "Dry Snacks",
+        items: [
+        ].sort((a, b) => a.name.localeCompare(b.name))
     },
     {
         category: "Dairy Products",
-        items: []
+        items: [].sort((a, b) => a.name.localeCompare(b.name))
     },
     {
         category: "Bakery Products",
-        items: []
+        items: [].sort((a, b) => a.name.localeCompare(b.name))
     },
     {
-        category: "Dry Foods",
-        items: []
+        category: "Nuts",
+        items: [].sort((a, b) => a.name.localeCompare(b.name))
     }
 ].sort();

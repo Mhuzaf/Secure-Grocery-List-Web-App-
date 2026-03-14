@@ -1,14 +1,24 @@
 const categoryItems = document.querySelectorAll(".categoryItem");
 
-const editCategoryDialog = document.getElementById("editCategoryDialog");
-const editCategoryTitle = document.getElementById("editCategoryTitle");
-const editCategoryInputId = document.getElementById("editCategoryId");
-const editCategoryInputNewName = document.getElementById("editCategoryNewName");
+const addCategoryDialog =   document.getElementById("addCategoryDialog");
 
-const deleteCategoryDialog = document.getElementById("deleteCategoryDialog");
-const deleteDialogTitle = document.getElementById("deleteDialogTitle");
-const deleteDialogItemName = document.getElementById("deleteCategoryName");
-const deleteDialogInput = document.getElementById("deleteCategory");
+const editCategoryDialog =          document.getElementById("editCategoryDialog");
+const editCategoryTitle =           document.getElementById("editCategoryTitle");
+const editCategoryInputId =         document.getElementById("editCategoryId");
+const editCategoryInputNewName =    document.getElementById("editCategoryNewName");
+
+const deleteCategoryDialog =    document.getElementById("deleteCategoryDialog");
+const deleteDialogTitle =       document.getElementById("deleteDialogTitle");
+const deleteDialogItemName =    document.getElementById("deleteCategoryName");
+const deleteDialogInput =       document.getElementById("deleteCategory");
+
+const addProductDialog = document.getElementById("addProductDialog");
+
+if (addCategoryDialog.classList.contains("hasError"))
+    addCategoryDialog.showModal();
+
+if (addProductDialog.classList.contains("hasError"))
+    addProductDialog.showModal();
 
 categoryItems.forEach(category => {
     // Edit dialog

@@ -1,13 +1,12 @@
-import { currentSession, logout } from "../../app/auth.ts";
+import { logout } from "../../app/auth.ts";
 import { redirect } from "../../app/redirect.ts";
-import Routes from "../../app/routes.ts";
+import { Context } from "../../app/router.ts";
 
-export const logoutController = (request: Request) => {
-    const session = currentSession(request.headers);
-    const headers = new Headers();
+export const logoutController = (ctx: Context) => {
+    const { session, headers } = ctx;
     if (session) {
         logout(headers, session);
-        return redirect(headers, Routes.HOME.route, `Logged out!`);
+        return redirect(headers, "/", `Logged out!`);
     }
-    return redirect(headers, Routes.HOME.route, `Failed to log out.`);
+    return redirect(headers, "/", `Failed to log out.`);
 }

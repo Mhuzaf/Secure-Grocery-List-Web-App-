@@ -1,95 +1,94 @@
 import { render } from "../app/render.ts";
 import { manageView } from "../views/manageView.ts";
 import { redirect } from "../app/redirect.ts";
-import Routes from "../app/routes.ts";
 import { validateSchema } from "../app/validation.ts";
 import { addCategorySchema, deleteCategorySchema, editCategorySchema } from "../schema/categorySchema.ts";
 import { addProductSchema } from "../schema/productSchema.ts";
-import { currentSession } from "../app/auth.ts";
 import { addCategory, deleteCategory, getCategories, updateCategory } from "../models/categoryModel.ts";
-import { getProducts } from "../models/productsModel.ts";
+import { addProduct, getProducts } from "../models/productsModel.ts";
+import { Context } from "../app/router.ts";
 
 
-export const manageController = (request: Request) => {
-    const session = currentSession(request.headers);
-    if (!session || session.role != "admin") {
-        const headers = new Headers();
-        return redirect(headers, Routes.HOME.route, `Page access is not authorized.`);
+export const manageController = (ctx: Context) => {
+    const { session, headers } = ctx;
+    if (!session || session.access != "admin") {
+        return redirect(headers, "/", `Page access is not authorized.`);
     }
     
     const categories = getCategories();
     const products = getProducts();
 
-    return render(manageView(categories, products), request);
+    return render(manageView(categories, products), ctx);
 }
 
-export const managePostController = async (request: Request) => {
+export const managePostController = async (ctx: Context) => {
+    const { request, session, headers } = ctx;
+    if (!session || session.access != "admin") {
+        return redirect(headers, "/", `Page access is not authorized.`);
+    }
     const formData = await request.formData();
 
     console.log(formData.get("manageMethod"))
 
     switch (formData.get("manageMethod")) {
         case "addCategory": {
-            const { isValid, errors } = validateSchema(formData, addCategorySchema); 
+            const { isValid, errors } = validateSchema("addCategory", formData, addCategorySchema); 
 
             if (!isValid) {
                 const categories = getCategories();
                 const products = getProducts();
                 
-                return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), ctx, 400);
             }
             
             const newItem = formData.get("addCategory");
             addCategory(newItem.toString());
 
-            const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `Added ${newItem} to category.`);
+            return redirect(headers, "/manage", `Added ${newItem} to category.`);
         }
 
         case "editCategory": {
-            const { isValid, errors } = validateSchema(formData, editCategorySchema); 
+            const { isValid, errors } = validateSchema("editCategory", formData, editCategorySchema); 
             
             if (!isValid) {
                 const categories = getCategories();
                 const products = getProducts();
 
-                return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), ctx, 400);
             }
 
             const id = formData.get("editCategoryId");
             const newItem = formData.get("editCategoryNewName");
             updateCategory(id.toString(), newItem.toString());
 
-            const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `Updated a category to \"${newItem}\".`);
+            return redirect(headers, "/manage", `Updated a category to \"${newItem}\".`);
         }
 
         case "deleteCategory": {
-            const { isValid, errors } = validateSchema(formData, deleteCategorySchema); 
+            const { isValid, errors } = validateSchema("deleteCategory", formData, deleteCategorySchema); 
 
             if (!isValid) {
                 const categories = getCategories();
                 const products = getProducts();
 
-                return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), ctx, 400);
             }
 
             const item = formData.get("deleteCategory");
             const itemName = formData.get("deleteCategoryName");
             deleteCategory(item.toString().toLowerCase().replace(RegExp("\\s+"), "_"));
 
-            const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `Deleted ${itemName} from category.`);
+            return redirect(headers, "/manage", `Deleted ${itemName} from category.`);
         }
 
         case "addProduct": {
-            const { isValid, errors } = validateSchema(formData, addProductSchema); 
+            const { isValid, errors } = validateSchema("addProduct", formData, addProductSchema); 
 
             if (!isValid) {
                 const categories = getCategories();
                 const products = getProducts();
 
-                return render(manageView(categories, products, errors), request, 400);
+                return render(manageView(categories, products, errors), ctx, 400);
             }
 
             const productName = formData.get("productName");
@@ -97,10 +96,16 @@ export const managePostController = async (request: Request) => {
             const productCategory = formData.get("productCategory");
             const productImage = formData.get("productImage") as File;
 
-            console.log(productName, productPrice, productCategory, productImage);
+            // console.log(productName, productPrice, productCategory, productImage);
+            const imageFile = await productImage.bytes();
+            addProduct({
+                name: productName.toString(), 
+                category: productCategory.toString(), 
+                price: Number.parseInt(productPrice.toString()),
+                imageData: imageFile
+            });
 
-            const headers = new Headers();
-            return redirect(headers, Routes.MANAGE.route, `stub!`);
+            return redirect(headers, "/manage", `Added Product \"${productName.toString()}\"`);
         }
     }
 }

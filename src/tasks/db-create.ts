@@ -7,8 +7,8 @@ import { addUser } from "../models/userModel.ts";
 // Create/Reset
 
 db.exec(`
-    DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS cart;
+    DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS category;
     DROP TABLE IF EXISTS sessions;
     DROP TABLE IF EXISTS users;
@@ -23,33 +23,33 @@ db.exec(`
         name TEXT NOT NULL,
         price INTEGER NOT NULL,
         category TEXT NOT NULL,
-        mime_type TEXT,
-        image_data BLOB
+        mimeType TEXT,
+        imageData BLOB
     );
  
     CREATE TABLE cart (
-        user_id INTEGER,
-        product_id INTEGER,
-        FOREIGN KEY (user_id) REFERENCES users(user_id),
-        FOREIGN KEY (product_id) REFERENCES products(id)
+        userId INTEGER,
+        productId INTEGER,
+        FOREIGN KEY (userId) REFERENCES users(userId),
+        FOREIGN KEY (productId) REFERENCES products(id)
     );
 
     CREATE TABLE users (
-        user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        userId INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
         access TEXT DEFAULT 'normal',
         email TEXT NOT NULL,
-        phone_no TEXT,
+        phoneNo TEXT,
         city TEXT,
         street TEXT,
-        room_no TEXT
+        roomNo TEXT
     );
 
     CREATE TABLE sessions (
-        session_id TEXT PRIMARY KEY,
+        sessionId TEXT PRIMARY KEY,
         username TEXT NOT NULL,
-        role TEXT NOT NULL,
+        access TEXT NOT NULL,
         FOREIGN KEY (username) REFERENCES users(username)
     );
 `);
@@ -78,8 +78,7 @@ defaultProducts.forEach((d: { category: string, items: { name: string, price: nu
             category: d.category,
             name: i.name,
             price: i.price,
-            mime_type: "png",
-            image_data: imageFile
+            imageData: imageFile
         });
     });
 });
