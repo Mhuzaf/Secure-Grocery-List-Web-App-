@@ -10,6 +10,19 @@ export interface Product {
     imageData?: Uint8Array<ArrayBuffer>
 }
 
+export const createProductsTable = () => {
+    db.prepare(`
+        CREATE TABLE products (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            price INTEGER NOT NULL,
+            isWeighedPerKg BOOLEAN NOT NULL,
+            category TEXT NOT NULL,
+            imageData BLOB
+        );
+    `).run();
+}
+
 export const getProduct = (id: number): Product => {
     return db.prepare(`
         SELECT * FROM products WHERE id = ?
@@ -70,4 +83,8 @@ export const getProductImage = (id: string) => {
     ).get(id);
 
     return new File([imageData], name);
+}
+
+export const deleteProductsTable = () => {
+    db.prepare("DROP TABLE IF EXISTS products").run();
 }

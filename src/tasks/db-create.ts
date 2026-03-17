@@ -1,62 +1,25 @@
-import { db } from "../app/db.ts"
 import { defaultProducts } from "../app/defaults.ts";
-import { addCategory } from "../models/categoryModel.ts";
-import { addProduct } from "../models/productsModel.ts";
-import { addUser } from "../models/userModel.ts";
+import { createCartTable, deleteCartTable } from "../models/cartModel.ts";
+import { addCategory, createCategoryTable, deleteCategoryTable } from "../models/categoryModel.ts";
+import { addProduct, createProductsTable, deleteProductsTable } from "../models/productsModel.ts";
+import { createSessionsTable, deleteSessionsTable } from "../models/sessionsModel.ts";
+import { addUser, createUsersTable, deleteUsersTable } from "../models/userModel.ts";
 
-// Create/Reset
+// Reset
+deleteCartTable();
+deleteProductsTable();
+deleteCategoryTable();
+deleteSessionsTable();
+deleteUsersTable();
 
-db.exec(`
-    DROP TABLE IF EXISTS cart;
-    DROP TABLE IF EXISTS products;
-    DROP TABLE IF EXISTS category;
-    DROP TABLE IF EXISTS sessions;
-    DROP TABLE IF EXISTS users;
-
-    CREATE TABLE category (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        amount INTEGER DEFAULT '0'
-    );
-
-    CREATE TABLE products (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        price INTEGER NOT NULL,
-        isWeighedPerKg BOOLEAN NOT NULL,
-        category TEXT NOT NULL,
-        imageData BLOB
-    );
- 
-    CREATE TABLE cart (
-        userId INTEGER,
-        productId INTEGER,
-        FOREIGN KEY (userId) REFERENCES users(userId),
-        FOREIGN KEY (productId) REFERENCES products(id)
-    );
-
-    CREATE TABLE users (
-        userId INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL,
-        access TEXT DEFAULT 'normal',
-        email TEXT NOT NULL,
-        phoneNo TEXT,
-        city TEXT,
-        street TEXT,
-        roomNo TEXT
-    );
-
-    CREATE TABLE sessions (
-        sessionId TEXT PRIMARY KEY,
-        username TEXT NOT NULL,
-        access TEXT NOT NULL,
-        FOREIGN KEY (username) REFERENCES users(username)
-    );
-`);
+// Create
+createCategoryTable();
+createProductsTable();
+createCartTable();
+createUsersTable();
+createSessionsTable();
 
 // Populate
-
 await addUser({
     username: "admin",
     password: "12345",

@@ -6,6 +6,16 @@ export interface Category {
     amount: number
 }
 
+export const createCategoryTable = () => {
+    db.prepare(`
+        CREATE TABLE category (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            amount INTEGER DEFAULT '0'
+        );
+    `).run();
+}
+
 export const addCategory = (name: string) => {
     db.prepare("INSERT INTO category (name) VALUES (?)").run(name);
 }
@@ -29,4 +39,8 @@ export const decrementAmount = (name: string) => {
 
 export const deleteCategory = (id: string) => {
     db.prepare("DELETE FROM category WHERE id = ?").run(id);
+}
+
+export const deleteCategoryTable = () => {
+    db.prepare("DROP TABLE IF EXISTS category").run();
 }
