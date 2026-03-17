@@ -3,6 +3,7 @@ import { db } from "../app/db.ts";
 export interface Category {
     id: number,
     name: string,
+    amount: number
 }
 
 export const addCategory = (name: string) => {
@@ -15,6 +16,15 @@ export const getCategories = () : Category[] => {
 
 export const updateCategory = (id: string, name: string) => {
     db.prepare("UPDATE category SET name = ? WHERE id = ?").run(name, id);
+}
+
+// TODO: maybe change these to use ids.
+export const incrementAmount = (name: string) => {
+    db.prepare("UPDATE category SET amount = amount + 1 WHERE name = ?").run(name);
+}
+
+export const decrementAmount = (name: string) => {
+    db.prepare("UPDATE category SET amount = amount - 1 WHERE name = ?").run(name);
 }
 
 export const deleteCategory = (id: string) => {

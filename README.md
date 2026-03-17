@@ -56,13 +56,13 @@ deno task start
 ### To Change
 
 - new table "orders" to take care of checkouts
-- ^^^ make a new page. "/orders"
+- ^^^ make a new page. "/orders" (+ locations)
 - require user page to change address
 - add accessibility features (aria)
 - add escape() to anywhere involving ${} <---
 - bulletproof auth (only have one session per user)
 - fix some things in "about me"
-- modalify the "add products" and add sort buttons (manage)
+- ~~modalify the "add products" and add sort buttons (manage)~~
 
 ### locations
 

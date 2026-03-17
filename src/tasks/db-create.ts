@@ -15,15 +15,16 @@ db.exec(`
 
     CREATE TABLE category (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
+        name TEXT NOT NULL,
+        amount INTEGER DEFAULT '0'
     );
 
     CREATE TABLE products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         price INTEGER NOT NULL,
+        isWeighedPerKg BOOLEAN NOT NULL,
         category TEXT NOT NULL,
-        mimeType TEXT,
         imageData BLOB
     );
  
@@ -71,13 +72,14 @@ defaultProducts.forEach((d: { category: string }) => {
     addCategory(d.category);
 });
 
-defaultProducts.forEach((d: { category: string, items: { name: string, price: number }[] }) => {
+defaultProducts.forEach((d: { category: string, items: { name: string, price: number, perKg?: boolean }[] }) => {
     d.items.forEach(i => {
         const imageFile = Deno.readFileSync(`src/defaultAssets/${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}/${i.name.toLowerCase()}.png`);
         addProduct({ 
             category: d.category,
             name: i.name,
             price: i.price,
+            isWeighedPerKg: i.perKg ? 1 : 0,
             imageData: imageFile
         });
     });

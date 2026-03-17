@@ -1,5 +1,6 @@
 import { Category } from "../models/categoryModel.ts";
 import { Product } from "../models/productsModel.ts";
+import { Dialog } from "./components/dialog.ts";
 
 export const productsView = (
     categories: Category[], 
@@ -58,6 +59,8 @@ export const productsView = (
         </form>`;
     }
 
+    console.log(products);
+
     const items = products.map(p => {
         return `<article 
                     class="productCard"
@@ -66,11 +69,21 @@ export const productsView = (
                     data-price="${p.price}"
                     data-category=${p.category}
                 >
-                    <img 
+                    <img
+                        class="productCardImage"
                         src="images/${p.id}"
                         alt="An image of ${p.name}"
                     >
-                    <p class="productName">${p.name}</p>
+                    <section>
+                        <p class="productName">${p.name}</p>
+                        <article>
+                            <small class="productPrice">
+                                Dhs. 
+                                <span>${p.price}</span>
+                            </small>
+                            ${p.isWeighedPerKg ? `<small>per kg</small>` : ""}
+                        </article>
+                    </section>
                 </article>`
     }).join("")
 
@@ -78,9 +91,7 @@ export const productsView = (
         <section id="productsRoot">
             <aside id="productsFilter" class="hidden">
                 ${filterView(true)}
-                <dialog id="filterDialog" closedby="any">
-                    ${filterView(false)}
-                </dialog>
+                ${Dialog("filterDialog", "Filter", filterView(false), null)}
             </aside>
             <section id="productsMain">
                 <section id="productsUpper">
@@ -89,12 +100,12 @@ export const productsView = (
                         <input type="submit" value="Search">
                     </form>
                     <section id="productsOptions">
-                        <button id="filterButton" command="show-modal" commandfor="filterDialog">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20z"/></svg>
+                        <button id="filterButton" class="icon" command="show-modal" commandfor="filterDialog">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20z"/></svg>
                             <span>Filter</span>
                         </button>
-                        <button id="cartButton" command="show-modal" commandfor="cartDialog">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M5.588 21.413Q5 20.825 5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22t-1.412-.587m10 0Q15 20.825 15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22t-1.412-.587M5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H1V2h3.25z"/></svg>
+                        <button id="cartButton" class="icon" command="show-modal" commandfor="cartDialog">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M5.588 21.413Q5 20.825 5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22t-1.412-.587m10 0Q15 20.825 15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22t-1.412-.587M5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H1V2h3.25z"/></svg>
                             <span>View Cart</span>
                         </button>
                     </section>
@@ -104,17 +115,18 @@ export const productsView = (
                 </section>
             </section>
             
-            <dialog id="cartDialog" closedby="any">
-            </dialog>
+            ${Dialog("cartDialog", "Your Cart",`
+                <p>TBI</p>    
+            `, null)}
 
-            <dialog id="productOptionsDialog" closedby="any">
+            ${Dialog("productOptionsDialog", "Product", `
                 <p id="productTitle">...</p>
                 <form method="POST">
                     <input type="hidden" name="addToCart" id="addToCart">
                     <input type="submit" value="Add to Cart">
                 </form>
                 <button id="productClose" command="close" commandfor="productOptionsDialog">Close</button>
-            </dialog>
+            `, null)}
         </section>
         <script type="module" src="/src/assets/js/productsSelector.js"></script>
     `;
