@@ -6,6 +6,17 @@ export interface SessionProps {
     access: string
 }
 
+export const createSessionsTable = () => {
+    db.prepare(`
+        CREATE TABLE sessions (
+            sessionId TEXT PRIMARY KEY,
+            username TEXT NOT NULL,
+            access TEXT NOT NULL,
+            FOREIGN KEY (username) REFERENCES users(username)
+        );
+    `).run();
+}
+
 export const createSession = (username: string, role: string) => {
     const sessionId = crypto.randomUUID();
     db.prepare(`
@@ -25,4 +36,8 @@ export const deleteSession = (sessionId: string) => {
     db.prepare(`
         DELETE FROM sessions WHERE sessionId = ?
     `).run(sessionId);
+}
+
+export const deleteSessionsTable = () => {
+    db.prepare("DROP TABLE IF EXISTS sessions").run();
 }

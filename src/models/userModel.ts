@@ -28,6 +28,21 @@ const hashedPassword = async (password: string) => {
     return Array.from(new Uint8Array(buffer)).map(byte => byte.toString(16).padStart(2, "0")).join("");
 }
 
+export const createUsersTable = () => {
+    db.prepare(`
+        CREATE TABLE users (
+            userId INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            access TEXT DEFAULT 'normal',
+            email TEXT NOT NULL,
+            phoneNo TEXT,
+            city TEXT,
+            street TEXT,
+            roomNo TEXT
+        );
+    `).run();
+}
 
 export const addUser = async (data: UserProps) => {
     const pw = await hashedPassword(data.password);
@@ -49,4 +64,8 @@ export const checkCredentials = async (username: string, password: string) => {
 
     const hashed = await hashedPassword(password);
     return hashed == user.password;
+}
+
+export const deleteUsersTable = () => {
+    db.prepare("DROP TABLE IF EXISTS users").run();
 }
