@@ -27,26 +27,32 @@ export const defaultProducts = [
             {
                 name: "Apple",
                 price: 5,
+                perKg: true
             },
             {
                 name: "Banana",
                 price: 7,
+                perKg: true
             },
             {
                 name: "Mandarin",
                 price: 7,
+                perKg: true
             },
             {
                 name: "Grapes",
                 price: 10,
+                perKg: true
             },
             {
                 name: "Watermelon",
                 price: 6,
+                perKg: true
             },
             {
                 name: "Tomato",
                 price: 5,
+                perKg: true
             },
         ].sort((a, b) => a.name.localeCompare(b.name))
     },
@@ -56,18 +62,22 @@ export const defaultProducts = [
             {
                 name: "Potato",
                 price: 8,
+                perKg: true
             },
             {
                 name: "Carrot",
                 price: 4,
+                perKg: true
             },
             {
                 name: "Onion",
                 price: 4,
+                perKg: true
             },
             {
                 name: "Cabbage",
                 price: 2,
+                perKg: true
             },
         ].sort((a, b) => a.name.localeCompare(b.name))
     },

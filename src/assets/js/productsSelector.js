@@ -1,10 +1,8 @@
-// Filter panel
+// Filter dialog
 
 const filterButton = document.getElementById("filterButton");
 const filterClose = document.getElementById("filterClose");
 const filterDialog = document.getElementById("filterDialog");
-
-console.log(filterClose);
 
 filterButton.addEventListener("click", () => {
     filterDialog.showModal();
@@ -24,7 +22,8 @@ const productInput = document.getElementById("addToCart");
 const productClose = document.getElementById("productClose");
 
 productItems.forEach(item => {
-    item.addEventListener("click", () => {
+    // <img>
+    item.children[0].addEventListener("click", () => {
         console.log(item.dataset.name, item.dataset.price, item.dataset.category)
         productTitle.textContent = item.dataset.name;
         productInput.value = item.dataset.id;
@@ -37,5 +36,6 @@ productClose.addEventListener("click", () => {
 });
 
 productDialog.addEventListener("cancel", () => {
+    productTitle.textContent = "";
     productInput.value = "";
 });

@@ -1,3 +1,4 @@
+import { Dialog } from "../views/components/dialog.ts";
 import { company, title } from "./defaults.ts";
 import { getFlash } from "./flash.ts";
 import { Context } from "./router.ts";
@@ -58,7 +59,7 @@ const routesMap = routes.map(r => {
 export const render = (content: string, ctx: Context, status = 200) => {
     const { request, session, headers } = ctx;
     
-    headers.set("content-type", "text/html");
+    headers.set("Content-Type", "text/html");
 
     const flash = getFlash(request.headers, headers);
     const flashMsg = flash ? `
@@ -78,7 +79,7 @@ export const render = (content: string, ctx: Context, status = 200) => {
                 <link rel="stylesheet" href="/src/assets/styles.css">
             </head>
             <body>
-                <header>
+                <header id="mainHeader">
                     <a href="/" class="title">
                         <h2>${title}</h2>
                     </a>
@@ -95,8 +96,7 @@ export const render = (content: string, ctx: Context, status = 200) => {
                     <button id="pagesButton" command="show-modal" commandfor="pagesDialog">
                         Pages
                     </button>
-                    <dialog id="pagesDialog" closedby="any">
-                        <p>Navigation</p>
+                    ${Dialog("pagesDialog", "Navigation", `
                         <ul>
                             ${routes.map(r => {
                                 return `<li>
@@ -115,7 +115,7 @@ export const render = (content: string, ctx: Context, status = 200) => {
                             ` : ""}
                         `: ""}
                         </ul>
-                    </dialog>
+                    `, null)}
                 </header>
 
                 ${flashMsg}

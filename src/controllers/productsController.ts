@@ -67,7 +67,7 @@ export const productsPostController = async (ctx: Context) => {
         const item = formData.get("addToCart");
 
         const user = getUser(session.username);
-        addToCart(Number.parseInt(item.toString()), user.userId);
+        addToCart(parseInt(item.toString()), user.userId);
 
         return redirect(headers, "/products", `Added ${item} to cart`);
     }
