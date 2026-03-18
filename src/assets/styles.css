@@ -33,7 +33,15 @@ a {
 button, input, select, option {
     font-size: medium;
     font-family: "Inter";
-    width: fit-content;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+select {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 input[type="checkbox"] {
@@ -81,7 +89,9 @@ button {
 
 input[type="search"], 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
     border: none;
     border-radius: 0.5em;
     padding: 0.3em 0.5em;
@@ -119,9 +129,8 @@ dialog {
         gap: 1em;
         width: 100%;
 
-        > p {
+        > h2 {
             margin: 0;
-            font-weight: bold;
         }
     }
 
@@ -135,6 +144,11 @@ dialog {
         margin-top: 1em;
         gap: 0.5em !important;
     }
+}
+
+.error {
+    margin: 0;
+    color: red;
 }
 
 /*  */
@@ -585,55 +599,84 @@ body {
     /* Login/Register View */
 
     #loginRoot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin: 1em;
 
-        a {
-            color: var(--color-button-fg);
-        }
-
-        #loginForm {
+        article {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1em;
+            background-color: var(--color-card);
+            padding: 1em;
+            border-radius: 0.5em;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
-            section {
+            h2 {
+                text-align: center;
+                margin: 0;
+            }
+            
+            a {
+                color: var(--color-button-fg);
+            }
+
+            #loginForm {
                 display: flex;
                 flex-direction: column;
-
-                label {
-                    margin-bottom: 4px;
-                }
-
-                .error {
-                    margin: 0;
-                    color: red;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 1em;
+    
+                section {
+                    display: flex;
+                    flex-direction: column;
+    
+                    label {
+                        margin-bottom: 4px;
+                    }
                 }
             }
         }
     }
 
     #registerRoot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin: 1em;
 
-        a {
-            color: var(--color-button-fg);
-        }
+        article {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--color-card);
+            padding: 1em;
+            border-radius: 0.5em;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
-        #registerForm {
-            width: fit-content;
-            display: grid;
-            grid-template-columns: auto auto;
-            gap: 1em;
-
-            input, select {
-                width: fit-content;
+            h2 {
+                text-align: center;
+                margin: 0;
             }
 
-            .error {
-                margin: 0;
-                color: red;
+            #authSwitch {
+                text-align: center;
+                
+                a {
+                    color: var(--color-button-fg);
+                }
+            }
+
+            ul {
+                padding: 0;
+                margin: 0 1em;
+            }
+
+            #registerGrid {
+                display: grid;
+                grid-template-columns: auto auto;
+                gap: 1em;
+                margin: 1em 0;
             }
         }
     }
@@ -642,11 +685,42 @@ body {
 
     /* Profile View */
 
-    #profileLoginMsg {
+    #profileRoot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin: 1em;
 
-        a {
-            color: var(--color-header-fg)
+        article {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--color-card);
+            padding: 1em;
+            border-radius: 0.5em;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+            h2 {
+                text-align: center;
+                margin: 0;
+            }
+
+            p {
+                margin: 0.5em 0;
+            }
+
+            #profileActions {
+                display: grid;
+                grid-auto-flow: column;
+                grid-auto-columns: 1fr;
+                gap: 0.5em;
+                margin: auto;
+                margin-top: 1em;
+
+                button {
+                    width: 100%;
+                    cursor: pointer;
+                }
+            }
         }
     }
 
@@ -656,11 +730,6 @@ body {
 
     #manageRoot {
         padding: 1em;
-
-        .error {
-            color: red;
-            margin: 0;
-        }
 
         details {
 
@@ -755,7 +824,6 @@ body {
             }
         } 
         
-
         .seperator {
             border-top: 1px solid slategray;
         }

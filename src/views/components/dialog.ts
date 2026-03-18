@@ -7,7 +7,7 @@ export const Dialog = (
     return `
         <dialog id="${id}" class="${hasError ? "hasError" : ""}" closedby="any">
             <header id="dialogHeader">
-                <p id="dialogTitle-${id}">${title}</p>
+                <h2 id="dialogTitle-${id}">${title}</h2>
                 <button id="dialogClose" class="flat" command="close" commandfor="${id}">✕</button>
             </header>
             <main>
