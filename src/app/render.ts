@@ -44,6 +44,10 @@ const routes = [
         name: "Products", 
         route: "/products"
     },
+    {
+        name: "Cart",
+        route: "/cart"
+    },
     { 
         name: "Profile", 
         route: "/profile"
@@ -93,7 +97,7 @@ export const render = (content: string, ctx: Context, status = 200) => {
                             ` : ""}
                         `: ""}
                     </nav>
-                    <button id="pagesButton" command="show-modal" commandfor="pagesDialog">
+                    <button id="pagesButton" class="plain2" command="show-modal" commandfor="pagesDialog">
                         Pages
                     </button>
                     ${Dialog("pagesDialog", "Navigation", `

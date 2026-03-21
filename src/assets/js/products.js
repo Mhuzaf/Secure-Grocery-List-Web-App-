@@ -19,6 +19,7 @@ const productItems = document.querySelectorAll(".productCard");
 const productDialog = document.getElementById("productOptionsDialog");
 const productTitle = document.getElementById("productTitle");
 const productInput = document.getElementById("addToCart");
+const productInputId = document.getElementById("addToCartId");
 const productClose = document.getElementById("productClose");
 
 productItems.forEach(item => {
@@ -26,7 +27,8 @@ productItems.forEach(item => {
     item.children[0].addEventListener("click", () => {
         console.log(item.dataset.name, item.dataset.price, item.dataset.category)
         productTitle.textContent = item.dataset.name;
-        productInput.value = item.dataset.id;
+        productInput.value = item.dataset.name;
+        productInputId.value = item.dataset.id;
         productDialog.showModal();
     });
 });

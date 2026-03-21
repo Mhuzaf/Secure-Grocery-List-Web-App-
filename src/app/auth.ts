@@ -2,6 +2,7 @@ import { deleteCookie, getCookies, setCookie } from "@std/http/cookie";
 import { createSession, deleteSession, getSession } from "../models/sessionsModel.ts";
 
 export const login = (headers: Headers, username: string) => {
+    // TODO: can this be made more secure?
     let sessionId;
     if (username === "admin") sessionId = createSession(username, "admin");
     else sessionId = createSession(username, "normal");

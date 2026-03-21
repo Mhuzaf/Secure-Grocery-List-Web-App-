@@ -1,6 +1,6 @@
 import { db } from "../app/db.ts";
 
-export interface CartProps {
+export interface CartItem {
     userId: number,
     productId: number,
 }
@@ -16,15 +16,15 @@ export const createCartTable = () => {
     `).run();
 }
 
-export const getCart = (userId: number) => {
+export const getCartItems = (userId: number): CartItem[] => {
     return db.prepare(`
         SELECT * FROM cart WHERE userId = ?    
-    `).get(userId);
+    `).all(userId);
 }
 
 export const addToCart = (productId: number, userId: number) => {
     db.prepare(`
-        INSERT INTO cart (userId, productPd) VALUES
+        INSERT INTO cart (userId, productId) VALUES
             (?, ?)
     `).run(userId, productId);
 }

@@ -1,5 +1,5 @@
 const password = document.getElementById("password");
-const confirmPass = document.getElementById("confirm_password");
+const confirmPass = document.getElementById("confirmPassword");
 
 const comparePasswords = () => {
     if (password.value == confirmPass.value) {

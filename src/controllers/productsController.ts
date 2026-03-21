@@ -19,9 +19,12 @@ export const productsController = (ctx: Context) => {
     const filterData: {
         search?: string,
         categories?: string[],
-        priceRange?: string,
         sort?: string
     } = {};
+
+    if (url.searchParams.has("sortProducts") && url.searchParams.get("sortProducts") != "") {
+        filterData.sort = url.searchParams.get("sortProducts");
+    } else filterData.sort = "Alphabetical";
 
     if (url.searchParams.has("productSearch") && url.searchParams.get("productSearch") != "") {
         const search = url.searchParams.get("productSearch");
@@ -32,7 +35,6 @@ export const productsController = (ctx: Context) => {
         filterData.search = search;
     } 
     
-    // TODO: checked by default?
     if (url.searchParams.has("filterCategory") && url.searchParams.get("filterCategory") != "") {
         const items = url.searchParams.getAll("filterCategory");
         const filteredCategory = [];
@@ -41,6 +43,17 @@ export const productsController = (ctx: Context) => {
         );
         products = filteredCategory;
         filterData.categories = items.map(i => i);
+    }
+
+    // filterData.sort is already available, so sort last
+    if (filterData.sort == "PriceAscending") {
+        products = products.sort((a, b) => {
+            return a.price - b.price;
+        });
+    } else if (filterData.sort == "PriceDescending") {
+        products = products.sort((a, b) => {
+            return b.price - a.price;
+        });
     }
 
     return render(productsView(categories, products, null, filterData), ctx);
@@ -55,20 +68,15 @@ export const productsPostController = async (ctx: Context) => {
     const formData = await request.formData();
 
     if (formData.has("addToCart")) {
-        const { isValid, errors } = validateSchema("addToCart", formData, addToCartSchema); 
+        const { isValid, errors, validated } = validateSchema("addToCart", formData, addToCartSchema); 
         
-        if (!isValid) {
-            const categories = getCategories();
-            const products = getProducts();
-            
-            return render(productsView(categories, products, errors, null), ctx);
+        if (!isValid) {            
+            return render(productsView(getCategories(), getProducts(), errors, null), ctx);
         }
 
-        const item = formData.get("addToCart");
-
         const user = getUser(session.username);
-        addToCart(parseInt(item.toString()), user.userId);
+        addToCart(parseInt(validated.addToCartId.toString()), user.userId);
 
-        return redirect(headers, "/products", `Added ${item} to cart`);
+        return redirect(headers, "/products", `Added \"${validated.addToCart}\" to cart.`);
     }
 }

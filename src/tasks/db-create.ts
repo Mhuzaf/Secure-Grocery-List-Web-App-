@@ -1,6 +1,7 @@
-import { defaultProducts } from "../app/defaults.ts";
+import { defaultLocations, defaultProducts } from "../app/defaults.ts";
 import { createCartTable, deleteCartTable } from "../models/cartModel.ts";
 import { addCategory, createCategoryTable, deleteCategoryTable } from "../models/categoryModel.ts";
+import { addCity, addDistrict, createCityTable, createDistrictsTable, deleteCityTable, deleteDistrictsTable } from "../models/locationsModel.ts";
 import { addProduct, createProductsTable, deleteProductsTable } from "../models/productsModel.ts";
 import { createSessionsTable, deleteSessionsTable } from "../models/sessionsModel.ts";
 import { addUser, createUsersTable, deleteUsersTable } from "../models/userModel.ts";
@@ -10,14 +11,25 @@ deleteCartTable();
 deleteProductsTable();
 deleteCategoryTable();
 deleteSessionsTable();
+deleteDistrictsTable();
+deleteCityTable();
 deleteUsersTable();
 
 // Create
 createCategoryTable();
 createProductsTable();
 createCartTable();
-createUsersTable();
+createCityTable();
+createDistrictsTable();
 createSessionsTable();
+createUsersTable();
+
+defaultLocations.forEach(d => {
+    addCity(d.city);
+    d.districts.forEach(dis => {
+        addDistrict(dis, d.city);
+    });
+});
 
 // Populate
 await addUser({
@@ -27,17 +39,19 @@ await addUser({
     email: "support@greensmart.com",
     phoneNo: null,
     city: null,
+    district: null,
     street: null,
     roomNo: null
 });
 
-defaultProducts.forEach((d: { category: string }) => {
+defaultProducts.forEach(d => {
     addCategory(d.category);
 });
 
-defaultProducts.forEach((d: { category: string, items: { name: string, price: number, perKg?: boolean }[] }) => {
+defaultProducts.forEach(d => {
     d.items.forEach(i => {
-        const imageFile = Deno.readFileSync(`src/defaultAssets/${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}/${i.name.toLowerCase()}.png`);
+        const productName = i.fileName || i.name.toLowerCase();
+        const imageFile = Deno.readFileSync(`src/defaultAssets/${d.category.toLowerCase().replace(RegExp("\\s+"), "_")}/${productName}.png`);
         addProduct({ 
             category: d.category,
             name: i.name,

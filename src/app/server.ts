@@ -13,6 +13,8 @@ import { ApplicationRouter } from "./router.ts";
 import { withLogs } from "../middleware/logging.ts";
 import { withSession } from "../middleware/auth.ts";
 import { withHeaders } from "../middleware/headers.ts";
+import { checkoutController } from "../controllers/checkoutController.ts";
+import { cartController } from "../controllers/cartController.ts";
 
 const app = new ApplicationRouter();
 // Middleware
@@ -30,6 +32,8 @@ app.get("/login", loginController);
 app.get("/register", registerController);
 app.get("/manage", manageController);
 app.get("/images/:imageId", imageController);
+app.get("/cart", cartController);
+app.get("/checkout", checkoutController);
 
 // POST
 app.post("/login", loginPostController);

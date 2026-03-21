@@ -1,5 +1,5 @@
-import { defaultLocations } from "../app/defaults.ts"
 import { ErrorFragment, getErrFragments } from "../app/errorFragments.ts";
+import { City, District } from "../models/locationsModel.ts";
 
 export const loginView = (errors?) => {
     let fragments: ErrorFragment;
@@ -12,7 +12,9 @@ export const loginView = (errors?) => {
 
                 <p>
                     Don't have an account?
-                    <a href="/register">Register here</a>
+                    <a href="/register">
+                        <button>Register</button>
+                    </a>
                 </p>
 
                 <form method="POST" id="loginForm">
@@ -37,9 +39,18 @@ export const loginView = (errors?) => {
 };
 
 
-export const registerView = (errors?) => {
+export const registerView = (cities: City[], districts: District[], errors?) => {
     let fragments: ErrorFragment;
     if (errors) fragments = getErrFragments(errors);
+
+    const cityDistrictsMap = cities.map(city => {
+        return `<optgroup label="${city.city}">
+                    ${districts.map(dist => {
+                        if (dist.city == city.city)
+                            return `<option name="${dist.district}">${dist.district}</option>`
+                    })}
+                </optgroup>`
+    }).join("");
 
     return `
         <section id="registerRoot">
@@ -48,7 +59,9 @@ export const registerView = (errors?) => {
 
                 <p id="authSwitch">
                     Have an account?
-                    <a href="/login">Login here</a>
+                    <a href="/login">
+                        <button>Login</button>    
+                    </a>
                 </p>
 
                 <ul>
@@ -72,11 +85,11 @@ export const registerView = (errors?) => {
                             ${errors ? fragments.password.message : ""}
                         </section>
 
-                        <label for="confirm_password">Confirm Password</label>
+                        <label for="confirmPassword">Confirm Password</label>
                         <section>
-                            <input type="password" name="confirm_password" id="confirm_password"
-                            ${errors ? fragments.confirm_password.value : ""} required>
-                            ${errors ? fragments.confirm_password.message : ""}
+                            <input type="password" name="confirmPassword" id="confirmPassword"
+                            ${errors ? fragments.confirmPassword.value : ""} required>
+                            ${errors ? fragments.confirmPassword.message : ""}
                         </section>
 
                         <label for="email">Email</label>
@@ -94,16 +107,9 @@ export const registerView = (errors?) => {
                             ${errors ? fragments.phone.message : ""}
                         </section>
 
-                        <label for="citydistrict">City/District</label>
-
+                        <label for="citydistrict">City + District</label>
                         <select name="citydistrict" id="citydistrict">
-                            ${defaultLocations.map(loc => {
-                                return `<optgroup label="${loc.city}">
-                                    ${loc.districts.map(dist => {
-                                        return `<option value="${dist.toLowerCase().replace(RegExp("\\s+"), "_")}">${dist}</option>`
-                                    }).join("")}
-                                </optgroup>`
-                            }).join("")}
+                            ${cityDistrictsMap}
                         </select>
 
                         <label for="street">Street</label>
@@ -123,7 +129,7 @@ export const registerView = (errors?) => {
                     <input type="submit" value="Register">
                 </form>
             </article>
-            <script type="module" src="/src/assets/js/confirmPassword.js"></script>
+            <script type="module" src="/src/assets/js/register.js"></script>
         </section>
     `;
 }

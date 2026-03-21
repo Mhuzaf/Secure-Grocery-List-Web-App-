@@ -7,6 +7,7 @@ import { addProductSchema, deleteProductSchema, editProductSchema } from "../sch
 import { addCategory, deleteCategory, getCategories, updateCategory } from "../models/categoryModel.ts";
 import { addProduct, deleteProduct, getProducts, updateProduct } from "../models/productsModel.ts";
 import { Context } from "../app/router.ts";
+import { getCities, getDistricts, LocationSortOptions } from "../models/locationsModel.ts";
 
 
 export const manageController = (ctx: Context) => {
@@ -14,11 +15,7 @@ export const manageController = (ctx: Context) => {
     if (!session || session.access != "admin") {
         return redirect(headers, "/", `Page access is not authorized.`);
     }
-    
-    const categories = getCategories();
-    const products = getProducts();
-
-    return render(manageView(categories, products), ctx);
+    return render(manageView(getCategories(), getProducts(), getCities(), getDistricts(LocationSortOptions.CITY_ASC)), ctx);
 }
 
 export const managePostController = async (ctx: Context) => {
@@ -35,7 +32,7 @@ export const managePostController = async (ctx: Context) => {
             const { isValid, errors } = validateSchema("addCategory", formData, addCategorySchema); 
 
             if (!isValid) {
-                return render(manageView(getCategories(), getProducts(), errors), ctx, 400);
+                return render(manageView(getCategories(), getProducts(), getCities(), getDistricts(LocationSortOptions.CITY_ASC), errors), ctx, 400);
             }
             
             const newItem = formData.get("addCategory");
@@ -48,7 +45,7 @@ export const managePostController = async (ctx: Context) => {
             const { isValid, errors } = validateSchema("editCategory", formData, editCategorySchema); 
             
             if (!isValid) {
-                return render(manageView(getCategories(), getProducts(), errors), ctx, 400);
+                return render(manageView(getCategories(), getProducts(), getCities(), getDistricts(LocationSortOptions.CITY_ASC), errors), ctx, 400);
             }
 
             const id = formData.get("editCategoryId");
@@ -62,7 +59,7 @@ export const managePostController = async (ctx: Context) => {
             const { isValid, errors } = validateSchema("deleteCategory", formData, deleteCategorySchema); 
 
             if (!isValid) {
-                return render(manageView(getCategories(), getProducts(), errors), ctx, 400);
+                return render(manageView(getCategories(), getProducts(), getCities(), getDistricts(LocationSortOptions.CITY_ASC), errors), ctx, 400);
             }
 
             const item = formData.get("deleteCategory");
@@ -76,7 +73,7 @@ export const managePostController = async (ctx: Context) => {
             const { isValid, errors } = validateSchema("addProduct", formData, addProductSchema); 
             
             if (!isValid) {
-                return render(manageView(getCategories(), getProducts(), errors), ctx, 400);
+                return render(manageView(getCategories(), getProducts(), getCities(), getDistricts(LocationSortOptions.CITY_ASC), errors), ctx, 400);
             }
 
             const productName = formData.get("addProductName");
@@ -103,7 +100,7 @@ export const managePostController = async (ctx: Context) => {
             console.log(formData, validated);
 
             if (!isValid) {
-                return render(manageView(getCategories(), getProducts(), errors), ctx, 400);
+                return render(manageView(getCategories(), getProducts(), getCities(), getDistricts(LocationSortOptions.CITY_ASC), errors), ctx, 400);
             }
 
             const productId = formData.get("editProductId");
@@ -134,7 +131,7 @@ export const managePostController = async (ctx: Context) => {
             const { isValid, errors } = validateSchema("deleteProduct", formData, deleteProductSchema);
             
             if (!isValid) {
-                return render(manageView(getCategories(), getProducts(), errors), ctx, 400);
+                return render(manageView(getCategories(), getProducts(), getCities(), getDistricts(LocationSortOptions.CITY_ASC), errors), ctx, 400);
             }
 
             const productName = formData.get("deleteProductName");

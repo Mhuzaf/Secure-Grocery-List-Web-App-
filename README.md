@@ -17,19 +17,21 @@ deno task start
 ### Items
 
 - fruits
-  - apple
-  - banana
-  - mandarin
-  - grapes
-  - watermelon
-  - tomato
+  - ~~apple~~
+  - ~~banana~~
+  - ~~mandarin~~
+  - ~~grapes~~
+  - ~~watermelon~~
+  - ~~tomato~~
   - Dates
   - Coconut
+  - ADD MORE
 - vegetables
-  - potato
-  - carrot
-  - onion
-  - cabbage
+  - ~~potato~~
+  - ~~carrot~~
+  - ~~onion~~
+  - ~~cabbage~~
+  - ADD MORE
 - snacks
   - Chocolate chip cookie
   - britannia whole wheat cracker
@@ -56,13 +58,12 @@ deno task start
 ### To Change
 
 - new table "orders" to take care of checkouts
-- ^^^ make a new page. "/orders" (+ locations)
 - require user page to change address
 - add accessibility features (aria)
 - add escape() to anywhere involving ${} <---
 - bulletproof auth (only have one session per user)
-- fix some things in "about me"
-- ~~modalify the "add products" and add sort buttons (manage)~~
+  - restrict /login and /register to only no session
+- fix some things in home/about me
 
 ### locations
 

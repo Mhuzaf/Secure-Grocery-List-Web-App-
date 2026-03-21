@@ -3,13 +3,14 @@ import { db } from "../app/db.ts"
 export interface UserProps {
     userId?:  number,
     username: string,
-    password?: string,
-    access?: string,
-    email?: string,
-    phoneNo?: string,
-    city?: string,
-    street?: string,
-    roomNo?: string
+    password: string,
+    access: string,
+    email: string,
+    phoneNo: string,
+    city: string,
+    district: string,
+    street: string,
+    roomNo: string
 }
 
 const salt = "supersecretstring";
@@ -38,8 +39,11 @@ export const createUsersTable = () => {
             email TEXT NOT NULL,
             phoneNo TEXT,
             city TEXT,
+            district TEXT,
             street TEXT,
-            roomNo TEXT
+            roomNo TEXT,
+            FOREIGN KEY (city) REFERENCES city(city),
+            FOREIGN KEY (district) REFERENCES districts(district)
         );
     `).run();
 }
@@ -47,9 +51,9 @@ export const createUsersTable = () => {
 export const addUser = async (data: UserProps) => {
     const pw = await hashedPassword(data.password);
     db.prepare(`
-        INSERT INTO users (username, password, access, email, phoneNo, city, street, roomNo) VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?)  
-    `).run(data.username, pw, data.access, data.email, data.phoneNo, data.city, data.street, data.roomNo);
+        INSERT INTO users (username, password, access, email, phoneNo, city, district, street, roomNo) VALUES
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)  
+    `).run(data.username, pw, data.access, data.email, data.phoneNo, data.city, data.district, data.street, data.roomNo);
 }
 
 export const getUser = (username: string): UserProps => {
