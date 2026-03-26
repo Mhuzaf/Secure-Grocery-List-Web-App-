@@ -1,4 +1,4 @@
-import { requiredString } from "../app/validation.ts";
+import { maxValue, minValue, requiredString } from "../app/validation.ts";
 
 export const addToCartSchema = {
     "addToCart": {
@@ -8,5 +8,9 @@ export const addToCartSchema = {
     "addToCartId": {
         displayName: "Cart Id",
         validators: [requiredString]
+    },
+    "productQuantity": {
+        displayName: "Quantity",
+        validators: [requiredString, minValue(1), maxValue(20)]
     }
 }

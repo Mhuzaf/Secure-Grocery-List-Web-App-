@@ -60,8 +60,8 @@ const routesMap = routes.map(r => {
             </a>`
 }).join("");
 
-export const render = (content: string, ctx: Context, status = 200) => {
-    const { request, session, headers } = ctx;
+export const render = (content: string, ctx: Context) => {
+    const { request, session, headers, status = 200 } = ctx;
     
     headers.set("Content-Type", "text/html");
 
@@ -91,7 +91,7 @@ export const render = (content: string, ctx: Context, status = 200) => {
                         ${routesMap}
                         ${session ? `
                             ${session.access == "admin" ? `
-                                <a href="/manage" aria-label="Manage">
+                                <a href="/manage/discounts" aria-label="Manage">
                                     Manage
                                 </a>
                             ` : ""}

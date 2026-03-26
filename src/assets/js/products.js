@@ -20,6 +20,8 @@ const productDialog = document.getElementById("productOptionsDialog");
 const productTitle = document.getElementById("productTitle");
 const productInput = document.getElementById("addToCart");
 const productInputId = document.getElementById("addToCartId");
+const productQuantitySection = document.getElementById("productQuantitySection");
+const productQuantitySlider = document.getElementById("productQuantity");
 const productClose = document.getElementById("productClose");
 
 productItems.forEach(item => {
@@ -29,6 +31,7 @@ productItems.forEach(item => {
         productTitle.textContent = item.dataset.name;
         productInput.value = item.dataset.name;
         productInputId.value = item.dataset.id;
+
         productDialog.showModal();
     });
 });
@@ -40,4 +43,5 @@ productClose.addEventListener("click", () => {
 productDialog.addEventListener("cancel", () => {
     productTitle.textContent = "";
     productInput.value = "";
+    productQuantitySlider.value = 1;
 });

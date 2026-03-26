@@ -17,6 +17,7 @@ export const defaultLocations = [
     }
 ]
 
+// The avgWeight is in grams.
 export const defaultProducts = [
     {
         category: "Fruits",
@@ -24,32 +25,32 @@ export const defaultProducts = [
             {
                 name: "Apple",
                 price: 5,
-                perKg: true
+                avgWeight: 200
             },
             {
                 name: "Banana",
                 price: 7,
-                perKg: true
+                avgWeight: 120
             },
             {
                 name: "Mandarin",
                 price: 7,
-                perKg: true
+                avgWeight: 120
             },
             {
                 name: "Grapes",
                 price: 10,
-                perKg: true
+                avgWeight: 6
             },
             {
                 name: "Watermelon",
                 price: 6,
-                perKg: true
+                avgWeight: 2500
             },
             {
                 name: "Tomato",
                 price: 5,
-                perKg: true
+                avgWeight: 130
             },
         ].sort((a, b) => a.name.localeCompare(b.name))
     },
@@ -59,22 +60,22 @@ export const defaultProducts = [
             {
                 name: "Potato",
                 price: 8,
-                perKg: true
+                avgWeight: 380
             },
             {
                 name: "Carrot",
                 price: 4,
-                perKg: true
+                avgWeight: 110
             },
             {
                 name: "Onion",
                 price: 4,
-                perKg: true
+                avgWeight: 340
             },
             {
                 name: "Cabbage",
                 price: 2,
-                perKg: true
+                avgWeight: 750
             },
         ].sort((a, b) => a.name.localeCompare(b.name))
     },

@@ -6,7 +6,7 @@ export interface Product {
     name: string,
     price: number,
     category: string,
-    isWeighedPerKg: number, // 0 = false, 1 = true
+    averageWeight: number,
     imageData?: Uint8Array<ArrayBuffer>
 }
 
@@ -16,7 +16,7 @@ export const createProductsTable = () => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             price INTEGER NOT NULL,
-            isWeighedPerKg BOOLEAN NOT NULL,
+            averageWeight INTEGER NOT NULL DEFAULT '0',
             category TEXT NOT NULL,
             imageData BLOB
         );
@@ -35,9 +35,9 @@ export const getProducts = () : Product[] => {
 
 export const addProduct = (data: Product) => {
     db.prepare(`
-        INSERT INTO products (name, price, isWeighedPerKg, category, imageData) VALUES
+        INSERT INTO products (name, price, averageWeight, category, imageData) VALUES
             (?, ?, ?, ?, ?)
-    `).run(data.name, data.price, data.isWeighedPerKg, data.category, data.imageData);
+    `).run(data.name, data.price, data.averageWeight, data.category, data.imageData);
     incrementAmount(data.category);
 }
 
@@ -47,20 +47,20 @@ export const updateProduct = (oldCategory: string, data: Product) => {
             UPDATE products 
             SET name = ?,
                 price = ?,
-                isWeighedPerKg = ?,
+                averageWeight = ?,
                 category = ?,
                 imageData = ?
             WHERE id = ?
-        `).run(data.name, data.price, data.isWeighedPerKg, data.category, data.imageData, data.id);
+        `).run(data.name, data.price, data.averageWeight, data.category, data.imageData, data.id);
     } else {
         db.prepare(`
             UPDATE products 
             SET name = ?,
                 price = ?,
-                isWeighedPerKg = ?,
+                averageWeight = ?,
                 category = ?
             WHERE id = ?
-        `).run(data.name, data.price, data.isWeighedPerKg, data.category, data.id);
+        `).run(data.name, data.price, data.averageWeight, data.category, data.id);
     }
 
     // TODO: prepare when it requires ids

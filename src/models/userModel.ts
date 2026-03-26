@@ -5,12 +5,16 @@ export interface UserProps {
     username: string,
     password: string,
     access: string,
+    firstName: string,
+    lastName: string,
     email: string,
     phoneNo: string,
     city: string,
     district: string,
     street: string,
-    roomNo: string
+    roomNo: string,
+    card16?: number
+    card3?: number
 }
 
 const salt = "supersecretstring";
@@ -36,12 +40,16 @@ export const createUsersTable = () => {
             username TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
             access TEXT DEFAULT 'normal',
+            firstName TEXT NOT NULL,
+            lastName TEXT NOT NULL,
             email TEXT NOT NULL,
             phoneNo TEXT,
             city TEXT,
             district TEXT,
             street TEXT,
             roomNo TEXT,
+            card16 INTEGER,
+            card3 INTEGER,
             FOREIGN KEY (city) REFERENCES city(city),
             FOREIGN KEY (district) REFERENCES districts(district)
         );
@@ -51,9 +59,9 @@ export const createUsersTable = () => {
 export const addUser = async (data: UserProps) => {
     const pw = await hashedPassword(data.password);
     db.prepare(`
-        INSERT INTO users (username, password, access, email, phoneNo, city, district, street, roomNo) VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?, ?)  
-    `).run(data.username, pw, data.access, data.email, data.phoneNo, data.city, data.district, data.street, data.roomNo);
+        INSERT INTO users (username, password, access, firstName, lastName, email, phoneNo, city, district, street, roomNo) VALUES
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  
+    `).run(data.username, pw, data.access, data.firstName, data.lastName, data.email, data.phoneNo, data.city, data.district, data.street, data.roomNo);
 }
 
 export const getUser = (username: string): UserProps => {
@@ -61,6 +69,8 @@ export const getUser = (username: string): UserProps => {
         SELECT * FROM users WHERE username = ?    
     `).get(username);
 }
+
+// update user?
 
 export const checkCredentials = async (username: string, password: string) => {
     const user = getUser(username);

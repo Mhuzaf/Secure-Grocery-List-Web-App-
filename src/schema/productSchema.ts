@@ -27,6 +27,9 @@ export const editProductSchema = {
     "editProductId": {
         validators: [requiredString]
     },
+    "editProductOldCategory": {
+        validators: [requiredString]
+    },
     "editProductName": {
         displayName: "Product Name",
         validators: [requiredString, minLength(3), maxLength(50)]

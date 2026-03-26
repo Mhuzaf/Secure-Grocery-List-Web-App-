@@ -2,24 +2,18 @@ import { login } from "../../app/auth.ts";
 import { redirect } from "../../app/redirect.ts";
 import { render } from "../../app/render.ts";
 import { Context } from "../../app/router.ts";
-import { validateSchema } from "../../app/validation.ts";
 import { checkCredentials } from "../../models/userModel.ts";
-import { userLoginSchema } from "../../schema/userSchema.ts";
-import { loginView } from "../../views/loginView.ts";
+import { loginView } from "../../views/login/loginView.ts";
 
 export const loginController = (ctx: Context) => {
-    return render(loginView(), ctx);
+    const { errors } = ctx;
+    return render(loginView(errors), ctx);
 }
 
-export const loginPostController = async (ctx: Context) => {
-    const { request, headers } = ctx;
-    const formData = await request.formData();
-    
-    const { isValid, errors, validated } = validateSchema("login", formData, userLoginSchema);
+export const loginPostController = async (ctx: Context, next) => {
+    const { headers, isValid, validated } = ctx;
 
-    if (!isValid) {
-        return render(loginView(errors), ctx, 400);
-    }
+    if (!isValid) return next(ctx);
 
     const validCredentials = await checkCredentials(validated.username, validated.password);
     
@@ -28,5 +22,5 @@ export const loginPostController = async (ctx: Context) => {
     }
 
     login(headers, validated.username);
-    return redirect(headers, "/", `Logged in as ${validated.username}`);
+    return redirect(headers, "/", `Welcome back, ${validated.username}!`);
 }

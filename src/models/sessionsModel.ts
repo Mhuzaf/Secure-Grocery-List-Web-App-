@@ -18,6 +18,7 @@ export const createSessionsTable = () => {
 }
 
 export const createSession = (username: string, role: string) => {
+    console.log(username, role);
     const sessionId = crypto.randomUUID();
     db.prepare(`
         INSERT INTO sessions (sessionId, username, access) VALUES

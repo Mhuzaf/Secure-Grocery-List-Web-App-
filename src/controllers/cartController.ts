@@ -7,23 +7,24 @@ import { getUser } from "../models/userModel.ts";
 import { cartView } from "../views/cartView.ts";
 
 export const cartController = (ctx: Context) => {
-    const { session, headers } = ctx;
+    const { session } = ctx;
     
-    if (!session) {
-        return redirect(headers, "/login", `Login to view your cart.`);
-    }
-
     const user = getUser(session.username);
+    const cart = getCartItems(user.userId);
     // It's better to map here with one query 
     // than to make multiple queries
     // O(n)
-    const products = getCartItems(user.userId).map(i => {
+    const products = cart.map(i => {
         return getProducts().find(p => {
             return p.id == i.productId;
         });
     });
     
-    return render(cartView(products), ctx);
+    return render(cartView(getCartItems(user.userId), products), ctx);
 }
 
-// TODO: post controller
+export const cartSubmitController = (ctx: Context) => {
+    const { headers } = ctx;
+    
+    return redirect(headers, "/checkout", null);
+}

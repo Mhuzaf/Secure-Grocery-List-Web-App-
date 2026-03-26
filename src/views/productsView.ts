@@ -65,6 +65,7 @@ export const productsView = (
                     data-name="${p.name}"
                     data-price="${p.price}"
                     data-category=${p.category}
+                    data-weight="${p.averageWeight}"
                 >
                     <img
                         class="productCardImage"
@@ -74,11 +75,11 @@ export const productsView = (
                     <section>
                         <p class="productName">${p.name}</p>
                         <article>
-                            <small class="productPrice">
+                            <small class="productPrice priceFont">
                                 Dhs. 
                                 <span>${p.price}</span>
                             </small>
-                            ${p.isWeighedPerKg ? `<small>per kg</small>` : ""}
+                            ${p.averageWeight != 0 ? `<small>per kg</small>` : ""}
                         </article>
                     </section>
                 </article>`
@@ -116,6 +117,12 @@ export const productsView = (
                     <input type="hidden" name="productPostMethod" value="addToCart">
                     <input type="hidden" name="addToCart" id="addToCart">
                     <input type="hidden" name="addToCartId" id="addToCartId">
+                    
+                    <section id="productQuantitySection">
+                        <label for="productQuantity">Quantity</label>
+                        <input name="productQuantity" id="productQuantity" type="range" min="1" max="20" value="1">
+                    </section>
+                    
                     <input type="submit" value="Add to Cart">
                 </form>
                 <button id="productClose" command="close" commandfor="productOptionsDialog">Close</button>

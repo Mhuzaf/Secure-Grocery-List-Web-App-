@@ -11,9 +11,9 @@ deleteCartTable();
 deleteProductsTable();
 deleteCategoryTable();
 deleteSessionsTable();
+deleteUsersTable();
 deleteDistrictsTable();
 deleteCityTable();
-deleteUsersTable();
 
 // Create
 createCategoryTable();
@@ -36,6 +36,8 @@ await addUser({
     username: "admin",
     password: "12345",
     access: "admin",
+    firstName: "GreensMart",
+    lastName: "Admin",
     email: "support@greensmart.com",
     phoneNo: null,
     city: null,
@@ -56,7 +58,7 @@ defaultProducts.forEach(d => {
             category: d.category,
             name: i.name,
             price: i.price,
-            isWeighedPerKg: i.perKg ? 1 : 0,
+            averageWeight: i.avgWeight ? i.avgWeight : 0,
             imageData: imageFile
         });
     });

@@ -1,19 +1,26 @@
 // deno-lint-ignore-file no-explicit-any
-// Have to use "any" as the image controller needs an id...
-
 import { SessionProps } from "../models/sessionsModel.ts";
+import { FormError } from "./errorFragments.ts";
 
 export interface Context {
     request: Request, 
     session?: SessionProps, 
-    headers?: Headers
+    headers?: Headers,
+    formName?: string,
+    isValid?: boolean,
+    errors?: FormError,
+    validated?: {
+        [key: string]: string
+    },
+    status?: number
 }
 
 export class ApplicationRouter {
     routes: { 
         method: string,
         pattern: URLPattern,
-        handler: any
+        handler: any,
+        middleware: any[]
     }[];
     middleware: any[];
 
@@ -22,19 +29,19 @@ export class ApplicationRouter {
         this.middleware = [];
     }
 
-    private register(method: string, pattern, handler) {
+    private register(method: string, pattern, handler, ...middleware) {
         if (typeof pattern == "string") {
             pattern = new URLPattern({ pathname: pattern }); 
         }
-        this.routes.push({ method, pattern, handler });
+        this.routes.push({ method, pattern, handler, middleware });
     }
 
-    public get(path: string, handler: any) {
-        this.register("GET", path, handler);
+    public get(path: string, handler: any, ...middleware) {
+        this.register("GET", path, handler, ...middleware);
     }
 
-    public post(path: string, handler: any) {
-        this.register("POST", path, handler);
+    public post(path: string, handler: any, ...middleware) {
+        this.register("POST", path, handler, ...middleware);
     }
 
     public use(middlewareFunc) {
@@ -43,6 +50,7 @@ export class ApplicationRouter {
 
     private chain(ctx: Context, middleware: any[], handler) {
         if (middleware.length == 0) return handler(ctx);
+                
         const [nextMWFunc, ...remainingMWFunc] = middleware;
         const next = (ctx) => {
             return this.chain(ctx, remainingMWFunc, handler);
@@ -56,6 +64,7 @@ export class ApplicationRouter {
             return request.method == method && pattern.test(request.url);
         });
         
-        return this.chain(ctx, this.middleware, route.handler);
+        const middleware = [...this.middleware, ...route.middleware];
+        return this.chain(ctx, middleware, route.handler);
     }
 }

@@ -1,16 +1,14 @@
 import { redirect } from "../app/redirect.ts";
 import { render } from "../app/render.ts";
 import { Context } from "../app/router.ts";
-import { validateSchema } from "../app/validation.ts";
 import { addToCart } from "../models/cartModel.ts";
 import { getCategories } from "../models/categoryModel.ts";
 import { getProducts } from "../models/productsModel.ts";
 import { getUser } from "../models/userModel.ts";
-import { addToCartSchema } from "../schema/cartSchema.ts";
 import { productsView } from "../views/productsView.ts";
 
 export const productsController = (ctx: Context) => {
-    const { request } = ctx;
+    const { request, errors } = ctx;
     const url = new URL(request.url);
 
     const categories = getCategories();
@@ -56,27 +54,16 @@ export const productsController = (ctx: Context) => {
         });
     }
 
-    return render(productsView(categories, products, null, filterData), ctx);
+    return render(productsView(categories, products, errors, filterData), ctx);
 }
 
-export const productsPostController = async (ctx: Context) => {
-    const { request, session, headers } = ctx;
-    if (!session) {
-        return redirect(headers, "/products", `Login to order products.`);
-    }
+export const productsPostController = (ctx: Context, next) => {
+    const { session, headers, isValid, validated } = ctx;
+    
+    if (!isValid) return next(ctx);
 
-    const formData = await request.formData();
+    const user = getUser(session.username);
+    addToCart(parseInt(validated.addToCartId.toString()), user.userId, parseInt(validated.productQuantity));
 
-    if (formData.has("addToCart")) {
-        const { isValid, errors, validated } = validateSchema("addToCart", formData, addToCartSchema); 
-        
-        if (!isValid) {            
-            return render(productsView(getCategories(), getProducts(), errors, null), ctx);
-        }
-
-        const user = getUser(session.username);
-        addToCart(parseInt(validated.addToCartId.toString()), user.userId);
-
-        return redirect(headers, "/products", `Added \"${validated.addToCart}\" to cart.`);
-    }
+    return redirect(headers, "/products", `Added \"${validated.addToCart}\" to cart.`);
 }

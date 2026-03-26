@@ -37,6 +37,11 @@ export const maxValue = (max: number) => {
     }
 }
 
+export const isEmail = (name: string, value: string) => {
+    if (!new RegExp("[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+").test(value))
+        return `${name} is invalid.`;
+}
+
 export const isImageFile = (name: string, value) => {
     if (!(value instanceof File)) return `${name} must be a file.`
     if (!value.type.startsWith("image/")) return `${name} must be an image file.`
