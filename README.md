@@ -1,105 +1,97 @@
-# Web Project
+# Secure Grocery List Web Application
 
-Web Project for Block 3 - Web App Development
+A full-stack, server-side rendered grocery list application built with **Deno, JavaScript, SQLite, HTML, and CSS**.
 
-## Running locally
+The application allows users to create accounts, authenticate securely, manage grocery items, and receive feedback through server-side validation and flash messages. The project focuses heavily on **secure web development**, including password hashing, session management, SQL injection prevention, XSS protection, and secure handling of user input.
 
-Make sure you have deno installed, Visit the [official site](https://deno.com)
-for instructions.
+---
 
-```sh
-git clone https://github.com/pnbread/webproject
-cd webproject
-deno install # install dependancies (jsr)
-deno task start
-```
+## Features
 
-### Items
+### User Authentication
+- User registration and login
+- Password hashing using **PBKDF2 with SHA-256**
+- UUID-based session creation
+- Session management using HTTP cookies
+- Persistent user records stored in SQLite
 
-- fruits
-  - ~~apple~~
-  - ~~banana~~
-  - ~~mandarin~~
-  - ~~grapes~~
-  - ~~watermelon~~
-  - ~~tomato~~
-  - Dates
-  - Coconut
-  - ADD MORE
-- vegetables
-  - ~~potato~~
-  - ~~carrot~~
-  - ~~onion~~
-  - ~~cabbage~~
-  - ADD MORE
-- snacks
-  - Chocolate chip cookie
-  - britannia whole wheat cracker
-  - ritz crackers
-  - parle nutricrunch
-- dairy products
-  - Milk
-  - Yogurt
-  - Mozzarella
-- bakery products
-  - Bread
-  - Croissant
-- nuts
-  - Almond
-  - Peanuts
-  - Walnuts
+### Grocery List Management
+- View grocery items stored in the database
+- Add new grocery items
+- Server-side validation of submitted items
+- Dynamic rendering of grocery items
+- Error messages for invalid input
 
-### Functionality
+### Validation
+- Reusable server-side validation system
+- Schema-based validation
+- Required-field validation
+- Minimum-length validation
+- Field-specific error messages
+- Preservation of submitted values when validation fails
 
-- ~~Login~~
-- ~~Cart~~
-- Checkout
+### Security
+- **Parameterized SQL queries** to protect against SQL injection
+- **HTML escaping** to protect against Cross-Site Scripting (XSS)
+- Password hashing instead of storing plaintext passwords
+- Session identifiers generated using UUIDs
+- Cookie-based session management
+- Encoded flash-message cookies
+- Server-side validation rather than relying only on client-side validation
 
-### To Change
+### User Interface
+- Server-side rendered HTML
+- Semantic HTML elements
+- Accessibility attributes such as `aria-labelledby`
+- CSS Grid-based layouts
+- Login and registration forms
+- Client-side password confirmation validation
+- Temporary flash notifications
 
-- new table "orders" to take care of checkouts
-- require user page to change address
-- add accessibility features (aria)
-- add escape() to anywhere involving ${} <---
-- bulletproof auth (only have one session per user)
-  - restrict /login and /register to only no session
-- fix some things in home/about me
+---
 
-### locations
+## Technologies Used
 
-```
-Dubai
-Jumeirah
-Deira
-Al Karama
-Bur Dubai
-Business Bay
+| Technology | Purpose |
+|---|---|
+| **Deno** | Server-side JavaScript runtime |
+| **JavaScript** | Application logic and client-side functionality |
+| **SQLite** | Database and persistent data storage |
+| **HTML5** | Structure and semantic markup |
+| **CSS3** | Styling and page layout |
+| **Web APIs** | Requests, responses, cookies, cryptography and browser functionality |
 
-Sharjah
-Al Ruqa Al Hamra
-Rahmaniya Suburb
-Al Sajaah
+### Deno Libraries
 
-Ajman
-Al Muwaihat 3
-Al Talia 1
-Al Talia 2
-```
+- `@db/sqlite` — SQLite database interaction
+- `@std/http` — HTTP utilities and cookie handling
+- `@std/html` — HTML entity escaping
+- `@std/encoding` — Base64 URL encoding and decoding
 
-### items
+---
 
-```
-Fruits
-Apple 5
-Banana 7
-Mandarin 7
-Grapes 10
-Watermelon 6
-Tomato 5
+## Application Architecture
 
-Vegetables
-Potato 8
-Carrot 4
-Onion 4
-Cabbage 2
-```
+The application follows an **MVC-style structure** to separate different responsibilities within the application.
+
+```text
+Request
+   │
+   ▼
+Server / Router
+   │
+   ▼
+Controller
+   │
+   ├──► Validation
+   │
+   ├──► Model ───► SQLite Database
+   │
+   ▼
+View
+   │
+   ▼
+Render
+   │
+   ▼
+HTTP Response
